@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en" class="antialiased">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RESCUE_ARCH - LOGIN</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Space Grotesk', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            black: '#0A0A0A',
+                            white: '#F4F4F0',
+                            accent: '#FF3B00', // High-vis orange
+                            gray: '#8E8E8E'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #F4F4F0;
+            color: #0A0A0A;
+        }
+
+        /* Brutalist/Architectural Utilities */
+        .arch-border {
+            border: 2px solid #0A0A0A;
+        }
+
+        .arch-border-b {
+            border-bottom: 2px solid #0A0A0A;
+        }
+
+        .arch-border-r {
+            border-right: 2px solid #0A0A0A;
+        }
+
+        /* Grid Background Pattern */
+        .bg-blueprint {
+            background-size: 40px 40px;
+            background-image:
+                linear-gradient(to right, rgba(10, 10, 10, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(10, 10, 10, 0.05) 1px, transparent 1px);
+        }
+
+        /* Input Styling */
+        .arch-input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid #0A0A0A;
+            padding: 1rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+        }
+
+        .arch-input:focus {
+            outline: none;
+            border-bottom-color: #FF3B00;
+            background: rgba(255, 59, 0, 0.05);
+            padding-left: 0.5rem;
+        }
+
+        .arch-input::placeholder {
+            color: #8E8E8E;
+        }
+
+        /* Button Styling */
+        .arch-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 1.25rem;
+            background: #0A0A0A;
+            color: #F4F4F0;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: all 0.2s ease;
+            border: 2px solid #0A0A0A;
+        }
+
+        .arch-btn:hover {
+            background: #FF3B00;
+            border-color: #FF3B00;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 0 #0A0A0A;
+        }
+
+        .arch-btn:active {
+            transform: translateY(0);
+            box-shadow: none;
+        }
+
+        /* Decorative Elements */
+        .crosshair {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+        }
+
+        .crosshair::before,
+        .crosshair::after {
+            content: '';
+            position: absolute;
+            background: #0A0A0A;
+        }
+
+        .crosshair::before {
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            transform: translateY(-50%);
+        }
+
+        .crosshair::after {
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            transform: translateX(-50%);
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col bg-blueprint selection:bg-brand-accent selection:text-white">
+
+    <!-- Top Bar -->
+    <header class="arch-border-b bg-brand-white flex justify-between items-center px-6 py-4 sticky top-0 z-50">
+        <div class="flex items-center gap-3">
+            <div class="w-6 h-6 bg-brand-black flex items-center justify-center">
+                <i data-lucide="box" class="text-brand-white w-4 h-4"></i>
+            </div>
+            <span class="font-bold tracking-tight text-xl uppercase">Rescue_Arch</span>
+        </div>
+        <div class="font-mono text-xs text-brand-gray uppercase tracking-widest hidden sm:block">
+            SYS.AUTH.v2.4 // SECURE_CONNECTION
+        </div>
+        <a href="#" class="font-mono text-sm font-bold hover:text-brand-accent transition-colors">
+            [ RETURN_HOME ]
+        </a>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow flex items-center justify-center p-4 sm:p-8 relative">
+
+        <!-- Decorative Crosshairs -->
+        <div class="crosshair top-8 left-8 hidden lg:block"></div>
+        <div class="crosshair top-8 right-8 hidden lg:block"></div>
+        <div class="crosshair bottom-8 left-8 hidden lg:block"></div>
+        <div class="crosshair bottom-8 right-8 hidden lg:block"></div>
+
+        <div
+            class="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-2 arch-border bg-brand-white shadow-[8px_8px_0_#0A0A0A]">
+
+            <!-- Left Column: Branding/Info -->
+            <div
+                class="arch-border-r p-8 lg:p-12 flex flex-col justify-between relative overflow-hidden hidden md:flex bg-[#EAEAE5]">
+                <div class="relative z-10">
+                    <div
+                        class="inline-block bg-brand-black text-brand-white px-3 py-1 font-mono text-xs uppercase mb-8">
+                        Access Protocol
+                    </div>
+                    <h1 class="text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight mb-6">
+                        AUTHENTICATION<br>REQUIRED.
+                    </h1>
+                    <p class="text-lg text-brand-gray max-w-md font-medium">
+                        Access the logistics network to coordinate surplus food distribution and track community impact
+                        metrics.
+                    </p>
+                </div>
+
+                <div class="relative z-10 mt-12">
+                    <div class="grid grid-cols-2 gap-4 font-mono text-xs text-brand-gray uppercase">
+                        <div>
+                            <span class="block text-brand-black font-bold mb-1">Active Nodes</span>
+                            [ 1,204 ]
+                        </div>
+                        <div>
+                            <span class="block text-brand-black font-bold mb-1">System Status</span>
+                            [ OPTIMAL ]
+                        </div>
+                        <div class="col-span-2 mt-4 pt-4 arch-border-b border-brand-gray/30">
+                            <span class="block text-brand-black font-bold mb-1">Security Clearance</span>
+                            Level 2 (Coordinator) / Level 3 (Admin)
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Large Background Graphic -->
+                <i data-lucide="fingerprint"
+                    class="absolute -bottom-20 -right-20 w-96 h-96 text-brand-black opacity-5"></i>
+            </div>
+
+            <!-- Right Column: Login Form -->
+            <div class="p-8 lg:p-12 bg-brand-white relative">
+
+                <div class="mb-10">
+                    <h2 class="text-3xl font-bold tracking-tight mb-2">System Login</h2>
+                    <p class="font-mono text-sm text-brand-gray">Enter credentials to initialize session.</p>
+                </div>
+
+                <form class="space-y-8">
+
+                    <!-- Email Input -->
+                    <div class="relative group">
+                        <label
+                            class="font-mono text-xs font-bold uppercase tracking-widest text-brand-black block mb-1">
+                            Identification [Email]
+                        </label>
+                        <input type="email" placeholder="operator@rescue-arch.org" class="arch-input" required>
+                        <i data-lucide="mail"
+                            class="absolute right-0 bottom-4 w-5 h-5 text-brand-gray group-focus-within:text-brand-accent transition-colors"></i>
+                    </div>
+
+                    <!-- Password Input -->
+                    <div class="relative group">
+                        <div class="flex justify-between items-end mb-1">
+                            <label class="font-mono text-xs font-bold uppercase tracking-widest text-brand-black block">
+                                Passcode [Password]
+                            </label>
+                            <a href="#"
+                                class="font-mono text-[10px] text-brand-gray hover:text-brand-accent uppercase tracking-wider">
+                                Reset_Key?
+                            </a>
+                        </div>
+                        <input type="password" placeholder="••••••••••••" class="arch-input" required>
+                        <button type="button"
+                            class="absolute right-0 bottom-4 text-brand-gray hover:text-brand-black transition-colors">
+                            <i data-lucide="eye" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+
+                    <!-- Remember Me -->
+                    <div class="flex items-center gap-3 pt-2">
+                        <label class="relative flex items-center cursor-pointer">
+                            <input type="checkbox" class="sr-only peer">
+                            <div
+                                class="w-5 h-5 arch-border bg-transparent peer-checked:bg-brand-black transition-colors flex items-center justify-center">
+                                <i data-lucide="check"
+                                    class="w-3 h-3 text-brand-white opacity-0 peer-checked:opacity-100"></i>
+                            </div>
+                        </label>
+                        <span class="font-mono text-xs uppercase text-brand-gray">Maintain Session State</span>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="pt-6 space-y-4">
+                        <button type="submit" class="arch-btn group">
+                            <span>Initialize Session</span>
+                            <i data-lucide="arrow-right"
+                                class="w-5 h-5 transform group-hover:translate-x-1 transition-transform"></i>
+                        </button>
+
+                        <div class="text-center">
+                            <span class="font-mono text-xs text-brand-gray uppercase">
+                                No Clearance?
+                                <a href="#"
+                                    class="text-brand-black font-bold hover:text-brand-accent ml-2 border-b border-brand-black hover:border-brand-accent pb-0.5 transition-colors">
+                                    Request_Access
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+
+                </form>
+
+                <!-- Alternative Login -->
+                <div class="mt-12 pt-8 arch-border-b border-t-2 border-brand-black/10 relative">
+                    <div
+                        class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-brand-white px-4 font-mono text-[10px] text-brand-gray uppercase tracking-widest">
+                        Or_Authenticate_Via
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <button
+                            class="flex items-center justify-center gap-2 py-3 arch-border hover:bg-brand-black hover:text-brand-white transition-colors font-mono text-xs font-bold uppercase">
+                            <i data-lucide="github" class="w-4 h-4"></i> GitHub
+                        </button>
+                        <button
+                            class="flex items-center justify-center gap-2 py-3 arch-border hover:bg-brand-black hover:text-brand-white transition-colors font-mono text-xs font-bold uppercase">
+                            <i data-lucide="chrome" class="w-4 h-4"></i> Google
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer
+        class="p-6 flex justify-between items-center font-mono text-[10px] text-brand-gray uppercase tracking-widest">
+        <div>&copy; 2024 RESCUE_ARCH. ALL RIGHTS RESERVED.</div>
+        <div class="flex gap-4">
+            <a href="#" class="hover:text-brand-black">TERMS</a>
+            <a href="#" class="hover:text-brand-black">PRIVACY</a>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+    </script>
+    <script src="/nav.js"></script>
+</body>
+
+</html>
