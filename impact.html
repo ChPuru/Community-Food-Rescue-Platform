@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en" class="antialiased">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodCycle — Impact Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Anton', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            400: '#4ade80',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            900: '#14532d',
+                            950: '#052e16',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .brutal-border { border: 3px solid #000; }
+        .brutal-shadow { box-shadow: 6px 6px 0px #000; transition: all 0.2s ease; }
+        .brutal-shadow:hover { box-shadow: 2px 2px 0px #000; transform: translate(4px, 4px); }
+        .brutal-shadow-green { box-shadow: 6px 6px 0px #16a34a; transition: all 0.2s ease; }
+        .brutal-shadow-green:hover { box-shadow: 2px 2px 0px #16a34a; transform: translate(4px, 4px); }
+        .bg-stripes {
+            background-image: repeating-linear-gradient(45deg, #000 0, #000 2px, transparent 2px, transparent 8px);
+        }
+        .bg-grid {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(0,0,0,0.1) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(0,0,0,0.1) 1px, transparent 1px);
+        }
+    </style>
+</head>
+<body class="bg-[#f4f4f0] text-black min-h-screen flex flex-col selection:bg-brand-600 selection:text-white">
+
+    <!-- Navigation -->
+    <nav class="border-b-[3px] border-black bg-white sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex-shrink-0 flex items-center gap-2">
+                    <div class="w-10 h-10 bg-brand-600 brutal-border flex items-center justify-center transform -rotate-6">
+                        <i data-lucide="recycle" class="text-white w-6 h-6"></i>
+                    </div>
+                    <span class="font-display text-3xl tracking-wide uppercase mt-1">FoodCycle</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-8 font-bold uppercase tracking-wider text-sm">
+                    <a href="#" class="hover:text-brand-600 transition-colors">Mission</a>
+                    <a href="#" class="hover:text-brand-600 transition-colors">Find Food</a>
+                    <a href="#" class="hover:text-brand-600 transition-colors">Donate</a>
+                    <a href="#" class="text-brand-600 border-b-2 border-brand-600 pb-1">Impact</a>
+                    <a href="#" class="bg-black text-white px-6 py-3 brutal-shadow hover:bg-brand-600">Dashboard</a>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button class="p-2 brutal-border bg-brand-400">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="bg-brand-400 border-b-[3px] border-black py-12 relative overflow-hidden">
+        <div class="absolute inset-0 bg-grid opacity-20"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+                <div>
+                    <div class="inline-block bg-black text-white px-3 py-1 font-bold uppercase tracking-widest text-sm mb-4 transform -skew-x-12">
+                        Global Metrics
+                    </div>
+                    <h1 class="font-display text-6xl sm:text-8xl uppercase leading-none">
+                        Environmental<br>
+                        <span class="text-white drop-shadow-[4px_4px_0_rgba(0,0,0,1)]">Impact</span>
+                    </h1>
+                </div>
+                <div class="bg-white brutal-border p-4 max-w-xs">
+                    <p class="font-bold text-sm uppercase tracking-wider mb-2">Live Status</p>
+                    <div class="flex items-center gap-2 text-brand-600 font-bold">
+                        <span class="relative flex h-3 w-3">
+                          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
+                          <span class="relative inline-flex rounded-full h-3 w-3 bg-brand-600"></span>
+                        </span>
+                        Tracking 1,204 active rescues
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+        
+        <!-- Top Stats Row -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            <!-- Stat 1 -->
+            <div class="bg-white brutal-border p-6 relative group hover:-translate-y-2 transition-transform">
+                <div class="absolute -top-4 -right-4 w-12 h-12 bg-brand-400 brutal-border rounded-full flex items-center justify-center z-10">
+                    <i data-lucide="scale" class="w-6 h-6 text-black"></i>
+                </div>
+                <h3 class="font-bold uppercase tracking-wider text-gray-500 mb-2">Food Rescued</h3>
+                <div class="font-display text-6xl mb-1">14.2<span class="text-brand-600 text-4xl">k</span></div>
+                <p class="font-bold text-sm uppercase">Pounds this month</p>
+                <div class="mt-4 h-2 w-full bg-gray-200 brutal-border overflow-hidden">
+                    <div class="h-full bg-brand-600 w-[75%]"></div>
+                </div>
+                <p class="text-xs font-bold text-brand-600 mt-2 text-right">+12% vs last month</p>
+            </div>
+
+            <!-- Stat 2 -->
+            <div class="bg-black text-white brutal-border p-6 relative group hover:-translate-y-2 transition-transform">
+                <div class="absolute -top-4 -right-4 w-12 h-12 bg-white brutal-border rounded-full flex items-center justify-center z-10">
+                    <i data-lucide="users" class="w-6 h-6 text-black"></i>
+                </div>
+                <h3 class="font-bold uppercase tracking-wider text-gray-400 mb-2">Meals Provided</h3>
+                <div class="font-display text-6xl mb-1 text-brand-400">11,800</div>
+                <p class="font-bold text-sm uppercase">To local shelters</p>
+                <div class="mt-4 flex gap-1">
+                    <div class="h-8 w-8 bg-brand-600 brutal-border border-white"></div>
+                    <div class="h-8 w-8 bg-brand-600 brutal-border border-white"></div>
+                    <div class="h-8 w-8 bg-brand-600 brutal-border border-white"></div>
+                    <div class="h-8 w-8 bg-brand-600 brutal-border border-white"></div>
+                    <div class="h-8 w-8 bg-brand-600 brutal-border border-white opacity-50"></div>
+                </div>
+            </div>
+
+            <!-- Stat 3 -->
+            <div class="bg-white brutal-border p-6 relative group hover:-translate-y-2 transition-transform">
+                <div class="absolute -top-4 -right-4 w-12 h-12 bg-brand-400 brutal-border rounded-full flex items-center justify-center z-10">
+                    <i data-lucide="cloud-off" class="w-6 h-6 text-black"></i>
+                </div>
+                <h3 class="font-bold uppercase tracking-wider text-gray-500 mb-2">CO2 Prevented</h3>
+                <div class="font-display text-6xl mb-1">5.6<span class="text-brand-600 text-4xl">t</span></div>
+                <p class="font-bold text-sm uppercase">Tons of emissions</p>
+                
+                <!-- Mini Chart -->
+                <div class="mt-6 flex items-end gap-2 h-12">
+                    <div class="w-1/5 bg-black h-[40%] brutal-border"></div>
+                    <div class="w-1/5 bg-black h-[60%] brutal-border"></div>
+                    <div class="w-1/5 bg-black h-[50%] brutal-border"></div>
+                    <div class="w-1/5 bg-black h-[80%] brutal-border"></div>
+                    <div class="w-1/5 bg-brand-400 h-[100%] brutal-border"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- Leaderboard -->
+            <div class="lg:col-span-1 bg-white brutal-border flex flex-col">
+                <div class="bg-black text-white p-4 border-b-[3px] border-black flex justify-between items-center">
+                    <h2 class="font-display text-2xl uppercase tracking-wide">Top Rescuers</h2>
+                    <i data-lucide="trophy" class="w-6 h-6 text-brand-400"></i>
+                </div>
+                <div class="p-0 flex-grow">
+                    <!-- Item 1 -->
+                    <div class="flex items-center p-4 border-b-[3px] border-black hover:bg-brand-50 transition-colors">
+                        <div class="font-display text-3xl text-brand-600 w-10">01</div>
+                        <div class="w-12 h-12 bg-stripes brutal-border rounded-full mr-4 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" class="w-full h-full object-cover grayscale" alt="Bakery">
+                        </div>
+                        <div class="flex-grow">
+                            <div class="font-bold uppercase text-sm">Downtown Bakery</div>
+                            <div class="text-xs font-bold text-gray-500">420 lbs rescued</div>
+                        </div>
+                    </div>
+                    <!-- Item 2 -->
+                    <div class="flex items-center p-4 border-b-[3px] border-black hover:bg-brand-50 transition-colors">
+                        <div class="font-display text-3xl text-black w-10">02</div>
+                        <div class="w-12 h-12 bg-brand-400 brutal-border rounded-full mr-4 flex items-center justify-center font-bold">SM</div>
+                        <div class="flex-grow">
+                            <div class="font-bold uppercase text-sm">SuperMart East</div>
+                            <div class="text-xs font-bold text-gray-500">385 lbs rescued</div>
+                        </div>
+                    </div>
+                    <!-- Item 3 -->
+                    <div class="flex items-center p-4 border-b-[3px] border-black hover:bg-brand-50 transition-colors">
+                        <div class="font-display text-3xl text-black w-10">03</div>
+                        <div class="w-12 h-12 bg-black brutal-border rounded-full mr-4 flex items-center justify-center font-bold text-white">CF</div>
+                        <div class="flex-grow">
+                            <div class="font-bold uppercase text-sm">City Farms</div>
+                            <div class="text-xs font-bold text-gray-500">290 lbs rescued</div>
+                        </div>
+                    </div>
+                    <!-- Item 4 -->
+                    <div class="flex items-center p-4 hover:bg-brand-50 transition-colors">
+                        <div class="font-display text-3xl text-gray-400 w-10">04</div>
+                        <div class="w-12 h-12 bg-white brutal-border rounded-full mr-4 flex items-center justify-center font-bold">
+                            <i data-lucide="user" class="w-5 h-5"></i>
+                        </div>
+                        <div class="flex-grow">
+                            <div class="font-bold uppercase text-sm">Sarah J. (Volunteer)</div>
+                            <div class="text-xs font-bold text-gray-500">15 deliveries</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="#" class="block text-center bg-brand-400 border-t-[3px] border-black py-3 font-bold uppercase tracking-wider hover:bg-brand-500 transition-colors">
+                    View Full Leaderboard
+                </a>
+            </div>
+
+            <!-- Impact Map / Chart Area -->
+            <div class="lg:col-span-2 flex flex-col gap-8">
+                
+                <!-- Category Breakdown -->
+                <div class="bg-white brutal-border p-6">
+                    <h2 class="font-display text-3xl uppercase tracking-wide mb-6 border-b-[3px] border-black pb-2">Food Types Rescued</h2>
+                    
+                    <div class="space-y-6">
+                        <!-- Bar 1 -->
+                        <div>
+                            <div class="flex justify-between font-bold uppercase text-sm mb-2">
+                                <span>Produce & Veg</span>
+                                <span>45%</span>
+                            </div>
+                            <div class="h-6 w-full bg-[#f4f4f0] brutal-border">
+                                <div class="h-full bg-brand-600 w-[45%] border-r-[3px] border-black"></div>
+                            </div>
+                        </div>
+                        <!-- Bar 2 -->
+                        <div>
+                            <div class="flex justify-between font-bold uppercase text-sm mb-2">
+                                <span>Baked Goods</span>
+                                <span>30%</span>
+                            </div>
+                            <div class="h-6 w-full bg-[#f4f4f0] brutal-border">
+                                <div class="h-full bg-black w-[30%] border-r-[3px] border-black"></div>
+                            </div>
+                        </div>
+                        <!-- Bar 3 -->
+                        <div>
+                            <div class="flex justify-between font-bold uppercase text-sm mb-2">
+                                <span>Prepared Meals</span>
+                                <span>15%</span>
+                            </div>
+                            <div class="h-6 w-full bg-[#f4f4f0] brutal-border">
+                                <div class="h-full bg-brand-400 w-[15%] border-r-[3px] border-black"></div>
+                            </div>
+                        </div>
+                        <!-- Bar 4 -->
+                        <div>
+                            <div class="flex justify-between font-bold uppercase text-sm mb-2">
+                                <span>Dairy & Other</span>
+                                <span>10%</span>
+                            </div>
+                            <div class="h-6 w-full bg-[#f4f4f0] brutal-border">
+                                <div class="h-full bg-stripes w-[10%] border-r-[3px] border-black"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Call to Action Banner -->
+                <div class="bg-brand-600 text-white brutal-border p-8 relative overflow-hidden group">
+                    <div class="absolute -right-10 -bottom-10 opacity-20 transform rotate-12 group-hover:rotate-0 transition-transform duration-500">
+                        <i data-lucide="leaf" class="w-64 h-64 text-black"></i>
+                    </div>
+                    <div class="relative z-10">
+                        <h2 class="font-display text-4xl sm:text-5xl uppercase mb-4">Your Impact Matters</h2>
+                        <p class="font-medium text-lg max-w-md mb-8 border-l-[4px] border-black pl-4">
+                            Every pound of food rescued is a step towards zero hunger and zero waste in our community.
+                        </p>
+                        <div class="flex flex-wrap gap-4">
+                            <button class="bg-black text-white px-8 py-4 font-bold uppercase tracking-wider brutal-border hover:bg-white hover:text-black transition-colors">
+                                Share Report
+                            </button>
+                            <button class="bg-white text-black px-8 py-4 font-bold uppercase tracking-wider brutal-border hover:bg-brand-400 transition-colors">
+                                Donate Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <script>
+        lucide.createIcons();
+    </script>
+    <script src="/nav.js"></script>
+</body>
+</html>
