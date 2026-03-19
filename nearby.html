@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en" class="antialiased">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodCycle - Brutalist Community Food Rescue</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Anton', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            400: '#4ade80',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            900: '#14532d',
+                            950: '#052e16',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .brutal-border { border: 3px solid #000; }
+        .brutal-shadow { box-shadow: 4px 4px 0px #000; transition: all 0.2s ease; }
+        .brutal-shadow:active { box-shadow: 0px 0px 0px #000; transform: translate(4px, 4px); }
+        .bg-stripes {
+            background-image: repeating-linear-gradient(45deg, #000 0, #000 2px, transparent 2px, transparent 8px);
+        }
+        
+        /* Mobile specific scroll hiding */
+        .hide-scroll::-webkit-scrollbar { display: none; }
+        .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-[#f4f4f0] text-black min-h-screen flex flex-col selection:bg-brand-600 selection:text-white max-w-md mx-auto relative brutal-border border-x-[3px] sm:my-8 sm:h-[850px] sm:overflow-hidden">
+
+    <!-- Mobile Header -->
+    <header class="bg-white border-b-[3px] border-black p-4 sticky top-0 z-50 flex justify-between items-center">
+        <div class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-brand-600 brutal-border flex items-center justify-center transform -rotate-6">
+                <i data-lucide="recycle" class="text-white w-5 h-5"></i>
+            </div>
+            <span class="font-display text-2xl tracking-wide uppercase mt-1">FoodCycle</span>
+        </div>
+        <button class="w-10 h-10 bg-black text-white brutal-border flex items-center justify-center brutal-shadow">
+            <i data-lucide="menu" class="w-5 h-5"></i>
+        </button>
+    </header>
+
+    <!-- Map View Toggle -->
+    <div class="bg-brand-400 border-b-[3px] border-black p-3 flex justify-between items-center">
+        <div class="font-bold uppercase text-sm tracking-wider flex items-center gap-2">
+            <span class="w-2 h-2 bg-black rounded-full animate-pulse"></span>
+            12 Active Rescues
+        </div>
+        <button class="bg-white px-3 py-1 brutal-border font-bold text-xs uppercase flex items-center gap-1 brutal-shadow">
+            <i data-lucide="map" class="w-4 h-4"></i> Map
+        </button>
+    </div>
+
+    <!-- Filter Chips (Horizontal Scroll) -->
+    <div class="bg-white border-b-[3px] border-black p-3 overflow-x-auto hide-scroll whitespace-nowrap flex gap-2">
+        <button class="bg-black text-white px-4 py-1.5 brutal-border font-bold text-xs uppercase inline-block">All</button>
+        <button class="bg-[#f4f4f0] px-4 py-1.5 brutal-border font-bold text-xs uppercase inline-block hover:bg-brand-400">Produce</button>
+        <button class="bg-[#f4f4f0] px-4 py-1.5 brutal-border font-bold text-xs uppercase inline-block hover:bg-brand-400">Bakery</button>
+        <button class="bg-[#f4f4f0] px-4 py-1.5 brutal-border font-bold text-xs uppercase inline-block hover:bg-brand-400">Meals</button>
+        <button class="bg-[#f4f4f0] px-4 py-1.5 brutal-border font-bold text-xs uppercase inline-block hover:bg-brand-400">Dairy</button>
+    </div>
+
+    <!-- Main Content (Scrollable List) -->
+    <main class="flex-1 overflow-y-auto p-4 space-y-4 bg-[#f4f4f0] pb-24">
+        
+        <!-- Section Header -->
+        <h2 class="font-display text-3xl uppercase mb-2">Nearby <span class="text-brand-600">Now</span></h2>
+
+        <!-- Card 1 (Urgent) -->
+        <article class="bg-white brutal-border relative">
+            <!-- Urgent Badge -->
+            <div class="absolute -top-3 -right-3 bg-brand-400 brutal-border px-2 py-1 font-bold text-xs uppercase transform rotate-6 z-10">
+                0.5 mi
+            </div>
+            
+            <div class="p-4 border-b-[3px] border-black flex gap-3">
+                <div class="w-12 h-12 bg-black text-white brutal-border flex items-center justify-center flex-shrink-0">
+                    <i data-lucide="croissant" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <h3 class="font-display text-xl uppercase leading-none mb-1">Morning Pastries</h3>
+                    <p class="text-xs font-bold text-gray-500 uppercase">Local Bakery Co.</p>
+                </div>
+            </div>
+            
+            <div class="p-4 bg-[#f4f4f0]">
+                <p class="text-sm font-medium mb-3">2 boxes of assorted bagels and muffins. Best before end of day.</p>
+                <div class="flex items-center justify-between">
+                    <span class="bg-white border-2 border-black px-2 py-0.5 text-[10px] font-bold uppercase">~15 lbs</span>
+                    <span class="text-brand-600 font-bold text-xs uppercase flex items-center gap-1">
+                        <i data-lucide="clock" class="w-3 h-3"></i> 45m left
+                    </span>
+                </div>
+            </div>
+            
+            <button class="w-full bg-black text-white py-3 font-display text-xl uppercase tracking-wider hover:bg-brand-600 transition-colors">
+                Claim Batch
+            </button>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="bg-white brutal-border relative">
+            <div class="absolute -top-3 -right-3 bg-white brutal-border px-2 py-1 font-bold text-xs uppercase transform rotate-6 z-10">
+                1.2 mi
+            </div>
+            
+            <div class="p-4 border-b-[3px] border-black flex gap-3">
+                <div class="w-12 h-12 bg-brand-100 brutal-border flex items-center justify-center flex-shrink-0">
+                    <i data-lucide="carrot" class="w-6 h-6 text-brand-900"></i>
+                </div>
+                <div>
+                    <h3 class="font-display text-xl uppercase leading-none mb-1">Imperfect Produce</h3>
+                    <p class="text-xs font-bold text-gray-500 uppercase">City Supermarket</p>
+                </div>
+            </div>
+            
+            <div class="p-4 bg-[#f4f4f0]">
+                <p class="text-sm font-medium mb-3">Slightly bruised apples and overripe bananas. Great for baking.</p>
+                <div class="flex items-center justify-between">
+                    <span class="bg-white border-2 border-black px-2 py-0.5 text-[10px] font-bold uppercase">~20 lbs</span>
+                    <span class="text-gray-500 font-bold text-xs uppercase flex items-center gap-1">
+                        <i data-lucide="clock" class="w-3 h-3"></i> 2h left
+                    </span>
+                </div>
+            </div>
+            
+            <button class="w-full bg-white text-black border-t-[3px] border-black py-3 font-display text-xl uppercase tracking-wider hover:bg-brand-400 transition-colors">
+                Claim Batch
+            </button>
+        </article>
+
+        <!-- Banner Ad / CTA -->
+        <div class="bg-brand-600 text-white brutal-border p-4 relative overflow-hidden my-6">
+            <div class="absolute right-0 bottom-0 opacity-20 transform rotate-12 translate-x-4 translate-y-4">
+                <i data-lucide="truck" class="w-24 h-24 text-black"></i>
+            </div>
+            <h3 class="font-display text-2xl uppercase mb-2 relative z-10">Have Surplus?</h3>
+            <p class="text-sm font-medium mb-4 relative z-10">List your excess food in seconds and connect with local rescuers.</p>
+            <button class="bg-black text-white px-4 py-2 font-bold text-xs uppercase brutal-border relative z-10">
+                Create Listing
+            </button>
+        </div>
+
+        <!-- Card 3 -->
+        <article class="bg-white brutal-border relative">
+            <div class="absolute -top-3 -right-3 bg-white brutal-border px-2 py-1 font-bold text-xs uppercase transform rotate-6 z-10">
+                2.5 mi
+            </div>
+            
+            <div class="p-4 border-b-[3px] border-black flex gap-3">
+                <div class="w-12 h-12 bg-gray-100 brutal-border flex items-center justify-center flex-shrink-0 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1607006411021-b4a61c5e46cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" class="w-full h-full object-cover grayscale contrast-125" alt="Dairy">
+                </div>
+                <div>
+                    <h3 class="font-display text-xl uppercase leading-none mb-1">Excess Dairy</h3>
+                    <p class="text-xs font-bold text-gray-500 uppercase">Corner Bodega</p>
+                </div>
+            </div>
+            
+            <div class="p-4 bg-[#f4f4f0]">
+                <p class="text-sm font-medium mb-3">Milk and yogurt nearing sell-by date. Needs refrigeration ASAP.</p>
+                <div class="flex items-center justify-between">
+                    <span class="bg-white border-2 border-black px-2 py-0.5 text-[10px] font-bold uppercase">~10 lbs</span>
+                    <span class="text-gray-500 font-bold text-xs uppercase flex items-center gap-1">
+                        <i data-lucide="clock" class="w-3 h-3"></i> 4h left
+                    </span>
+                </div>
+            </div>
+            
+            <button class="w-full bg-white text-black border-t-[3px] border-black py-3 font-display text-xl uppercase tracking-wider hover:bg-brand-400 transition-colors">
+                Claim Batch
+            </button>
+        </article>
+
+    </main>
+
+    <!-- Mobile Bottom Navigation -->
+    <nav class="bg-white border-t-[3px] border-black fixed bottom-0 w-full max-w-md z-50 flex justify-around p-2 pb-safe">
+        <a href="#" class="flex flex-col items-center p-2 text-brand-600">
+            <i data-lucide="list" class="w-6 h-6 mb-1"></i>
+            <span class="text-[10px] font-bold uppercase">Feed</span>
+        </a>
+        <a href="#" class="flex flex-col items-center p-2 text-gray-400 hover:text-black">
+            <i data-lucide="map" class="w-6 h-6 mb-1"></i>
+            <span class="text-[10px] font-bold uppercase">Map</span>
+        </a>
+        <div class="relative -top-6">
+            <button class="w-14 h-14 bg-brand-400 brutal-border rounded-full flex items-center justify-center brutal-shadow">
+                <i data-lucide="plus" class="w-6 h-6 text-black"></i>
+            </button>
+        </div>
+        <a href="#" class="flex flex-col items-center p-2 text-gray-400 hover:text-black">
+            <i data-lucide="bar-chart-2" class="w-6 h-6 mb-1"></i>
+            <span class="text-[10px] font-bold uppercase">Impact</span>
+        </a>
+        <a href="#" class="flex flex-col items-center p-2 text-gray-400 hover:text-black">
+            <i data-lucide="user" class="w-6 h-6 mb-1"></i>
+            <span class="text-[10px] font-bold uppercase">Profile</span>
+        </a>
+    </nav>
+
+    <script>
+        lucide.createIcons();
+    </script>
+    <script src="/nav.js"></script>
+</body>
+</html>
