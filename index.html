@@ -1,239 +1,107 @@
 <!DOCTYPE html>
-<html lang="en" class="antialiased">
-
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FoodCycle — Editorial Brutalist Food Rescue</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;900&display=swap"
-        rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        display: ['Anton', 'sans-serif'],
-                    },
-                    colors: {
-                        brand: {
-                            50: '#f0fdf4',
-                            100: '#dcfce7',
-                            400: '#4ade80',
-                            500: '#22c55e',
-                            600: '#16a34a',
-                            900: '#14532d',
-                            950: '#052e16',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        /* Brutalist Utilities */
-        .brutal-border {
-            border: 3px solid #000;
-        }
-
-        .brutal-shadow {
-            box-shadow: 6px 6px 0px #000;
-            transition: all 0.2s ease;
-        }
-
-        .brutal-shadow:hover {
-            box-shadow: 2px 2px 0px #000;
-            transform: translate(4px, 4px);
-        }
-
-        .brutal-shadow-green {
-            box-shadow: 6px 6px 0px #16a34a;
-            transition: all 0.2s ease;
-        }
-
-        .brutal-shadow-green:hover {
-            box-shadow: 2px 2px 0px #16a34a;
-            transform: translate(4px, 4px);
-        }
-
-        .marquee-container {
-            overflow: hidden;
-            white-space: nowrap;
-            border-top: 3px solid #000;
-            border-bottom: 3px solid #000;
-            background: #16a34a;
-            color: #fff;
-            padding: 0.5rem 0;
-        }
-
-        .marquee-content {
-            display: inline-block;
-            animation: marquee 20s linear infinite;
-            font-family: 'Anton', sans-serif;
-            font-size: 1.5rem;
-            letter-spacing: 0.05em;
-        }
-
-        @keyframes marquee {
-            0% {
-                transform: translateX(0);
-            }
-
-            100% {
-                transform: translateX(-50%);
-            }
-        }
-
-        /* Diagonal stripes for empty states/accents */
-        .bg-stripes {
-            background-image: repeating-linear-gradient(45deg,
-                    #000 0,
-                    #000 2px,
-                    transparent 2px,
-                    transparent 8px);
-        }
-    </style>
+    <title>FoodCycle — Community Food Rescue</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-
-<body class="bg-[#f4f4f0] text-black min-h-screen flex flex-col selection:bg-brand-600 selection:text-white">
+<body class="bg-page min-h-screen flex flex-col">
 
     <!-- Navigation -->
-    <nav class="border-b-[3px] border-black bg-white sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-20 items-center">
-                <!-- Logo -->
-                <div class="flex-shrink-0 flex items-center gap-2">
-                    <div
-                        class="w-10 h-10 bg-brand-600 brutal-border flex items-center justify-center transform -rotate-6">
-                        <i data-lucide="recycle" class="text-white w-6 h-6"></i>
-                    </div>
-                    <span class="font-display text-3xl tracking-wide uppercase mt-1">FoodCycle</span>
+    <nav class="site-nav">
+        <div class="nav-inner">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i data-icon="recycle" class="icon icon-lg" style="color:#fff"></i>
                 </div>
-
-                <!-- Desktop Menu -->
-                <div class="hidden md:flex items-center space-x-8 font-bold uppercase tracking-wider text-sm">
-                    <a href="#" class="hover:text-brand-600 transition-colors">Mission</a>
-                    <a href="#" class="hover:text-brand-600 transition-colors">Find Food</a>
-                    <a href="#" class="hover:text-brand-600 transition-colors">Donate</a>
-                    <a href="#" class="hover:text-brand-600 transition-colors">Impact</a>
-                    <a href="#" class="bg-black text-white px-6 py-3 brutal-shadow hover:bg-brand-600">Join Movement</a>
-                </div>
-
-                <!-- Mobile menu button -->
-                <div class="md:hidden flex items-center">
-                    <button class="p-2 brutal-border bg-brand-400">
-                        <i data-lucide="menu" class="w-6 h-6"></i>
-                    </button>
-                </div>
+                <span class="logo-text">FoodCycle</span>
             </div>
+
+            <div class="nav-links">
+                <a href="#">Mission</a>
+                <a href="#">Find Food</a>
+                <a href="#">Donate</a>
+                <a href="impact.html">Impact</a>
+                <a href="#" class="btn-nav">Join Movement</a>
+            </div>
+
+            <button class="mobile-menu-btn">
+                <i data-icon="menu" class="icon icon-lg"></i>
+            </button>
         </div>
     </nav>
 
     <!-- Marquee -->
     <div class="marquee-container">
         <div class="marquee-content">
-            RESCUE FOOD. REDUCE WASTE. FEED LIVES. • ZERO HUNGER • RESCUE FOOD. REDUCE WASTE. FEED LIVES. • ZERO HUNGER
-            • RESCUE FOOD. REDUCE WASTE. FEED LIVES. • ZERO HUNGER •
+            RESCUE FOOD. REDUCE WASTE. FEED LIVES. &bull; ZERO HUNGER &bull; RESCUE FOOD. REDUCE WASTE. FEED LIVES. &bull; ZERO HUNGER &bull; RESCUE FOOD. REDUCE WASTE. FEED LIVES. &bull; ZERO HUNGER &bull;
         </div>
     </div>
 
     <!-- Hero Section -->
     <main class="flex-grow">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-24">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div class="container" style="padding-top:3rem;padding-bottom:3rem">
+            <div class="grid grid-cols-1 lg-grid-cols-12 gap-8" style="align-items:center">
 
                 <!-- Hero Text -->
-                <div class="lg:col-span-7 space-y-8 relative z-10">
-                    <div
-                        class="inline-block bg-brand-400 brutal-border px-4 py-1 font-bold uppercase tracking-widest text-sm transform -skew-x-12">
-                        Community Action
-                    </div>
+                <div style="grid-column:span 7" class="lg-col-span-7">
+                    <div class="tag-skew mb-4">Community Action</div>
 
-                    <h1 class="font-display text-7xl sm:text-8xl lg:text-[140px] leading-[0.85] uppercase">
+                    <h1 class="hero-text-giant mb-4">
                         Stop <br>
-                        <span class="text-brand-600 relative inline-block">
-                            Wasting
-                            <!-- Decorative underline -->
-                            <svg class="absolute w-full h-6 -bottom-2 left-0 text-black" viewBox="0 0 100 20"
-                                preserveAspectRatio="none">
-                                <path d="M0 10 Q 50 20 100 10" stroke="currentColor" stroke-width="4" fill="none" />
-                            </svg>
-                        </span><br>
+                        <span class="text-brand-600">Wasting</span><br>
                         Good Food.
                     </h1>
 
-                    <p class="text-xl sm:text-2xl font-medium max-w-2xl border-l-[6px] border-brand-600 pl-6 py-2">
-                        Connect surplus food from local businesses directly to community members and shelters in
-                        real-time.
+                    <p class="text-xl font-medium hero-accent-line mb-8" style="max-width:42rem">
+                        Connect surplus food from local businesses directly to community members and shelters in real-time.
                     </p>
 
-                    <div class="flex flex-col sm:flex-row gap-6 pt-4">
-                        <a href="#"
-                            class="bg-brand-600 text-white text-center font-display text-2xl uppercase px-8 py-5 brutal-shadow">
-                            I Need Food
-                        </a>
-                        <a href="#"
-                            class="bg-white text-black text-center font-display text-2xl uppercase px-8 py-5 brutal-border brutal-shadow-green">
-                            I Have Surplus
-                        </a>
+                    <div class="flex flex-col gap-6 sm-flex-row">
+                        <a href="nearby.html" class="btn-primary">I Need Food</a>
+                        <a href="new-listing.html" class="btn-secondary">I Have Surplus</a>
                     </div>
 
                     <!-- Quick Stats -->
-                    <div class="grid grid-cols-3 gap-4 pt-12 border-t-[3px] border-black mt-12">
+                    <div class="hero-stats">
                         <div>
-                            <div class="font-display text-4xl sm:text-5xl">2.4<span class="text-brand-600">M</span>
-                            </div>
-                            <div class="font-bold uppercase text-xs sm:text-sm tracking-wider mt-1">Meals Rescued</div>
+                            <div class="font-display text-4xl sm-text-5xl">2.4<span class="text-brand-600">M</span></div>
+                            <div class="font-bold uppercase text-xs tracking-wider mt-1">Meals Rescued</div>
                         </div>
                         <div>
-                            <div class="font-display text-4xl sm:text-5xl">850<span class="text-brand-600">+</span>
-                            </div>
-                            <div class="font-bold uppercase text-xs sm:text-sm tracking-wider mt-1">Active Donors</div>
+                            <div class="font-display text-4xl sm-text-5xl">850<span class="text-brand-600">+</span></div>
+                            <div class="font-bold uppercase text-xs tracking-wider mt-1">Active Donors</div>
                         </div>
                         <div>
-                            <div class="font-display text-4xl sm:text-5xl">12<span class="text-brand-600">K</span></div>
-                            <div class="font-bold uppercase text-xs sm:text-sm tracking-wider mt-1">Volunteers</div>
+                            <div class="font-display text-4xl sm-text-5xl">12<span class="text-brand-600">K</span></div>
+                            <div class="font-bold uppercase text-xs tracking-wider mt-1">Volunteers</div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Hero Image/Graphic -->
-                <div class="lg:col-span-5 relative">
-                    <!-- Decorative background box -->
-                    <div class="absolute inset-0 bg-brand-400 brutal-border transform translate-x-6 translate-y-6">
-                    </div>
-
-                    <!-- Main Image Container -->
-                    <div class="relative bg-white brutal-border p-4 z-10">
-                        <div class="aspect-[4/5] bg-stripes brutal-border relative overflow-hidden group">
-                            <!-- Replace with actual image -->
-                            <img src="https://images.unsplash.com/photo-1593113565214-80afcb4a4771?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                                alt="Volunteers sorting fresh produce"
-                                class="absolute inset-0 w-full h-full object-cover filter grayscale contrast-125 group-hover:grayscale-0 transition-all duration-500">
+                <!-- Hero Image -->
+                <div style="grid-column:span 5" class="lg-col-span-5 relative">
+                    <div class="hero-image-bg"></div>
+                    <div class="hero-image-frame">
+                        <div class="img-placeholder-stripes brutal-border" style="aspect-ratio:4/5;position:relative">
+                            <div style="position:absolute;inset:0;background:linear-gradient(135deg,#a8d5a2 0%,#6ab864 50%,#3d8b37 100%);opacity:0.4"></div>
+                            <i data-icon="recycle" class="icon icon-huge" style="color:rgba(0,0,0,0.15);position:relative;z-index:1"></i>
 
                             <!-- Overlay Badge -->
-                            <div
-                                class="absolute top-4 right-4 bg-black text-white p-4 brutal-border transform rotate-12 group-hover:rotate-0 transition-transform">
+                            <div style="position:absolute;top:1rem;right:1rem;background:#000;color:#fff;padding:1rem;border:3px solid #000;transform:rotate(12deg);z-index:10">
                                 <div class="font-display text-3xl text-center leading-none">LIVE</div>
-                                <div class="font-bold text-xs uppercase tracking-widest text-brand-400 mt-1">Rescue Map
-                                </div>
+                                <div class="font-bold text-xs uppercase tracking-widest text-brand-400 mt-1">Rescue Map</div>
                             </div>
                         </div>
 
                         <!-- Caption -->
-                        <div class="mt-4 flex items-start justify-between">
+                        <div class="flex items-start justify-between mt-4">
                             <div>
                                 <h3 class="font-bold uppercase text-lg">Current Batch: #8842</h3>
                                 <p class="text-sm font-medium text-gray-600">Fresh produce from Downtown Market</p>
                             </div>
-                            <span
-                                class="bg-brand-100 text-brand-900 border-2 border-brand-900 px-2 py-1 text-xs font-bold uppercase">
-                                45 mins left
-                            </span>
+                            <span class="badge-brand" style="padding:0.25rem 0.5rem;white-space:nowrap">45 mins left</span>
                         </div>
                     </div>
                 </div>
@@ -243,27 +111,22 @@
     </main>
 
     <!-- Live Feed Teaser -->
-    <section class="border-t-[3px] border-black bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-            <div class="flex justify-between items-end mb-10">
-                <h2 class="font-display text-5xl sm:text-6xl uppercase">Urgent <span
-                        class="text-brand-600">Rescues</span></h2>
-                <a href="#"
-                    class="hidden sm:flex items-center gap-2 font-bold uppercase tracking-wider hover:text-brand-600">
-                    View All <i data-lucide="arrow-right" class="w-5 h-5"></i>
+    <section class="brutal-border-t bg-white">
+        <div class="container py-16">
+            <div class="flex justify-between items-end mb-8">
+                <h2 class="font-display text-5xl sm-text-6xl">Urgent <span class="text-brand-600">Rescues</span></h2>
+                <a href="feed.html" class="sm-flex items-center gap-2 font-bold uppercase tracking-wider hidden" style="display:none">
+                    View All <i data-icon="arrow-right" class="icon icon-md"></i>
                 </a>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 md-grid-cols-3 gap-8">
                 <!-- Card 1 -->
-                <div class="bg-[#f4f4f0] brutal-border p-6 relative group">
-                    <div
-                        class="absolute -top-4 -right-4 bg-brand-400 brutal-border px-3 py-1 font-bold text-sm transform rotate-6 z-10">
-                        1.2 mi
-                    </div>
+                <div class="card p-6 relative" style="background:var(--bg)">
+                    <div class="nearby-distance bg-brand-400">1.2 mi</div>
                     <div class="flex items-center gap-3 mb-4">
-                        <div class="w-12 h-12 bg-black rounded-full flex items-center justify-center text-white">
-                            <i data-lucide="croissant" class="w-6 h-6"></i>
+                        <div style="width:3rem;height:3rem;background:#000;border-radius:9999px;display:flex;align-items:center;justify-content:center;color:#fff">
+                            <i data-icon="croissant" class="icon icon-lg"></i>
                         </div>
                         <div>
                             <div class="font-bold uppercase">Morning Pastries</div>
@@ -271,43 +134,35 @@
                         </div>
                     </div>
                     <p class="font-medium mb-6">2 boxes of assorted bagels and muffins. Best before end of day.</p>
-                    <button
-                        class="w-full bg-white brutal-border py-3 font-bold uppercase tracking-wider group-hover:bg-black group-hover:text-white transition-colors">
+                    <button class="w-full brutal-border py-3 font-bold uppercase tracking-wider bg-white transition-colors" onmouseover="this.style.background='#000';this.style.color='#fff'" onmouseout="this.style.background='#fff';this.style.color='#000'">
                         Claim Batch
                     </button>
                 </div>
 
                 <!-- Card 2 -->
-                <div class="bg-[#f4f4f0] brutal-border p-6 relative group">
-                    <div
-                        class="absolute -top-4 -right-4 bg-brand-400 brutal-border px-3 py-1 font-bold text-sm transform rotate-6 z-10">
-                        0.8 mi
-                    </div>
+                <div class="card p-6 relative" style="background:var(--bg)">
+                    <div class="nearby-distance bg-brand-400">0.8 mi</div>
                     <div class="flex items-center gap-3 mb-4">
-                        <div class="w-12 h-12 bg-black rounded-full flex items-center justify-center text-white">
-                            <i data-lucide="carrot" class="w-6 h-6"></i>
+                        <div style="width:3rem;height:3rem;background:#000;border-radius:9999px;display:flex;align-items:center;justify-content:center;color:#fff">
+                            <i data-icon="carrot" class="icon icon-lg"></i>
                         </div>
                         <div>
                             <div class="font-bold uppercase">Imperfect Produce</div>
                             <div class="text-sm font-medium text-gray-600">City Supermarket</div>
                         </div>
                     </div>
-                    <p class="font-medium mb-6">15 lbs of slightly bruised apples and overripe bananas. Great for
-                        baking.</p>
-                    <button
-                        class="w-full bg-white brutal-border py-3 font-bold uppercase tracking-wider group-hover:bg-black group-hover:text-white transition-colors">
+                    <p class="font-medium mb-6">15 lbs of slightly bruised apples and overripe bananas. Great for baking.</p>
+                    <button class="w-full brutal-border py-3 font-bold uppercase tracking-wider bg-white transition-colors" onmouseover="this.style.background='#000';this.style.color='#fff'" onmouseout="this.style.background='#fff';this.style.color='#000'">
                         Claim Batch
                     </button>
                 </div>
 
-                <!-- Card 3 -->
-                <div
-                    class="bg-black text-white brutal-border p-6 flex flex-col justify-center items-center text-center">
-                    <i data-lucide="map" class="w-16 h-16 text-brand-400 mb-4"></i>
-                    <h3 class="font-display text-3xl uppercase mb-2">Open Map</h3>
-                    <p class="font-medium text-gray-400 mb-6">See 24 more active rescues in your area right now.</p>
-                    <button
-                        class="bg-brand-600 text-white brutal-border border-white py-3 px-8 font-bold uppercase tracking-wider hover:bg-white hover:text-black transition-colors">
+                <!-- Card 3: CTA -->
+                <div class="card p-6 flex flex-col justify-center items-center text-center" style="background:#000;color:#fff">
+                    <i data-icon="map" class="icon icon-hero text-brand-400 mb-4"></i>
+                    <h3 class="font-display text-3xl mb-2">Open Map</h3>
+                    <p class="font-medium mb-6" style="color:var(--gray-400)">See 24 more active rescues in your area right now.</p>
+                    <button class="brutal-border py-3 px-8 font-bold uppercase tracking-wider transition-colors" style="background:var(--brand-600);color:#fff;border-color:#fff" onmouseover="this.style.background='#fff';this.style.color='#000'" onmouseout="this.style.background='var(--brand-600)';this.style.color='#fff'">
                         Launch Radar
                     </button>
                 </div>
@@ -316,26 +171,21 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-black text-white border-t-[3px] border-brand-600">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
-                <div class="flex items-center gap-2">
-                    <i data-lucide="recycle" class="text-brand-400 w-8 h-8"></i>
-                    <span class="font-display text-2xl tracking-wide uppercase mt-1">FoodCycle</span>
-                </div>
-                <div class="flex gap-6 font-bold uppercase text-sm tracking-wider">
-                    <a href="#" class="hover:text-brand-400">About</a>
-                    <a href="#" class="hover:text-brand-400">Guidelines</a>
-                    <a href="#" class="hover:text-brand-400">Contact</a>
-                </div>
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="flex items-center gap-2">
+                <i data-icon="recycle" class="icon icon-xl text-brand-400"></i>
+                <span class="font-display text-2xl tracking-wide mt-1">FoodCycle</span>
+            </div>
+            <div class="footer-links">
+                <a href="#">About</a>
+                <a href="#">Guidelines</a>
+                <a href="feedback.html">Contact</a>
             </div>
         </div>
     </footer>
 
-    <script>
-        lucide.createIcons();
-    </script>
-    <script src="/nav.js"></script>
+    <script src="icons.js"></script>
+    <script src="nav.js"></script>
 </body>
-
 </html>

@@ -1,104 +1,62 @@
 <!DOCTYPE html>
-<html lang="en" class="antialiased">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FoodCycle — Share Surplus Food</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        display: ['Anton', 'sans-serif'],
-                    },
-                    colors: {
-                        brand: {
-                            50: '#f0fdf4',
-                            100: '#dcfce7',
-                            400: '#4ade80',
-                            500: '#22c55e',
-                            600: '#16a34a',
-                            900: '#14532d',
-                            950: '#052e16',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        .brutal-border { border: 3px solid #000; }
-        .brutal-shadow { box-shadow: 6px 6px 0px #000; transition: all 0.2s ease; }
-        .brutal-shadow:hover { box-shadow: 2px 2px 0px #000; transform: translate(4px, 4px); }
-        .brutal-shadow-green { box-shadow: 6px 6px 0px #16a34a; transition: all 0.2s ease; }
-        .brutal-shadow-green:hover { box-shadow: 2px 2px 0px #16a34a; transform: translate(4px, 4px); }
-        .bg-stripes {
-            background-image: repeating-linear-gradient(45deg, #000 0, #000 2px, transparent 2px, transparent 8px);
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body class="bg-[#f4f4f0] text-black min-h-screen flex flex-col selection:bg-brand-600 selection:text-white">
+<body class="bg-page min-h-screen flex flex-col">
 
     <!-- Navigation -->
-    <nav class="border-b-[3px] border-black bg-white sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-20 items-center">
-                <div class="flex items-center gap-4">
-                    <a href="#" class="p-2 brutal-border hover:bg-brand-400 transition-colors">
-                        <i data-lucide="x" class="w-6 h-6"></i>
-                    </a>
-                    <div class="hidden sm:flex items-center gap-2">
-                        <span class="font-display text-2xl tracking-wide uppercase mt-1">Cancel</span>
-                    </div>
+    <nav class="site-nav">
+        <div class="nav-inner">
+            <div class="flex items-center gap-4">
+                <a href="feed.html" class="p-2 brutal-border transition-colors" onmouseover="this.style.background='var(--brand-400)'" onmouseout="this.style.background='transparent'">
+                    <i data-icon="x" class="icon icon-lg"></i>
+                </a>
+                <div class="sm-flex hidden items-center gap-2">
+                    <span class="font-display text-2xl tracking-wide mt-1">Cancel</span>
                 </div>
-                
-                <div class="flex items-center gap-3">
-                    <div class="bg-black text-white px-4 py-2 brutal-border font-display text-xl uppercase tracking-wider flex items-center gap-2">
-                        Step 1 of 3
-                    </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <div class="bg-black text-white px-4 py-2 brutal-border font-display text-xl uppercase tracking-wider flex items-center gap-2">
+                    Step 1 of 3
                 </div>
             </div>
         </div>
     </nav>
 
-    <main class="flex-grow max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
-        
+    <main class="flex-grow container py-12" style="max-width:48rem">
+
         <div class="mb-12">
-            <div class="inline-block bg-brand-400 brutal-border px-4 py-1 font-bold uppercase tracking-widest text-sm transform -skew-x-12 mb-4">
-                New Listing
-            </div>
-            <h1 class="font-display text-6xl sm:text-7xl uppercase leading-none mb-4">
+            <div class="tag-skew mb-4">New Listing</div>
+            <h1 class="font-display text-6xl sm-text-7xl leading-none mb-4">
                 Share <span class="text-brand-600">Surplus</span><br>Food
             </h1>
-            <p class="text-xl font-medium border-l-[4px] border-black pl-4">
+            <p class="text-xl font-medium border-l-brand-thick">
                 List your excess food to connect with local rescuers. Be as descriptive as possible.
             </p>
         </div>
 
         <form class="space-y-8">
-            
+
             <!-- Basic Info Section -->
-            <div class="bg-white brutal-border p-6 sm:p-8 relative">
-                <div class="absolute -top-4 -right-4 bg-black text-white brutal-border px-4 py-2 font-display text-2xl uppercase transform rotate-6 z-10">
+            <div class="bg-white brutal-border p-6 sm-p-8 relative">
+                <div class="absolute z-10" style="top:-1rem;right:-1rem;background:#000;color:#fff;border:3px solid #000;padding:0.5rem 1rem;font-family:var(--font-display);font-size:1.5rem;text-transform:uppercase;transform:rotate(6deg)">
                     01. Basics
                 </div>
-                
+
                 <div class="space-y-6">
                     <div>
                         <label class="font-bold uppercase text-sm text-gray-500 block mb-2">Listing Title</label>
-                        <input type="text" placeholder="e.g., Morning Pastries Batch" class="w-full brutal-border p-4 font-bold text-lg focus:ring-0 focus:border-brand-600 bg-[#f4f4f0]">
+                        <input type="text" placeholder="e.g., Morning Pastries Batch" class="input-brutal">
                     </div>
-                    
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+
+                    <div class="grid grid-cols-1 sm-grid-cols-2 gap-6">
                         <div>
                             <label class="font-bold uppercase text-sm text-gray-500 block mb-2">Food Category</label>
-                            <select class="w-full brutal-border p-4 font-bold text-lg focus:ring-0 focus:border-brand-600 bg-[#f4f4f0]">
+                            <select class="select-brutal">
                                 <option>Select Category...</option>
                                 <option>Produce & Veg</option>
                                 <option>Baked Goods</option>
@@ -109,56 +67,46 @@
                         </div>
                         <div>
                             <label class="font-bold uppercase text-sm text-gray-500 block mb-2">Estimated Quantity (lbs)</label>
-                            <input type="number" placeholder="e.g., 15" class="w-full brutal-border p-4 font-bold text-lg focus:ring-0 focus:border-brand-600 bg-[#f4f4f0]">
+                            <input type="number" placeholder="e.g., 15" class="input-brutal">
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Details Section -->
-            <div class="bg-white brutal-border p-6 sm:p-8 relative">
-                <div class="absolute -top-4 -right-4 bg-black text-white brutal-border px-4 py-2 font-display text-2xl uppercase transform rotate-6 z-10">
+            <div class="bg-white brutal-border p-6 sm-p-8 relative">
+                <div class="absolute z-10" style="top:-1rem;right:-1rem;background:#000;color:#fff;border:3px solid #000;padding:0.5rem 1rem;font-family:var(--font-display);font-size:1.5rem;text-transform:uppercase;transform:rotate(6deg)">
                     02. Details
                 </div>
-                
+
                 <div class="space-y-6">
                     <div>
                         <label class="font-bold uppercase text-sm text-gray-500 block mb-2">Description & Contents</label>
-                        <textarea rows="4" placeholder="Describe what's included, condition, and any packaging details..." class="w-full brutal-border p-4 font-medium text-lg focus:ring-0 focus:border-brand-600 bg-[#f4f4f0]"></textarea>
+                        <textarea rows="4" placeholder="Describe what's included, condition, and any packaging details..." class="textarea-brutal"></textarea>
                     </div>
-                    
+
                     <div>
                         <label class="font-bold uppercase text-sm text-gray-500 block mb-4">Allergen Warnings (Select all that apply)</label>
-                        <div class="flex flex-wrap gap-3">
+                        <div class="flex flex-wrap gap-3" id="allergens">
                             <label class="cursor-pointer">
-                                <input type="checkbox" class="peer sr-only">
-                                <div class="bg-[#f4f4f0] brutal-border px-4 py-2 font-bold uppercase text-sm peer-checked:bg-brand-400 peer-checked:text-black transition-colors">
-                                    Gluten
-                                </div>
+                                <input type="checkbox" class="sr-only" onchange="this.nextElementSibling.style.background=this.checked?'var(--brand-400)':'var(--bg)'">
+                                <div class="brutal-border px-4 py-2 font-bold uppercase text-sm transition-colors" style="background:var(--bg)">Gluten</div>
                             </label>
                             <label class="cursor-pointer">
-                                <input type="checkbox" class="peer sr-only">
-                                <div class="bg-[#f4f4f0] brutal-border px-4 py-2 font-bold uppercase text-sm peer-checked:bg-brand-400 peer-checked:text-black transition-colors">
-                                    Dairy
-                                </div>
+                                <input type="checkbox" class="sr-only" onchange="this.nextElementSibling.style.background=this.checked?'var(--brand-400)':'var(--bg)'">
+                                <div class="brutal-border px-4 py-2 font-bold uppercase text-sm transition-colors" style="background:var(--bg)">Dairy</div>
                             </label>
                             <label class="cursor-pointer">
-                                <input type="checkbox" class="peer sr-only">
-                                <div class="bg-[#f4f4f0] brutal-border px-4 py-2 font-bold uppercase text-sm peer-checked:bg-brand-400 peer-checked:text-black transition-colors">
-                                    Nuts
-                                </div>
+                                <input type="checkbox" class="sr-only" onchange="this.nextElementSibling.style.background=this.checked?'var(--brand-400)':'var(--bg)'">
+                                <div class="brutal-border px-4 py-2 font-bold uppercase text-sm transition-colors" style="background:var(--bg)">Nuts</div>
                             </label>
                             <label class="cursor-pointer">
-                                <input type="checkbox" class="peer sr-only">
-                                <div class="bg-[#f4f4f0] brutal-border px-4 py-2 font-bold uppercase text-sm peer-checked:bg-brand-400 peer-checked:text-black transition-colors">
-                                    Meat
-                                </div>
+                                <input type="checkbox" class="sr-only" onchange="this.nextElementSibling.style.background=this.checked?'var(--brand-400)':'var(--bg)'">
+                                <div class="brutal-border px-4 py-2 font-bold uppercase text-sm transition-colors" style="background:var(--bg)">Meat</div>
                             </label>
                             <label class="cursor-pointer">
-                                <input type="checkbox" class="peer sr-only">
-                                <div class="bg-[#f4f4f0] brutal-border px-4 py-2 font-bold uppercase text-sm peer-checked:bg-black peer-checked:text-white transition-colors">
-                                    None
-                                </div>
+                                <input type="checkbox" class="sr-only" onchange="this.nextElementSibling.style.background=this.checked?'#000':'var(--bg)';this.nextElementSibling.style.color=this.checked?'#fff':'#000'">
+                                <div class="brutal-border px-4 py-2 font-bold uppercase text-sm transition-colors" style="background:var(--bg)">None</div>
                             </label>
                         </div>
                     </div>
@@ -166,20 +114,20 @@
             </div>
 
             <!-- Logistics Section -->
-            <div class="bg-white brutal-border p-6 sm:p-8 relative">
-                <div class="absolute -top-4 -right-4 bg-black text-white brutal-border px-4 py-2 font-display text-2xl uppercase transform rotate-6 z-10">
+            <div class="bg-white brutal-border p-6 sm-p-8 relative">
+                <div class="absolute z-10" style="top:-1rem;right:-1rem;background:#000;color:#fff;border:3px solid #000;padding:0.5rem 1rem;font-family:var(--font-display);font-size:1.5rem;text-transform:uppercase;transform:rotate(6deg)">
                     03. Logistics
                 </div>
-                
+
                 <div class="space-y-6">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div class="grid grid-cols-1 sm-grid-cols-2 gap-6">
                         <div>
                             <label class="font-bold uppercase text-sm text-gray-500 block mb-2">Available Until</label>
-                            <input type="time" class="w-full brutal-border p-4 font-bold text-lg focus:ring-0 focus:border-brand-600 bg-[#f4f4f0]">
+                            <input type="time" class="input-brutal">
                         </div>
                         <div>
                             <label class="font-bold uppercase text-sm text-gray-500 block mb-2">Pickup Location</label>
-                            <select class="w-full brutal-border p-4 font-bold text-lg focus:ring-0 focus:border-brand-600 bg-[#f4f4f0]">
+                            <select class="select-brutal">
                                 <option>Main Storefront</option>
                                 <option>Back Alley Door</option>
                                 <option>Loading Dock B</option>
@@ -187,20 +135,20 @@
                             </select>
                         </div>
                     </div>
-                    
+
                     <div>
                         <label class="font-bold uppercase text-sm text-gray-500 block mb-2">Special Pickup Instructions</label>
-                        <textarea rows="2" placeholder="e.g., Ring the bell, bring your own bags..." class="w-full brutal-border p-4 font-medium text-lg focus:ring-0 focus:border-brand-600 bg-[#f4f4f0]"></textarea>
+                        <textarea rows="2" placeholder="e.g., Ring the bell, bring your own bags..." class="textarea-brutal"></textarea>
                     </div>
                 </div>
             </div>
 
             <!-- Submit Area -->
-            <div class="pt-8 flex flex-col sm:flex-row gap-6 items-center justify-between">
-                <p class="text-sm font-bold uppercase text-gray-500 text-center sm:text-left">
-                    By posting, you agree to our <a href="#" class="underline text-black hover:text-brand-600">Food Safety Guidelines</a>.
+            <div class="pt-8 flex flex-col gap-6 sm-flex-row sm-items-center" style="justify-content:space-between">
+                <p class="text-sm font-bold uppercase text-gray-500 text-center">
+                    By posting, you agree to our <a href="#" class="underline" style="color:#000" onmouseover="this.style.color='var(--brand-600)'" onmouseout="this.style.color='#000'">Food Safety Guidelines</a>.
                 </p>
-                <button type="button" class="w-full sm:w-auto bg-brand-600 text-white px-12 py-5 font-display text-3xl uppercase tracking-wider brutal-shadow hover:bg-black transition-colors">
+                <button type="button" class="btn-primary brutal-shadow" style="width:auto;padding:1.25rem 3rem" onmouseover="this.style.background='#000'" onmouseout="this.style.background='var(--brand-600)'">
                     Post Listing
                 </button>
             </div>
@@ -208,9 +156,7 @@
         </form>
     </main>
 
-    <script>
-        lucide.createIcons();
-    </script>
-    <script src="/nav.js"></script>
+    <script src="icons.js"></script>
+    <script src="nav.js"></script>
 </body>
 </html>
