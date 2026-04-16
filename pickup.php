@@ -1,3 +1,4 @@
+<?php require_once 'init.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +13,7 @@
     <nav class="site-nav">
         <div class="nav-inner">
             <div class="flex items-center gap-4">
-                <a href="feed.html" class="p-2 brutal-border transition-colors" onmouseover="this.style.background='var(--brand-400)'" onmouseout="this.style.background='transparent'">
+                <a href="feed.php" class="p-2 brutal-border transition-colors" onmouseover="this.style.background='var(--brand-400)'" onmouseout="this.style.background='transparent'">
                     <i data-icon="arrow-left" class="icon icon-lg"></i>
                 </a>
                 <div class="sm-flex hidden items-center gap-2">
@@ -156,7 +157,7 @@
                         </button>
 
                         <p class="text-center text-xs font-bold uppercase tracking-wider">
-                            Need help? <a href="feedback.html" class="underline" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#000'">Contact Support</a>
+                            Need help? <a href="feedback.php" class="underline" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#000'">Contact Support</a>
                         </p>
                     </div>
                 </div>

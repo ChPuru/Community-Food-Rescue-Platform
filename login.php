@@ -1,3 +1,60 @@
+<?php
+session_start();
+require 'db.php';
+
+if (isset($_SESSION['user_id'])) {
+    header("Location: dashboard.php");
+    exit;
+}
+
+if (!isset($_SESSION['user_id']) && isset($_COOKIE['remember_token'])) {
+    $token = $_COOKIE['remember_token'];
+    $stmt = $pdo->prepare("SELECT id, name FROM users WHERE remember_token = ?");
+    $stmt->execute([$token]);
+    $user = $stmt->fetch();
+    
+    if ($user) {
+        $_SESSION['user_id'] = $user['id'];
+        $_SESSION['user_name'] = $user['name'];
+        header("Location: dashboard.php");
+        exit;
+    }
+}
+
+$error = '';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $email = trim($_POST['email']);
+    $password = $_POST['password'];
+    $remember = isset($_POST['remember']);
+
+    if (empty($email) || empty($password)) {
+        $error = "Both fields are required.";
+    } else {
+        $stmt = $pdo->prepare("SELECT id, name, password FROM users WHERE email = ?");
+        $stmt->execute([$email]);
+        $user = $stmt->fetch();
+
+        if ($user && password_verify($password, $user['password'])) {
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['user_name'] = $user['name'];
+
+            if ($remember) {
+                $token = bin2hex(random_bytes(32));
+                $stmt = $pdo->prepare("UPDATE users SET remember_token = ? WHERE id = ?");
+                $stmt->execute([$token, $user['id']]);
+                
+                setcookie("remember_token", $token, time() + (86400 * 30), "/", "", false, true);
+            }
+
+            header("Location: dashboard.php");
+            exit;
+        } else {
+            $error = "Invalid email or password.";
+        }
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +65,6 @@
 </head>
 <body class="min-h-screen flex flex-col bg-blueprint" style="background-color:var(--arch-white);color:var(--arch-black)">
 
-    <!-- Top Bar -->
     <header class="arch-border-b flex justify-between items-center px-6 py-4 sticky z-50" style="top:0;background:var(--arch-white)">
         <div class="flex items-center gap-3">
             <div style="width:1.5rem;height:1.5rem;background:var(--arch-black);display:flex;align-items:center;justify-content:center">
@@ -19,15 +75,13 @@
         <div class="font-mono text-xs sm-block hidden" style="color:var(--arch-gray);text-transform:uppercase;letter-spacing:0.1em">
             SYS.AUTH.v2.4 // SECURE_CONNECTION
         </div>
-        <a href="index.html" class="font-mono text-sm font-bold transition-colors" onmouseover="this.style.color='var(--arch-accent)'" onmouseout="this.style.color='inherit'">
+        <a href="index.php" class="font-mono text-sm font-bold transition-colors" onmouseover="this.style.color='var(--arch-accent)'" onmouseout="this.style.color='inherit'">
             [ RETURN_HOME ]
         </a>
     </header>
 
-    <!-- Main Content -->
     <main class="flex-grow flex items-center justify-center p-4 relative" style="padding:2rem">
 
-        <!-- Decorative Crosshairs -->
         <div class="crosshair lg-block hidden" style="top:2rem;left:2rem"></div>
         <div class="crosshair lg-block hidden" style="top:2rem;right:2rem"></div>
         <div class="crosshair lg-block hidden" style="bottom:2rem;left:2rem"></div>
@@ -35,7 +89,6 @@
 
         <div class="arch-border w-full grid grid-cols-1 lg-grid-cols-2" style="max-width:64rem;background:var(--arch-white);box-shadow:8px 8px 0 var(--arch-black)">
 
-            <!-- Left Column: Branding -->
             <div class="arch-border-r p-8 lg-p-12 flex flex-col justify-between relative overflow-hidden md-flex hidden" style="background:var(--arch-light)">
                 <div class="relative z-10">
                     <div class="inline-block font-mono text-xs uppercase mb-8" style="background:var(--arch-black);color:var(--arch-white);padding:0.25rem 0.75rem">
@@ -69,26 +122,29 @@
                 <i data-icon="fingerprint" class="icon icon-huge absolute" style="bottom:-5rem;right:-5rem;opacity:0.05;color:var(--arch-black)"></i>
             </div>
 
-            <!-- Right Column: Login Form -->
             <div class="p-8 lg-p-12 relative" style="background:var(--arch-white)">
 
                 <div class="mb-8">
                     <h2 class="font-bold tracking-tight mb-2" style="font-size:1.875rem">System Login</h2>
                     <p class="font-mono text-sm" style="color:var(--arch-gray)">Enter credentials to initialize session.</p>
                 </div>
+                
+                <?php if ($error): ?>
+                    <div style="background: #ffcccc; color: #cc0000; padding: 10px; margin-bottom: 20px; border: 1px solid #cc0000; font-family: monospace;">
+                        <?php echo htmlspecialchars($error); ?>
+                    </div>
+                <?php endif; ?>
 
-                <form class="space-y-8">
+                <form method="POST" action="login.php" class="space-y-8">
 
-                    <!-- Email Input -->
                     <div class="relative">
                         <label class="font-mono text-xs font-bold uppercase tracking-widest block mb-1">
                             Identification [Email]
                         </label>
-                        <input type="email" placeholder="operator@rescue-arch.org" class="arch-input" required>
+                        <input type="email" name="email" placeholder="operator@rescue-arch.org" class="arch-input" required>
                         <i data-icon="mail" class="icon icon-md absolute" style="right:0;bottom:1rem;color:var(--arch-gray)"></i>
                     </div>
 
-                    <!-- Password Input -->
                     <div class="relative">
                         <div class="flex justify-between items-end mb-1">
                             <label class="font-mono text-xs font-bold uppercase tracking-widest block">
@@ -98,25 +154,23 @@
                                 Reset_Key?
                             </a>
                         </div>
-                        <input type="password" placeholder="••••••••••••" class="arch-input" required>
+                        <input type="password" name="password" placeholder="••••••••••••" class="arch-input" required>
                         <button type="button" class="absolute transition-colors" style="right:0;bottom:1rem;color:var(--arch-gray)" onmouseover="this.style.color='var(--arch-black)'" onmouseout="this.style.color='var(--arch-gray)'">
                             <i data-icon="eye" class="icon icon-md"></i>
                         </button>
                     </div>
 
-                    <!-- Remember Me -->
                     <div class="flex items-center gap-3 pt-2">
                         <label class="relative flex items-center cursor-pointer">
-                            <input type="checkbox" class="sr-only" id="remember">
-                            <div class="arch-border" style="width:1.25rem;height:1.25rem;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer" onclick="this.previousElementSibling.click()">
+                            <input type="checkbox" name="remember" class="sr-only" id="remember">
+                            <div class="arch-border" style="width:1.25rem;height:1.25rem;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer" onclick="this.previousElementSibling.checked = !this.previousElementSibling.checked; this.style.background = this.previousElementSibling.checked ? 'var(--arch-black)' : 'transparent'">
                             </div>
                         </label>
                         <span class="font-mono text-xs uppercase" style="color:var(--arch-gray)">Maintain Session State</span>
                     </div>
 
-                    <!-- Actions -->
                     <div class="pt-6 space-y-4">
-                        <button type="submit" class="arch-btn">
+                        <button type="submit" class="arch-btn w-full">
                             <span>Initialize Session</span>
                             <i data-icon="arrow-right" class="icon icon-md"></i>
                         </button>
@@ -124,7 +178,7 @@
                         <div class="text-center">
                             <span class="font-mono text-xs uppercase" style="color:var(--arch-gray)">
                                 No Clearance?
-                                <a href="#" class="font-bold ml-2 pb-1 transition-colors" style="color:var(--arch-black);border-bottom:1px solid var(--arch-black)" onmouseover="this.style.color='var(--arch-accent)';this.style.borderColor='var(--arch-accent)'" onmouseout="this.style.color='var(--arch-black)';this.style.borderColor='var(--arch-black)'">
+                                <a href="register.php" class="font-bold ml-2 pb-1 transition-colors" style="color:var(--arch-black);border-bottom:1px solid var(--arch-black)" onmouseover="this.style.color='var(--arch-accent)';this.style.borderColor='var(--arch-accent)'" onmouseout="this.style.color='var(--arch-black)';this.style.borderColor='var(--arch-black)'">
                                     Request_Access
                                 </a>
                             </span>
@@ -133,7 +187,6 @@
 
                 </form>
 
-                <!-- Alternative Login -->
                 <div class="mt-12 pt-8 relative" style="border-top:2px solid rgba(10,10,10,0.1)">
                     <div class="absolute font-mono uppercase tracking-widest" style="top:-0.75rem;left:50%;transform:translateX(-50%);background:var(--arch-white);padding:0 1rem;font-size:0.625rem;color:var(--arch-gray)">
                         Or_Authenticate_Via
@@ -152,7 +205,6 @@
         </div>
     </main>
 
-    <!-- Footer -->
     <footer class="arch-footer">
         <div>&copy; 2024 RESCUE_ARCH. ALL RIGHTS RESERVED.</div>
         <div class="flex gap-4">

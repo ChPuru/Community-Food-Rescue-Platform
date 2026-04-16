@@ -1,3 +1,4 @@
+<?php require_once 'init.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,11 +17,16 @@
                 <span class="logo-text">FoodCycle</span>
             </div>
             <div class="nav-links">
-                <a href="#">Mission</a>
-                <a href="catalogue.html">Find Food</a>
-                <a href="new-listing.html">Donate</a>
-                <a href="#" class="text-brand-600" style="border-bottom:2px solid var(--brand-600);padding-bottom:0.25rem">Impact</a>
-                <a href="feed.html" class="btn-nav">Dashboard</a>
+                <a href="index.php">Mission</a>
+                <a href="catalogue.php">Find Food</a>
+                <a href="new-listing.php">Donate</a>
+                <a href="impact.php" class="text-brand-600" style="border-bottom:2px solid var(--brand-600);padding-bottom:0.25rem">Impact</a>
+                <?php if (isset($_SESSION['user_id'])): ?>
+                    <a href="dashboard.php" style="font-weight:bold; color:var(--brand-600);">Op: <?php echo htmlspecialchars($_SESSION['user_name']); ?></a>
+                    <a href="logout.php" class="btn-nav" style="background:#000; color:#fff; border-color:#000;">Logout</a>
+                <?php else: ?>
+                    <a href="login.php" class="btn-nav">Join Movement / Login</a>
+                <?php endif; ?>
             </div>
             <button class="mobile-menu-btn"><i data-icon="menu" class="icon icon-lg"></i></button>
         </div>

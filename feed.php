@@ -1,3 +1,4 @@
+<?php require_once 'init.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,7 +16,7 @@
                 <div class="logo-icon" style="width:2rem;height:2rem"><i data-icon="recycle" class="icon icon-md" style="color:#fff"></i></div>
                 <span class="font-display text-2xl tracking-wide mt-1">FoodCycle</span>
                 <div class="md-flex hidden ml-8 space-x-1">
-                    <a href="index.html" class="px-4 py-2 bg-black text-white font-bold uppercase text-xs tracking-wider brutal-border">Dashboard</a>
+                    <a href="index.php" class="px-4 py-2 bg-black text-white font-bold uppercase text-xs tracking-wider brutal-border">Dashboard</a>
                     <a href="#" class="px-4 py-2 font-bold uppercase text-xs tracking-wider brutal-border transition-colors" style="border-color:transparent" onmouseover="this.style.borderColor='#000';this.style.background='var(--brand-50)'" onmouseout="this.style.borderColor='transparent';this.style.background='transparent'">Map</a>
                     <a href="#" class="px-4 py-2 font-bold uppercase text-xs tracking-wider brutal-border transition-colors" style="border-color:transparent" onmouseover="this.style.borderColor='#000';this.style.background='var(--brand-50)'" onmouseout="this.style.borderColor='transparent';this.style.background='transparent'">History</a>
                 </div>
@@ -25,10 +26,14 @@
                     <i data-icon="bell" class="icon icon-md"></i>
                     <span class="absolute brutal-border" style="top:-0.5rem;right:-0.5rem;background:var(--brand-600);color:#fff;font-size:0.625rem;font-weight:700;padding:0.125rem 0.375rem">3</span>
                 </button>
-                <div class="flex items-center gap-2 brutal-border p-1" style="padding-right:0.75rem;background:var(--bg)">
-                    <div style="width:2rem;height:2rem;background:#000;border-radius:9999px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:0.875rem">JD</div>
-                    <span class="font-bold text-sm uppercase sm-block hidden">Jane Doe</span>
-                </div>
+                <?php if (isset($_SESSION['user_id'])): ?>
+                    <a href="dashboard.php" class="flex items-center gap-2 brutal-border p-1" style="padding-right:0.75rem;background:var(--bg);text-decoration:none;color:#000;">
+                        <div style="width:2rem;height:2rem;background:#000;border-radius:9999px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:0.875rem"><?php echo strtoupper(substr($_SESSION['user_name'], 0, 2)); ?></div>
+                        <span class="font-bold text-sm uppercase sm-block hidden"><?php echo htmlspecialchars($_SESSION['user_name']); ?></span>
+                    </a>
+                <?php else: ?>
+                    <a href="login.php" class="font-bold text-sm uppercase brutal-border px-4 py-2" style="background:#000;color:#fff;text-decoration:none;">Login</a>
+                <?php endif; ?>
             </div>
         </div>
     </nav>

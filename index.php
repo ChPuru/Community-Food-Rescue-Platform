@@ -1,3 +1,6 @@
+<?php
+require_once 'init.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,8 +25,13 @@
                 <a href="#">Mission</a>
                 <a href="#">Find Food</a>
                 <a href="#">Donate</a>
-                <a href="impact.html">Impact</a>
-                <a href="#" class="btn-nav">Join Movement</a>
+                <a href="impact.php">Impact</a>
+                <?php if (isset($_SESSION['user_id'])): ?>
+                    <a href="dashboard.php" style="font-weight:bold; color:var(--brand-600);">Op: <?php echo htmlspecialchars($_SESSION['user_name']); ?></a>
+                    <a href="logout.php" class="btn-nav" style="background:#000; color:#fff; border-color:#000;">Logout</a>
+                <?php else: ?>
+                    <a href="login.php" class="btn-nav">Join Movement / Login</a>
+                <?php endif; ?>
             </div>
 
             <button class="mobile-menu-btn">
@@ -59,8 +67,8 @@
                     </p>
 
                     <div class="flex flex-col gap-6 sm-flex-row">
-                        <a href="nearby.html" class="btn-primary">I Need Food</a>
-                        <a href="new-listing.html" class="btn-secondary">I Have Surplus</a>
+                        <a href="nearby.php" class="btn-primary">I Need Food</a>
+                        <a href="new-listing.php" class="btn-secondary">I Have Surplus</a>
                     </div>
 
                     <!-- Quick Stats -->
@@ -115,7 +123,7 @@
         <div class="container py-16">
             <div class="flex justify-between items-end mb-8">
                 <h2 class="font-display text-5xl sm-text-6xl">Urgent <span class="text-brand-600">Rescues</span></h2>
-                <a href="feed.html" class="sm-flex items-center gap-2 font-bold uppercase tracking-wider hidden" style="display:none">
+                <a href="feed.php" class="sm-flex items-center gap-2 font-bold uppercase tracking-wider hidden" style="display:none">
                     View All <i data-icon="arrow-right" class="icon icon-md"></i>
                 </a>
             </div>
@@ -180,7 +188,7 @@
             <div class="footer-links">
                 <a href="#">About</a>
                 <a href="#">Guidelines</a>
-                <a href="feedback.html">Contact</a>
+                <a href="feedback.php">Contact</a>
             </div>
         </div>
     </footer>

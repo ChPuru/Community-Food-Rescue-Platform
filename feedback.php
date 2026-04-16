@@ -1,3 +1,4 @@
+<?php require_once 'init.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,7 +20,7 @@
         <div class="font-mono text-xs sm-block hidden" style="color:var(--arch-gray);text-transform:uppercase;letter-spacing:0.1em">
             SYS.FEEDBACK.v1.2 // OPEN_CHANNEL
         </div>
-        <a href="index.html" class="font-mono text-sm font-bold transition-colors" onmouseover="this.style.color='var(--arch-accent)'" onmouseout="this.style.color='inherit'">
+        <a href="index.php" class="font-mono text-sm font-bold transition-colors" onmouseover="this.style.color='var(--arch-accent)'" onmouseout="this.style.color='inherit'">
             [ RETURN_HOME ]
         </a>
     </header>

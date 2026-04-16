@@ -1,3 +1,4 @@
+<?php require_once 'init.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -97,7 +98,7 @@
             <i data-icon="truck" class="icon icon-huge absolute" style="right:-1rem;bottom:-1rem;opacity:0.2;color:#000;transform:rotate(12deg)"></i>
             <h3 class="font-display text-2xl uppercase mb-2 relative z-10">Have Surplus?</h3>
             <p class="text-sm font-medium mb-4 relative z-10">List your excess food in seconds and connect with local rescuers.</p>
-            <a href="new-listing.html" class="brutal-border relative z-10 inline-block" style="background:#000;color:#fff;padding:0.5rem 1rem;font-weight:700;font-size:0.75rem;text-transform:uppercase">
+            <a href="new-listing.php" class="brutal-border relative z-10 inline-block" style="background:#000;color:#fff;padding:0.5rem 1rem;font-weight:700;font-size:0.75rem;text-transform:uppercase">
                 Create Listing
             </a>
         </div>
@@ -132,7 +133,7 @@
 
     <!-- Mobile Bottom Navigation -->
     <nav class="bg-white brutal-border-t fixed flex justify-around p-2" style="bottom:0;width:100%;max-width:28rem;z-index:50">
-        <a href="feed.html" class="flex flex-col items-center p-2 text-brand-600">
+        <a href="feed.php" class="flex flex-col items-center p-2 text-brand-600">
             <i data-icon="list" class="icon icon-lg mb-1"></i>
             <span class="font-bold uppercase" style="font-size:0.625rem">Feed</span>
         </a>
@@ -141,18 +142,25 @@
             <span class="font-bold uppercase" style="font-size:0.625rem">Map</span>
         </a>
         <div class="relative" style="top:-1.5rem">
-            <a href="new-listing.html" class="brutal-border brutal-shadow-sm rounded-full flex items-center justify-center" style="width:3.5rem;height:3.5rem;background:var(--brand-400)">
+            <a href="new-listing.php" class="brutal-border brutal-shadow-sm rounded-full flex items-center justify-center" style="width:3.5rem;height:3.5rem;background:var(--brand-400)">
                 <i data-icon="plus" class="icon icon-lg"></i>
             </a>
         </div>
-        <a href="impact.html" class="flex flex-col items-center p-2 text-gray-400 transition-colors" onmouseover="this.style.color='#000'" onmouseout="this.style.color='var(--gray-400)'">
+        <a href="impact.php" class="flex flex-col items-center p-2 text-gray-400 transition-colors" onmouseover="this.style.color='#000'" onmouseout="this.style.color='var(--gray-400)'">
             <i data-icon="bar-chart-2" class="icon icon-lg mb-1"></i>
             <span class="font-bold uppercase" style="font-size:0.625rem">Impact</span>
         </a>
-        <a href="login.html" class="flex flex-col items-center p-2 text-gray-400 transition-colors" onmouseover="this.style.color='#000'" onmouseout="this.style.color='var(--gray-400)'">
-            <i data-icon="user" class="icon icon-lg mb-1"></i>
-            <span class="font-bold uppercase" style="font-size:0.625rem">Profile</span>
-        </a>
+        <?php if (isset($_SESSION['user_id'])): ?>
+            <a href="dashboard.php" class="flex flex-col items-center p-2 text-brand-600 transition-colors">
+                <i data-icon="user" class="icon icon-lg mb-1"></i>
+                <span class="font-bold uppercase" style="font-size:0.625rem">Profile</span>
+            </a>
+        <?php else: ?>
+            <a href="login.php" class="flex flex-col items-center p-2 text-gray-400 transition-colors" onmouseover="this.style.color='#000'" onmouseout="this.style.color='var(--gray-400)'">
+                <i data-icon="user" class="icon icon-lg mb-1"></i>
+                <span class="font-bold uppercase" style="font-size:0.625rem">Login</span>
+            </a>
+        <?php endif; ?>
     </nav>
 
     <script src="icons.js"></script>

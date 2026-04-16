@@ -1,3 +1,4 @@
+<?php require_once 'init.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,10 +19,10 @@
                 <span class="font-bold tracking-tight text-xl uppercase">Rescue_Arch</span>
             </div>
             <nav class="md-flex hidden items-center gap-6 font-mono text-xs font-bold uppercase tracking-widest">
-                <a href="index.html" class="transition-colors" style="color:var(--arch-gray)" onmouseover="this.style.color='var(--arch-black)'" onmouseout="this.style.color='var(--arch-gray)'">Dashboard</a>
+                <a href="index.php" class="transition-colors" style="color:var(--arch-gray)" onmouseover="this.style.color='var(--arch-black)'" onmouseout="this.style.color='var(--arch-gray)'">Dashboard</a>
                 <a href="#" style="color:var(--arch-black);border-bottom:2px solid var(--arch-black);padding-bottom:0.25rem">Catalogue</a>
                 <a href="#" class="transition-colors" style="color:var(--arch-gray)" onmouseover="this.style.color='var(--arch-black)'" onmouseout="this.style.color='var(--arch-gray)'">Map_View</a>
-                <a href="impact.html" class="transition-colors" style="color:var(--arch-gray)" onmouseover="this.style.color='var(--arch-black)'" onmouseout="this.style.color='var(--arch-gray)'">Impact</a>
+                <a href="impact.php" class="transition-colors" style="color:var(--arch-gray)" onmouseover="this.style.color='var(--arch-black)'" onmouseout="this.style.color='var(--arch-gray)'">Impact</a>
             </nav>
         </div>
         <div class="flex items-center gap-4">
@@ -33,9 +34,13 @@
                 <i data-icon="bell" class="icon icon-md"></i>
                 <span class="absolute arch-border" style="top:-0.25rem;right:-0.25rem;width:0.75rem;height:0.75rem;background:var(--arch-accent);border-radius:9999px"></span>
             </button>
-            <div class="arch-border font-bold font-mono text-sm" style="width:2.5rem;height:2.5rem;background:var(--arch-black);color:var(--arch-white);display:flex;align-items:center;justify-content:center">
-                OP
-            </div>
+            <?php if(isset($_SESSION['user_id'])): ?>
+                <div class="arch-border font-bold font-mono text-sm" title="<?php echo htmlspecialchars($_SESSION['user_name']); ?>" style="width:2.5rem;height:2.5rem;background:var(--arch-black);color:var(--arch-white);display:flex;align-items:center;justify-content:center">
+                    <?php echo strtoupper(substr($_SESSION['user_name'], 0, 2)); ?>
+                </div>
+            <?php else: ?>
+                <a href="login.php" class="arch-border font-bold font-mono text-sm" style="width:2.5rem;height:2.5rem;background:var(--arch-black);color:var(--arch-white);display:flex;align-items:center;justify-content:center;text-decoration:none;">IN</a>
+            <?php endif; ?>
         </div>
     </header>
 
