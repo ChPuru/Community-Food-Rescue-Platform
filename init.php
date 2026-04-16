@@ -7,6 +7,7 @@ if (!isset($_SESSION['user_id']) && isset($_COOKIE['remember_token'])) {
     $stmt = $pdo->prepare("SELECT id, name FROM users WHERE remember_token = ?");
     $stmt->execute([$token]);
     $user = $stmt->fetch();
+    $stmt->closeCursor();
     
     if ($user) {
         $_SESSION['user_id'] = $user['id'];

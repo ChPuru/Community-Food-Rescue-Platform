@@ -17,8 +17,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
         $stmt->execute([$email]);
+        $userExists = $stmt->fetch();
+        $stmt->closeCursor();
         
-        if ($stmt->fetch()) {
+        if ($userExists) {
             $error = "Email is already registered.";
         } else {
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);

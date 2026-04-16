@@ -12,6 +12,7 @@ if (!isset($_SESSION['user_id']) && isset($_COOKIE['remember_token'])) {
     $stmt = $pdo->prepare("SELECT id, name FROM users WHERE remember_token = ?");
     $stmt->execute([$token]);
     $user = $stmt->fetch();
+    $stmt->closeCursor();
     
     if ($user) {
         $_SESSION['user_id'] = $user['id'];
@@ -34,6 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt = $pdo->prepare("SELECT id, name, password FROM users WHERE email = ?");
         $stmt->execute([$email]);
         $user = $stmt->fetch();
+        $stmt->closeCursor();
 
         if ($user && password_verify($password, $user['password'])) {
             $_SESSION['user_id'] = $user['id'];
