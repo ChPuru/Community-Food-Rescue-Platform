@@ -1,15 +1,13 @@
-<?php require_once 'init.php'; ?>
+<?php require_once '../backend/init.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FoodCycle — Impact Dashboard</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body class="bg-page min-h-screen flex flex-col">
-
-    <!-- Navigation -->
     <nav class="site-nav">
         <div class="nav-inner">
             <div class="logo">
@@ -31,8 +29,6 @@
             <button class="mobile-menu-btn"><i data-icon="menu" class="icon icon-lg"></i></button>
         </div>
     </nav>
-
-    <!-- Header -->
     <header class="bg-brand-400 brutal-border-b py-12 relative overflow-hidden">
         <div class="absolute inset-0 bg-grid" style="opacity:0.2"></div>
         <div class="container relative z-10">
@@ -57,12 +53,8 @@
             </div>
         </div>
     </header>
-
     <main class="flex-grow container py-12">
-
-        <!-- Top Stats Row -->
         <div class="grid grid-cols-1 md-grid-cols-3 gap-8 mb-12">
-            <!-- Stat 1 -->
             <div class="stat-card">
                 <div class="stat-icon-circle"><i data-icon="scale" class="icon icon-lg"></i></div>
                 <h3 class="font-bold uppercase tracking-wider text-gray-500 mb-2">Food Rescued</h3>
@@ -71,8 +63,6 @@
                 <div class="progress-bar mt-4"><div class="progress-bar-fill" style="width:75%"></div></div>
                 <p class="text-xs font-bold text-brand-600 mt-2 text-right">+12% vs last month</p>
             </div>
-
-            <!-- Stat 2 -->
             <div class="stat-card" style="background:#000;color:#fff">
                 <div class="stat-icon-circle" style="background:#fff"><i data-icon="users" class="icon icon-lg"></i></div>
                 <h3 class="font-bold uppercase tracking-wider mb-2" style="color:var(--gray-400)">Meals Provided</h3>
@@ -86,8 +76,6 @@
                     <div class="brutal-border" style="height:2rem;width:2rem;background:var(--brand-600);border-color:#fff;opacity:0.5"></div>
                 </div>
             </div>
-
-            <!-- Stat 3 -->
             <div class="stat-card">
                 <div class="stat-icon-circle"><i data-icon="cloud-off" class="icon icon-lg"></i></div>
                 <h3 class="font-bold uppercase tracking-wider text-gray-500 mb-2">CO2 Prevented</h3>
@@ -102,12 +90,8 @@
                 </div>
             </div>
         </div>
-
-        <!-- Main Content Area -->
         <div class="grid grid-cols-1 gap-8" style="grid-template-columns:1fr">
             <div class="grid grid-cols-1 lg-grid-cols-3 gap-8">
-
-            <!-- Leaderboard -->
             <div class="lg-col-span-1 bg-white brutal-border flex flex-col">
                 <div class="brutal-border-b p-4 flex justify-between items-center" style="background:#000;color:#fff">
                     <h2 class="font-display text-2xl tracking-wide">Top Rescuers</h2>
@@ -139,11 +123,7 @@
                     View Full Leaderboard
                 </a>
             </div>
-
-            <!-- Impact Charts -->
             <div class="lg-col-span-2 flex flex-col gap-8">
-
-                <!-- Category Breakdown -->
                 <div class="bg-white brutal-border p-6">
                     <h2 class="font-display text-3xl tracking-wide mb-6" style="border-bottom:3px solid #000;padding-bottom:0.5rem">Food Types Rescued</h2>
                     <div class="space-y-6">
@@ -165,8 +145,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- CTA Banner -->
                 <div class="brutal-border p-8 relative overflow-hidden" style="background:var(--brand-600);color:#fff">
                     <i data-icon="leaf" class="icon absolute" style="right:-2.5rem;bottom:-2.5rem;width:16rem;height:16rem;opacity:0.2;color:#000;transform:rotate(12deg)"></i>
                     <div class="relative z-10">
@@ -180,14 +158,11 @@
                         </div>
                     </div>
                 </div>
-
             </div>
-
             </div>
         </div>
     </main>
-
-    <script src="icons.js"></script>
-    <script src="nav.js"></script>
+    <script src="assets/icons.js"></script>
+    <script src="assets/nav.js"></script>
 </body>
 </html>

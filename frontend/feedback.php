@@ -1,15 +1,13 @@
-<?php require_once 'init.php'; ?>
+<?php require_once '../backend/init.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RESCUE_ARCH - FEEDBACK</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body class="min-h-screen flex flex-col bg-blueprint" style="background-color:var(--arch-white);color:var(--arch-black)">
-
-    <!-- Top Bar -->
     <header class="arch-border-b flex justify-between items-center px-6 py-4 sticky z-50" style="top:0;background:var(--arch-white)">
         <div class="flex items-center gap-3">
             <div style="width:1.5rem;height:1.5rem;background:var(--arch-black);display:flex;align-items:center;justify-content:center">
@@ -24,13 +22,8 @@
             [ RETURN_HOME ]
         </a>
     </header>
-
-    <!-- Main Content -->
     <main class="flex-grow flex items-center justify-center" style="padding:2rem">
-
         <div class="arch-border w-full" style="max-width:48rem;background:var(--arch-white);box-shadow:8px 8px 0 var(--arch-black)">
-
-            <!-- Header Area -->
             <div class="arch-border-b p-8 lg-p-12 relative overflow-hidden" style="background:var(--arch-light)">
                 <i data-icon="megaphone" class="icon icon-huge absolute" style="right:-5rem;top:-5rem;opacity:0.05;color:var(--arch-black);transform:rotate(-12deg)"></i>
                 <div class="relative z-10">
@@ -45,12 +38,8 @@
                     </p>
                 </div>
             </div>
-
-            <!-- Form -->
             <div class="p-8 lg-p-12">
                 <form class="space-y-8">
-
-                    <!-- Category Selection -->
                     <div>
                         <label class="font-mono text-xs font-bold uppercase tracking-widest block mb-4">
                             Feedback Category *
@@ -62,14 +51,10 @@
                             <div><input type="radio" name="feedback-cat" id="cat-other" value="other" class="sr-only rating-input"><label for="cat-other" class="block text-center py-3 arch-border font-mono text-xs font-bold uppercase cursor-pointer transition-colors"><i data-icon="layers" class="icon icon-sm inline-block mb-1"></i><br>Other</label></div>
                         </div>
                     </div>
-
-                    <!-- Subject Line -->
                     <div class="relative">
                         <label class="font-mono text-xs font-bold uppercase tracking-widest block mb-1">Subject *</label>
                         <input type="text" placeholder="Brief summary of your feedback" class="arch-input" required>
                     </div>
-
-                    <!-- Description -->
                     <div>
                         <div class="flex justify-between items-end mb-1">
                             <label class="font-mono text-xs font-bold uppercase tracking-widest block">Detailed Description *</label>
@@ -77,8 +62,6 @@
                         </div>
                         <textarea maxlength="500" rows="6" placeholder="Provide as much detail as possible. If reporting a bug, include steps to reproduce..." class="arch-textarea" required></textarea>
                     </div>
-
-                    <!-- File Upload -->
                     <div>
                         <label class="font-mono text-xs font-bold uppercase tracking-widest block mb-4">Attachment (Optional)</label>
                         <div class="arch-border p-6 text-center cursor-pointer transition-colors" style="border-style:dashed;background:var(--arch-light)" onmouseover="this.style.background='#fff'" onmouseout="this.style.background='var(--arch-light)'">
@@ -88,8 +71,6 @@
                             <input type="file" class="hidden" accept=".png,.jpg,.jpeg,.pdf">
                         </div>
                     </div>
-
-                    <!-- Follow-up -->
                     <div class="flex items-center gap-3 pt-2">
                         <label class="relative flex items-center cursor-pointer">
                             <input type="checkbox" class="sr-only">
@@ -97,8 +78,6 @@
                         </label>
                         <span class="font-mono text-sm" style="color:var(--arch-gray)">I would like to be contacted about this feedback.</span>
                     </div>
-
-                    <!-- Submit -->
                     <div class="pt-4">
                         <button type="submit" class="arch-btn">
                             <span>Submit Feedback</span>
@@ -108,13 +87,10 @@
                             All submissions are reviewed within 48 hours.
                         </p>
                     </div>
-
                 </form>
             </div>
         </div>
     </main>
-
-    <!-- Footer -->
     <footer class="arch-footer">
         <div>&copy; 2024 RESCUE_ARCH. ALL RIGHTS RESERVED.</div>
         <div class="flex gap-4">
@@ -122,8 +98,7 @@
             <a href="#">PRIVACY</a>
         </div>
     </footer>
-
-    <script src="icons.js"></script>
-    <script src="nav.js"></script>
+    <script src="assets/icons.js"></script>
+    <script src="assets/nav.js"></script>
 </body>
 </html>

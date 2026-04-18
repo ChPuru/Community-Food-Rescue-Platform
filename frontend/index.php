@@ -1,5 +1,5 @@
 <?php
-require_once 'init.php';
+require_once '../backend/init.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -7,11 +7,9 @@ require_once 'init.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FoodCycle — Community Food Rescue</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body class="bg-page min-h-screen flex flex-col">
-
-    <!-- Navigation -->
     <nav class="site-nav">
         <div class="nav-inner">
             <div class="logo">
@@ -20,7 +18,6 @@ require_once 'init.php';
                 </div>
                 <span class="logo-text">FoodCycle</span>
             </div>
-
             <div class="nav-links">
                 <a href="#">Mission</a>
                 <a href="#">Find Food</a>
@@ -33,45 +30,33 @@ require_once 'init.php';
                     <a href="login.php" class="btn-nav">Join Movement / Login</a>
                 <?php endif; ?>
             </div>
-
             <button class="mobile-menu-btn">
                 <i data-icon="menu" class="icon icon-lg"></i>
             </button>
         </div>
     </nav>
-
-    <!-- Marquee -->
     <div class="marquee-container">
         <div class="marquee-content">
             RESCUE FOOD. REDUCE WASTE. FEED LIVES. &bull; ZERO HUNGER &bull; RESCUE FOOD. REDUCE WASTE. FEED LIVES. &bull; ZERO HUNGER &bull; RESCUE FOOD. REDUCE WASTE. FEED LIVES. &bull; ZERO HUNGER &bull;
         </div>
     </div>
-
-    <!-- Hero Section -->
     <main class="flex-grow">
         <div class="container" style="padding-top:3rem;padding-bottom:3rem">
             <div class="grid grid-cols-1 lg-grid-cols-12 gap-8" style="align-items:center">
-
-                <!-- Hero Text -->
                 <div style="grid-column:span 7" class="lg-col-span-7">
                     <div class="tag-skew mb-4">Community Action</div>
-
                     <h1 class="hero-text-giant mb-4">
                         Stop <br>
                         <span class="text-brand-600">Wasting</span><br>
                         Good Food.
                     </h1>
-
                     <p class="text-xl font-medium hero-accent-line mb-8" style="max-width:42rem">
                         Connect surplus food from local businesses directly to community members and shelters in real-time.
                     </p>
-
                     <div class="flex flex-col gap-6 sm-flex-row">
                         <a href="nearby.php" class="btn-primary">I Need Food</a>
                         <a href="new-listing.php" class="btn-secondary">I Have Surplus</a>
                     </div>
-
-                    <!-- Quick Stats -->
                     <div class="hero-stats">
                         <div>
                             <div class="font-display text-4xl sm-text-5xl">2.4<span class="text-brand-600">M</span></div>
@@ -87,23 +72,17 @@ require_once 'init.php';
                         </div>
                     </div>
                 </div>
-
-                <!-- Hero Image -->
                 <div style="grid-column:span 5" class="lg-col-span-5 relative">
                     <div class="hero-image-bg"></div>
                     <div class="hero-image-frame">
                         <div class="img-placeholder-stripes brutal-border" style="aspect-ratio:4/5;position:relative">
                             <div style="position:absolute;inset:0;background:linear-gradient(135deg,#a8d5a2 0%,#6ab864 50%,#3d8b37 100%);opacity:0.4"></div>
                             <i data-icon="recycle" class="icon icon-huge" style="color:rgba(0,0,0,0.15);position:relative;z-index:1"></i>
-
-                            <!-- Overlay Badge -->
                             <div style="position:absolute;top:1rem;right:1rem;background:#000;color:#fff;padding:1rem;border:3px solid #000;transform:rotate(12deg);z-index:10">
                                 <div class="font-display text-3xl text-center leading-none">LIVE</div>
                                 <div class="font-bold text-xs uppercase tracking-widest text-brand-400 mt-1">Rescue Map</div>
                             </div>
                         </div>
-
-                        <!-- Caption -->
                         <div class="flex items-start justify-between mt-4">
                             <div>
                                 <h3 class="font-bold uppercase text-lg">Current Batch: #8842</h3>
@@ -113,12 +92,9 @@ require_once 'init.php';
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </main>
-
-    <!-- Live Feed Teaser -->
     <section class="brutal-border-t bg-white">
         <div class="container py-16">
             <div class="flex justify-between items-end mb-8">
@@ -127,9 +103,7 @@ require_once 'init.php';
                     View All <i data-icon="arrow-right" class="icon icon-md"></i>
                 </a>
             </div>
-
             <div class="grid grid-cols-1 md-grid-cols-3 gap-8">
-                <!-- Card 1 -->
                 <div class="card p-6 relative" style="background:var(--bg)">
                     <div class="nearby-distance bg-brand-400">1.2 mi</div>
                     <div class="flex items-center gap-3 mb-4">
@@ -146,8 +120,6 @@ require_once 'init.php';
                         Claim Batch
                     </button>
                 </div>
-
-                <!-- Card 2 -->
                 <div class="card p-6 relative" style="background:var(--bg)">
                     <div class="nearby-distance bg-brand-400">0.8 mi</div>
                     <div class="flex items-center gap-3 mb-4">
@@ -164,8 +136,6 @@ require_once 'init.php';
                         Claim Batch
                     </button>
                 </div>
-
-                <!-- Card 3: CTA -->
                 <div class="card p-6 flex flex-col justify-center items-center text-center" style="background:#000;color:#fff">
                     <i data-icon="map" class="icon icon-hero text-brand-400 mb-4"></i>
                     <h3 class="font-display text-3xl mb-2">Open Map</h3>
@@ -177,8 +147,6 @@ require_once 'init.php';
             </div>
         </div>
     </section>
-
-    <!-- Footer -->
     <footer class="site-footer">
         <div class="footer-inner">
             <div class="flex items-center gap-2">
@@ -192,8 +160,7 @@ require_once 'init.php';
             </div>
         </div>
     </footer>
-
-    <script src="icons.js"></script>
-    <script src="nav.js"></script>
+    <script src="assets/icons.js"></script>
+    <script src="assets/nav.js"></script>
 </body>
 </html>

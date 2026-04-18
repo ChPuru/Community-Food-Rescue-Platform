@@ -1,15 +1,19 @@
-<?php require_once 'init.php'; ?>
+<?php 
+require_once '../backend/init.php'; 
+require_once '../backend/db.php';
+$stmt = $pdo->prepare("SELECT l.*, u.name as operator_name FROM listings l JOIN users u ON l.user_id = u.id WHERE l.status = 'active' ORDER BY l.created_at DESC");
+$stmt->execute();
+$listings = $stmt->fetchAll();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FoodCycle - Workspace</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body class="bg-page flex flex-col overflow-hidden" style="height:100vh;color:#000">
-
-    <!-- Top Navigation Bar -->
     <nav class="brutal-border-b bg-white" style="flex-shrink:0;z-index:50">
         <div class="flex justify-between items-center px-4" style="height:4rem">
             <div class="flex items-center gap-4">
@@ -18,7 +22,6 @@
                 <div class="md-flex hidden ml-8 space-x-1">
                     <a href="index.php" class="px-4 py-2 bg-black text-white font-bold uppercase text-xs tracking-wider brutal-border">Dashboard</a>
                     <a href="#" class="px-4 py-2 font-bold uppercase text-xs tracking-wider brutal-border transition-colors" style="border-color:transparent" onmouseover="this.style.borderColor='#000';this.style.background='var(--brand-50)'" onmouseout="this.style.borderColor='transparent';this.style.background='transparent'">Map</a>
-                    <a href="#" class="px-4 py-2 font-bold uppercase text-xs tracking-wider brutal-border transition-colors" style="border-color:transparent" onmouseover="this.style.borderColor='#000';this.style.background='var(--brand-50)'" onmouseout="this.style.borderColor='transparent';this.style.background='transparent'">History</a>
                 </div>
             </div>
             <div class="flex items-center gap-4">
@@ -37,18 +40,13 @@
             </div>
         </div>
     </nav>
-
-    <!-- Main Workspace Area -->
     <div class="flex flex-1 overflow-hidden">
-
-        <!-- Left Sidebar -->
         <aside class="brutal-border-r bg-white lg-flex hidden flex-col overflow-y-auto" style="width:16rem;flex-shrink:0">
             <div class="p-4 brutal-border-b bg-brand-400">
-                <button class="w-full bg-black text-white py-3 font-display text-xl uppercase tracking-wider brutal-shadow-sm flex items-center justify-center gap-2 transition-colors" style="border:none;cursor:pointer" onmouseover="this.style.background='var(--brand-600)'" onmouseout="this.style.background='#000'">
+                <a href="new-listing.php" class="w-full bg-black text-white py-3 font-display text-xl uppercase tracking-wider brutal-shadow-sm flex items-center justify-center gap-2 transition-colors text-center no-underline" onmouseover="this.style.background='var(--brand-600)'" onmouseout="this.style.background='#000'">
                     <i data-icon="plus-circle" class="icon icon-md"></i> New Listing
-                </button>
+                </a>
             </div>
-
             <div class="p-4 flex-1">
                 <h3 class="font-display text-xl uppercase mb-4" style="border-bottom:2px solid #000;padding-bottom:0.25rem">Filters</h3>
                 <div class="space-y-4">
@@ -58,35 +56,9 @@
                             <option>Within 5 miles</option><option>Within 10 miles</option><option>Within 25 miles</option><option>Any distance</option>
                         </select>
                     </div>
-                    <div>
-                        <label class="font-bold uppercase text-xs text-gray-500 block mb-2">Food Type</label>
-                        <div class="space-y-2">
-                            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" checked class="checkbox-brutal"><span class="font-bold text-sm uppercase">Produce</span></label>
-                            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" checked class="checkbox-brutal"><span class="font-bold text-sm uppercase">Baked Goods</span></label>
-                            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="checkbox-brutal"><span class="font-bold text-sm uppercase">Prepared Meals</span></label>
-                            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="checkbox-brutal"><span class="font-bold text-sm uppercase">Dairy</span></label>
-                        </div>
-                    </div>
-                    <div>
-                        <label class="font-bold uppercase text-xs text-gray-500 block mb-2">Urgency</label>
-                        <div class="flex gap-2">
-                            <button class="flex-1 py-1 brutal-border font-bold text-xs uppercase" style="background:var(--brand-600);color:#fff">High</button>
-                            <button class="flex-1 py-1 brutal-border font-bold text-xs uppercase bg-white transition-colors" onmouseover="this.style.background='var(--gray-100)'" onmouseout="this.style.background='#fff'">Med</button>
-                            <button class="flex-1 py-1 brutal-border font-bold text-xs uppercase bg-white transition-colors" onmouseover="this.style.background='var(--gray-100)'" onmouseout="this.style.background='#fff'">Low</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="p-4 brutal-border-t bg-stripes">
-                <div class="bg-white brutal-border p-3 text-center">
-                    <div class="font-display text-2xl text-brand-600">142 lbs</div>
-                    <div class="font-bold uppercase tracking-wider" style="font-size:0.625rem">Rescued this week</div>
                 </div>
             </div>
         </aside>
-
-        <!-- Center Column: Feed -->
         <main class="flex-1 flex flex-col min-w-0 brutal-border-r bg-page">
             <div class="p-4 brutal-border-b bg-white flex justify-between items-center" style="flex-shrink:0">
                 <h2 class="font-display text-3xl uppercase">Live Feed</h2>
@@ -95,143 +67,67 @@
                     Updating
                 </div>
             </div>
-
             <div class="flex-1 overflow-y-auto feed-scroll p-4 space-y-4">
-
-                <!-- Feed Item 1 (Urgent) -->
-                <article class="feed-item">
-                    <div class="feed-item-expiry">Expires in 45m</div>
-                    <div class="flex gap-4">
-                        <div class="brutal-border flex-shrink-0 flex items-center justify-center" style="width:4rem;height:4rem;background:var(--brand-100)">
-                            <i data-icon="croissant" class="icon icon-xl text-brand-900"></i>
-                        </div>
-                        <div class="flex-1 min-w-0">
-                            <h3 class="font-display text-xl uppercase truncate" style="padding-right:6rem">Morning Pastries Batch</h3>
-                            <div class="text-sm font-bold text-gray-600 mb-2 flex items-center gap-2">
-                                <i data-icon="map-pin" class="icon icon-sm"></i> Local Bakery Co. (1.2 mi)
-                            </div>
-                            <p class="text-sm font-medium mb-3 line-clamp-2">2 boxes of assorted bagels and muffins. Best before end of day. Please bring your own containers if possible.</p>
-                            <div class="feed-divider flex items-center justify-between">
-                                <div class="flex gap-2">
-                                    <span class="badge-green">Baked Goods</span>
-                                    <span class="badge-outline">~15 lbs</span>
+                <?php if (empty($listings)): ?>
+                    <div class="text-center py-12">
+                        <p class="font-bold uppercase text-gray-500">No active listings available.</p>
+                    </div>
+                <?php else: ?>
+                    <?php foreach ($listings as $item): ?>
+                        <article class="feed-item">
+                            <div class="feed-item-expiry">Until <?php echo date('H:i', strtotime($item['available_until'])); ?></div>
+                            <div class="flex gap-4">
+                                <div class="brutal-border flex-shrink-0 flex items-center justify-center" style="width:4rem;height:4rem;background:var(--brand-100)">
+                                    <?php 
+                                        $icon = 'package';
+                                        if ($item['category'] == 'Produce') $icon = 'carrot';
+                                        elseif ($item['category'] == 'Baked Goods') $icon = 'croissant';
+                                        elseif ($item['category'] == 'Dairy') $icon = 'box';
+                                    ?>
+                                    <i data-icon="<?php echo $icon; ?>" class="icon icon-xl text-brand-900"></i>
                                 </div>
-                                <button class="btn-black">Claim</button>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Feed Item 2 -->
-                <article class="feed-item">
-                    <div class="flex gap-4">
-                        <div class="brutal-border flex-shrink-0 flex items-center justify-center" style="width:4rem;height:4rem;background:var(--gray-100)">
-                            <i data-icon="carrot" class="icon icon-xl text-gray-600"></i>
-                        </div>
-                        <div class="flex-1 min-w-0">
-                            <div class="flex justify-between items-start mb-1">
-                                <h3 class="font-display text-xl uppercase truncate">Imperfect Produce</h3>
-                                <span class="text-xs font-bold text-gray-500 uppercase">2h ago</span>
-                            </div>
-                            <div class="text-sm font-bold text-gray-600 mb-2 flex items-center gap-2">
-                                <i data-icon="map-pin" class="icon icon-sm"></i> City Supermarket (3.5 mi)
-                            </div>
-                            <p class="text-sm font-medium mb-3 line-clamp-2">15 lbs of slightly bruised apples and overripe bananas. Great for baking or smoothies. Pre-boxed and ready to go.</p>
-                            <div class="feed-divider flex items-center justify-between">
-                                <div class="flex gap-2">
-                                    <span class="badge-green">Produce</span>
-                                    <span class="badge-outline">~20 lbs</span>
+                                <div class="flex-1 min-w-0">
+                                    <h3 class="font-display text-xl uppercase truncate" style="padding-right:6rem"><?php echo htmlspecialchars($item['title']); ?></h3>
+                                    <div class="text-sm font-bold text-gray-600 mb-2 flex items-center gap-2">
+                                        <i data-icon="map-pin" class="icon icon-sm"></i> <?php echo htmlspecialchars($item['operator_name']); ?> (<?php echo htmlspecialchars($item['pickup_location']); ?>)
+                                    </div>
+                                    <p class="text-sm font-medium mb-3 line-clamp-2"><?php echo htmlspecialchars($item['description']); ?></p>
+                                    <div class="feed-divider flex items-center justify-between">
+                                        <div class="flex gap-2">
+                                            <span class="badge-green"><?php echo htmlspecialchars($item['category']); ?></span>
+                                            <span class="badge-outline">~<?php echo htmlspecialchars($item['quantity']); ?> lbs</span>
+                                        </div>
+                                        <button class="btn-black">Claim</button>
+                                    </div>
                                 </div>
-                                <button class="brutal-border px-4 py-1 font-bold text-xs uppercase transition-colors" style="box-shadow:4px 4px 0 var(--brand-600);background:#fff" onmouseover="this.style.background='var(--brand-400)'" onmouseout="this.style.background='#fff'">Claim</button>
                             </div>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Feed Item 3 (Claimed) -->
-                <article class="feed-item-claimed">
-                    <div class="absolute inset-0 bg-stripes pointer-events-none" style="opacity:0.1"></div>
-                    <div class="flex gap-4 relative z-10">
-                        <div class="brutal-border flex-shrink-0 flex items-center justify-center" style="width:4rem;height:4rem;background:var(--gray-300)">
-                            <i data-icon="check-circle" class="icon icon-xl"></i>
-                        </div>
-                        <div class="flex-1 min-w-0">
-                            <div class="flex justify-between items-start mb-1">
-                                <h3 class="font-display text-xl uppercase truncate line-through">Catered Lunch Leftovers</h3>
-                                <span class="text-xs font-bold text-gray-600 uppercase">Claimed</span>
-                            </div>
-                            <div class="text-sm font-bold text-gray-600 mb-2 flex items-center gap-2">
-                                <i data-icon="map-pin" class="icon icon-sm"></i> Tech Corp Office (0.5 mi)
-                            </div>
-                            <p class="text-sm font-medium line-clamp-1 text-gray-600">Assorted sandwiches and salads from corporate event.</p>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Feed Item 4 -->
-                <article class="feed-item">
-                    <div class="feed-item-new">New</div>
-                    <div class="flex gap-4">
-                        <div class="brutal-border flex-shrink-0 overflow-hidden" style="width:4rem;height:4rem;background:var(--brand-100)">
-                            <div class="img-placeholder w-full h-full" style="background:linear-gradient(135deg,#b3e5fc,#81d4fa,#4fc3f7)">
-                                <i data-icon="box" class="icon icon-xl" style="opacity:0.4"></i>
-                            </div>
-                        </div>
-                        <div class="flex-1 min-w-0">
-                            <h3 class="font-display text-xl uppercase truncate" style="padding-right:4rem">Excess Dairy Products</h3>
-                            <div class="text-sm font-bold text-gray-600 mb-2 flex items-center gap-2">
-                                <i data-icon="map-pin" class="icon icon-sm"></i> Corner Bodega (2.1 mi)
-                            </div>
-                            <p class="text-sm font-medium mb-3 line-clamp-2">Milk and yogurt nearing sell-by date. Still perfectly good for consumption. Needs refrigeration ASAP.</p>
-                            <div class="feed-divider flex items-center justify-between">
-                                <div class="flex gap-2">
-                                    <span class="badge-green">Dairy</span>
-                                    <span class="badge-outline">~10 lbs</span>
-                                </div>
-                                <button class="brutal-border px-4 py-1 font-bold text-xs uppercase transition-colors" style="box-shadow:4px 4px 0 var(--brand-600);background:#fff" onmouseover="this.style.background='var(--brand-400)'" onmouseout="this.style.background='#fff'">Claim</button>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-
+                        </article>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
         </main>
-
-        <!-- Right Column: Map & Details -->
         <aside class="xl-flex hidden flex-col bg-white" style="width:33%">
-            <!-- Map Placeholder -->
             <div class="brutal-border-b relative" style="height:50%;background:var(--gray-200)">
                 <div class="absolute inset-0 bg-grid" style="opacity:0.3"></div>
                 <div class="absolute inset-0 p-4">
                     <div class="brutal-border w-full h-full relative overflow-hidden" style="background:#e5e5f7">
                         <svg class="absolute inset-0 w-full h-full" style="opacity:0.2" xmlns="http://www.w3.org/2000/svg">
                             <path d="M0,50 Q100,100 200,50 T400,50" fill="none" stroke="black" stroke-width="4"/>
-                            <path d="M50,0 L50,400 M150,0 L150,400 M250,0 L250,400" fill="none" stroke="black" stroke-width="2"/>
                         </svg>
-                        <div class="bounce absolute" style="top:25%;left:25%;width:1rem;height:1rem;background:var(--brand-600);border:3px solid #000;border-radius:9999px"></div>
                         <div class="absolute font-bold font-mono" style="top:50%;left:50%;width:1.5rem;height:1.5rem;background:#000;color:#fff;border:3px solid #000;border-radius:9999px;display:flex;align-items:center;justify-content:center;font-size:0.625rem;z-index:10">YOU</div>
-                        <div class="absolute" style="bottom:33%;right:25%;width:1rem;height:1rem;background:var(--brand-400);border:3px solid #000;border-radius:9999px"></div>
                     </div>
                 </div>
-                <div class="absolute flex flex-col gap-2" style="bottom:1.5rem;right:1.5rem">
-                    <button class="brutal-border bg-white flex items-center justify-center" style="width:2rem;height:2rem" onmouseover="this.style.background='var(--gray-100)'" onmouseout="this.style.background='#fff'"><i data-icon="plus" class="icon icon-sm"></i></button>
-                    <button class="brutal-border bg-white flex items-center justify-center" style="width:2rem;height:2rem" onmouseover="this.style.background='var(--gray-100)'" onmouseout="this.style.background='#fff'"><i data-icon="minus" class="icon icon-sm"></i></button>
-                </div>
             </div>
-
-            <!-- Detail Panel -->
             <div class="flex-1 p-6 overflow-y-auto">
                 <div class="h-full flex flex-col items-center justify-center text-center p-6" style="border:4px dashed var(--gray-300)">
                     <i data-icon="mouse-pointer-click" class="icon icon-2xl mb-4" style="color:var(--gray-400)"></i>
                     <h3 class="font-display text-2xl uppercase mb-2 text-gray-500">Select a Listing</h3>
-                    <p class="font-medium text-sm" style="color:var(--gray-400)">Click on any rescue batch in the feed to view full details, pickup instructions, and contact info.</p>
+                    <p class="font-medium text-sm" style="color:var(--gray-400)">Click on any rescue batch in the feed to view full details.</p>
                 </div>
             </div>
         </aside>
-
     </div>
-
-    <script src="icons.js"></script>
-    <script src="nav.js"></script>
+    <script src="assets/icons.js"></script>
+    <script src="assets/nav.js"></script>
 </body>
 </html>
