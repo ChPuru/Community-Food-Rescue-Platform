@@ -1,15 +1,13 @@
-<?php require_once 'init.php'; ?>
+<?php require_once '../backend/init.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FoodCycle — Pickup Details</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body class="bg-page min-h-screen flex flex-col">
-
-    <!-- Navigation -->
     <nav class="site-nav">
         <div class="nav-inner">
             <div class="flex items-center gap-4">
@@ -28,18 +26,11 @@
             </div>
         </div>
     </nav>
-
     <main class="flex-grow container py-8">
-
         <div class="grid grid-cols-1 lg-grid-cols-12 gap-8">
-
-            <!-- Left Column: Details -->
             <div class="lg-col-span-7 space-y-8">
-
-                <!-- Header Info -->
                 <div class="bg-white brutal-border p-6 sm-p-8 relative">
                     <div class="pickup-batch-badge">Batch #8842</div>
-
                     <div class="flex items-start gap-4 mb-6">
                         <div class="brutal-border flex-shrink-0 flex items-center justify-center" style="width:4rem;height:4rem;background:#000;color:#fff">
                             <i data-icon="croissant" class="icon icon-xl"></i>
@@ -50,7 +41,6 @@
                             <p class="text-xl font-medium text-gray-600">Local Bakery Co.</p>
                         </div>
                     </div>
-
                     <div class="brutal-border-t pt-6 grid grid-cols-2 sm-grid-cols-4 gap-4">
                         <div>
                             <p class="pickup-stat">Quantity</p>
@@ -70,17 +60,13 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Description & Instructions -->
                 <div class="bg-white brutal-border p-6 sm-p-8">
                     <h2 class="font-display text-3xl uppercase mb-6" style="border-bottom:3px solid #000;padding-bottom:0.5rem">Details & Instructions</h2>
-
                     <div class="space-y-6">
                         <div>
                             <h3 class="font-bold uppercase text-sm text-gray-500 mb-2">What's Included</h3>
                             <p class="font-medium text-lg">2 boxes of assorted bagels, muffins, and day-old bread. Best before end of day.</p>
                         </div>
-
                         <div>
                             <h3 class="font-bold uppercase text-sm text-gray-500 mb-2">Pickup Instructions</h3>
                             <div class="brutal-border p-4 font-medium" style="background:var(--bg)">
@@ -91,7 +77,6 @@
                                 </ul>
                             </div>
                         </div>
-
                         <div>
                             <h3 class="font-bold uppercase text-sm text-gray-500 mb-2">Allergen Warning</h3>
                             <div class="flex gap-2">
@@ -102,20 +87,13 @@
                         </div>
                     </div>
                 </div>
-
             </div>
-
-            <!-- Right Column: Map & Actions -->
             <div class="lg-col-span-5 space-y-8">
-
-                <!-- Map Card -->
                 <div class="bg-white brutal-border overflow-hidden flex flex-col" style="height:400px">
                     <div class="brutal-border-b p-3 flex justify-between items-center" style="background:#000;color:#fff">
                         <h2 class="font-bold uppercase tracking-wider text-sm">Location</h2>
                         <button style="color:#fff" onmouseover="this.style.color='var(--brand-400)'" onmouseout="this.style.color='#fff'"><i data-icon="external-link" class="icon icon-sm"></i></button>
                     </div>
-
-                    <!-- Map Area -->
                     <div class="flex-grow relative" style="background:var(--gray-200)">
                         <div class="absolute inset-0 bg-grid" style="opacity:0.3"></div>
                         <div class="absolute inset-0 p-4">
@@ -134,7 +112,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="p-4 brutal-border-t bg-white">
                         <p class="font-bold text-lg">123 Main Street</p>
                         <p class="text-sm text-gray-600 font-medium">Downtown District, Cityville</p>
@@ -143,30 +120,24 @@
                         </button>
                     </div>
                 </div>
-
-                <!-- Action Card -->
                 <div class="brutal-border p-6 sm-p-8 relative overflow-hidden" style="background:var(--brand-400)">
                     <i data-icon="hand-heart" class="icon absolute" style="right:-2.5rem;bottom:-2.5rem;width:12rem;height:12rem;opacity:0.2;color:#000;transform:rotate(12deg)"></i>
-
                     <div class="relative z-10">
                         <h2 class="font-display text-4xl mb-2">Ready to Rescue?</h2>
                         <p class="font-medium mb-6" style="color:#000">By claiming this batch, you commit to picking it up within the next 45 minutes.</p>
-
                         <button class="w-full brutal-shadow font-display text-3xl uppercase tracking-wider mb-4 transition-colors" style="background:#000;color:#fff;padding:1.25rem;border:none;cursor:pointer" onmouseover="this.style.background='#fff';this.style.color='#000'" onmouseout="this.style.background='#000';this.style.color='#fff'">
                             Claim Batch
                         </button>
-
                         <p class="text-center text-xs font-bold uppercase tracking-wider">
                             Need help? <a href="feedback.php" class="underline" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#000'">Contact Support</a>
                         </p>
                     </div>
                 </div>
-
             </div>
         </div>
     </main>
-
-    <script src="icons.js"></script>
-    <script src="nav.js"></script>
+    <script src="assets/icons.js"></script>
+    <script src="assets/nav.js"></script>
 </body>
 </html>
+

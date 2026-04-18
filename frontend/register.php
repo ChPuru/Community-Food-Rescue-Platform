@@ -1,15 +1,12 @@
 <?php
 session_start();
-require 'db.php';
-
+require '../backend/db.php';
 $error = '';
 $success = '';
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = trim($_POST['name']);
     $email = trim($_POST['email']);
     $password = $_POST['password'];
-
     if (empty($name) || empty($email) || empty($password)) {
         $error = "All fields are required.";
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -17,15 +14,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
         $stmt->execute([$email]);
-        $userExists = $stmt->fetch();
-        $stmt->closeCursor();
-        
-        if ($userExists) {
+        if ($stmt->fetch()) {
             $error = "Email is already registered.";
         } else {
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
             $stmt = $pdo->prepare("INSERT INTO users (name, email, password) VALUES (?, ?, ?)");
-            
             if ($stmt->execute([$name, $email, $hashed_password])) {
                 $success = "Registration successful. You can now login.";
             } else {
@@ -41,10 +34,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RESCUE_ARCH - REGISTER</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body class="min-h-screen flex flex-col bg-blueprint" style="background-color:var(--arch-white);color:var(--arch-black)">
-
     <header class="arch-border-b flex justify-between items-center px-6 py-4 sticky z-50" style="top:0;background:var(--arch-white)">
         <div class="flex items-center gap-3">
             <div style="width:1.5rem;height:1.5rem;background:var(--arch-black);display:flex;align-items:center;justify-content:center">
@@ -59,16 +51,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             [ RETURN_HOME ]
         </a>
     </header>
-
     <main class="flex-grow flex items-center justify-center p-4 relative" style="padding:2rem">
-
         <div class="crosshair lg-block hidden" style="top:2rem;left:2rem"></div>
         <div class="crosshair lg-block hidden" style="top:2rem;right:2rem"></div>
         <div class="crosshair lg-block hidden" style="bottom:2rem;left:2rem"></div>
         <div class="crosshair lg-block hidden" style="bottom:2rem;right:2rem"></div>
-
         <div class="arch-border w-full grid grid-cols-1 lg-grid-cols-2" style="max-width:64rem;background:var(--arch-white);box-shadow:8px 8px 0 var(--arch-black)">
-
             <div class="arch-border-r p-8 lg-p-12 flex flex-col justify-between relative overflow-hidden md-flex hidden" style="background:var(--arch-light)">
                 <div class="relative z-10">
                     <div class="inline-block font-mono text-xs uppercase mb-8" style="background:var(--arch-black);color:var(--arch-white);padding:0.25rem 0.75rem">
@@ -81,7 +69,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         Join the logistics network to coordinate surplus food distribution and track community impact metrics.
                     </p>
                 </div>
-
                 <div class="relative z-10 mt-12">
                     <div class="grid grid-cols-2 gap-4 font-mono text-xs uppercase" style="color:var(--arch-gray)">
                         <div>
@@ -98,38 +85,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                     </div>
                 </div>
-
                 <i data-icon="fingerprint" class="icon icon-huge absolute" style="bottom:-5rem;right:-5rem;opacity:0.05;color:var(--arch-black)"></i>
             </div>
-
             <div class="p-8 lg-p-12 relative" style="background:var(--arch-white)">
-
                 <div class="mb-8">
                     <h2 class="font-bold tracking-tight mb-2" style="font-size:1.875rem">System Registration</h2>
                     <p class="font-mono text-sm" style="color:var(--arch-gray)">Create credentials to access network.</p>
                 </div>
-                
                 <?php if ($error): ?>
                     <div style="background: #ffcccc; color: #cc0000; padding: 10px; margin-bottom: 20px; border: 1px solid #cc0000; font-family: monospace;">
                         <?php echo htmlspecialchars($error); ?>
                     </div>
                 <?php endif; ?>
-                
                 <?php if ($success): ?>
                     <div style="background: #ccffcc; color: #006600; padding: 10px; margin-bottom: 20px; border: 1px solid #006600; font-family: monospace;">
                         <?php echo htmlspecialchars($success); ?>
                     </div>
                 <?php endif; ?>
-
                 <form method="POST" action="register.php" class="space-y-6">
-
                     <div class="relative">
                         <label class="font-mono text-xs font-bold uppercase tracking-widest block mb-1">
                             Operator [Name]
                         </label>
                         <input type="text" name="name" placeholder="John Doe" class="arch-input" required>
                     </div>
-
                     <div class="relative">
                         <label class="font-mono text-xs font-bold uppercase tracking-widest block mb-1">
                             Identification [Email]
@@ -137,20 +116,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <input type="email" name="email" placeholder="operator@rescue-arch.org" class="arch-input" required>
                         <i data-icon="mail" class="icon icon-md absolute" style="right:0;bottom:1rem;color:var(--arch-gray)"></i>
                     </div>
-
                     <div class="relative">
                         <label class="font-mono text-xs font-bold uppercase tracking-widest block mb-1">
                             Passcode [Password]
                         </label>
                         <input type="password" name="password" placeholder="••••••••••••" class="arch-input" required minlength="8">
                     </div>
-
                     <div class="pt-6 space-y-4">
                         <button type="submit" class="arch-btn w-full">
                             <span>Register Operator</span>
                             <i data-icon="arrow-right" class="icon icon-md"></i>
                         </button>
-
                         <div class="text-center">
                             <span class="font-mono text-xs uppercase" style="color:var(--arch-gray)">
                                 Already have Clearance?
@@ -160,13 +136,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </span>
                         </div>
                     </div>
-
                 </form>
-
             </div>
         </div>
     </main>
-
     <footer class="arch-footer">
         <div>&copy; 2024 RESCUE_ARCH. ALL RIGHTS RESERVED.</div>
         <div class="flex gap-4">
@@ -174,8 +147,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <a href="#">PRIVACY</a>
         </div>
     </footer>
-
-    <script src="icons.js"></script>
-    <script src="nav.js"></script>
+    <script src="assets/icons.js"></script>
+    <script src="assets/nav.js"></script>
 </body>
 </html>
+

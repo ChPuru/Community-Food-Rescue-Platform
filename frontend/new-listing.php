@@ -1,15 +1,13 @@
-<?php require_once 'init.php'; ?>
+<?php require_once '../backend/init.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FoodCycle — Share Surplus Food</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body class="bg-page min-h-screen flex flex-col">
-
-    <!-- Navigation -->
     <nav class="site-nav">
         <div class="nav-inner">
             <div class="flex items-center gap-4">
@@ -27,9 +25,7 @@
             </div>
         </div>
     </nav>
-
     <main class="flex-grow container py-12" style="max-width:48rem">
-
         <div class="mb-12">
             <div class="tag-skew mb-4">New Listing</div>
             <h1 class="font-display text-6xl sm-text-7xl leading-none mb-4">
@@ -39,21 +35,16 @@
                 List your excess food to connect with local rescuers. Be as descriptive as possible.
             </p>
         </div>
-
         <form class="space-y-8">
-
-            <!-- Basic Info Section -->
             <div class="bg-white brutal-border p-6 sm-p-8 relative">
                 <div class="absolute z-10" style="top:-1rem;right:-1rem;background:#000;color:#fff;border:3px solid #000;padding:0.5rem 1rem;font-family:var(--font-display);font-size:1.5rem;text-transform:uppercase;transform:rotate(6deg)">
                     01. Basics
                 </div>
-
                 <div class="space-y-6">
                     <div>
                         <label class="font-bold uppercase text-sm text-gray-500 block mb-2">Listing Title</label>
                         <input type="text" placeholder="e.g., Morning Pastries Batch" class="input-brutal">
                     </div>
-
                     <div class="grid grid-cols-1 sm-grid-cols-2 gap-6">
                         <div>
                             <label class="font-bold uppercase text-sm text-gray-500 block mb-2">Food Category</label>
@@ -73,19 +64,15 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Details Section -->
             <div class="bg-white brutal-border p-6 sm-p-8 relative">
                 <div class="absolute z-10" style="top:-1rem;right:-1rem;background:#000;color:#fff;border:3px solid #000;padding:0.5rem 1rem;font-family:var(--font-display);font-size:1.5rem;text-transform:uppercase;transform:rotate(6deg)">
                     02. Details
                 </div>
-
                 <div class="space-y-6">
                     <div>
                         <label class="font-bold uppercase text-sm text-gray-500 block mb-2">Description & Contents</label>
                         <textarea rows="4" placeholder="Describe what's included, condition, and any packaging details..." class="textarea-brutal"></textarea>
                     </div>
-
                     <div>
                         <label class="font-bold uppercase text-sm text-gray-500 block mb-4">Allergen Warnings (Select all that apply)</label>
                         <div class="flex flex-wrap gap-3" id="allergens">
@@ -113,13 +100,10 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Logistics Section -->
             <div class="bg-white brutal-border p-6 sm-p-8 relative">
                 <div class="absolute z-10" style="top:-1rem;right:-1rem;background:#000;color:#fff;border:3px solid #000;padding:0.5rem 1rem;font-family:var(--font-display);font-size:1.5rem;text-transform:uppercase;transform:rotate(6deg)">
                     03. Logistics
                 </div>
-
                 <div class="space-y-6">
                     <div class="grid grid-cols-1 sm-grid-cols-2 gap-6">
                         <div>
@@ -136,15 +120,12 @@
                             </select>
                         </div>
                     </div>
-
                     <div>
                         <label class="font-bold uppercase text-sm text-gray-500 block mb-2">Special Pickup Instructions</label>
                         <textarea rows="2" placeholder="e.g., Ring the bell, bring your own bags..." class="textarea-brutal"></textarea>
                     </div>
                 </div>
             </div>
-
-            <!-- Submit Area -->
             <div class="pt-8 flex flex-col gap-6 sm-flex-row sm-items-center" style="justify-content:space-between">
                 <p class="text-sm font-bold uppercase text-gray-500 text-center">
                     By posting, you agree to our <a href="#" class="underline" style="color:#000" onmouseover="this.style.color='var(--brand-600)'" onmouseout="this.style.color='#000'">Food Safety Guidelines</a>.
@@ -153,11 +134,10 @@
                     Post Listing
                 </button>
             </div>
-
         </form>
     </main>
-
-    <script src="icons.js"></script>
-    <script src="nav.js"></script>
+    <script src="assets/icons.js"></script>
+    <script src="assets/nav.js"></script>
 </body>
 </html>
+

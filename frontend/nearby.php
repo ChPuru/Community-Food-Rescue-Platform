@@ -1,15 +1,13 @@
-<?php require_once 'init.php'; ?>
+<?php require_once '../backend/init.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FoodCycle - Nearby</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body class="bg-page flex flex-col brutal-border" style="max-width:28rem;margin:0 auto;min-height:100vh;border-left:3px solid #000;border-right:3px solid #000">
-
-    <!-- Mobile Header -->
     <header class="bg-white brutal-border-b p-4 sticky flex justify-between items-center" style="top:0;z-index:50">
         <div class="flex items-center gap-2">
             <div class="logo-icon" style="width:2rem;height:2rem"><i data-icon="recycle" class="icon icon-md" style="color:#fff"></i></div>
@@ -19,8 +17,6 @@
             <i data-icon="menu" class="icon icon-md"></i>
         </button>
     </header>
-
-    <!-- Map View Toggle -->
     <div class="bg-brand-400 brutal-border-b p-3 flex justify-between items-center">
         <div class="font-bold uppercase text-sm tracking-wider flex items-center gap-2">
             <span class="pulse" style="width:0.5rem;height:0.5rem;background:#000;border-radius:9999px;display:inline-block"></span>
@@ -30,8 +26,6 @@
             <i data-icon="map" class="icon icon-sm"></i> Map
         </button>
     </div>
-
-    <!-- Filter Chips -->
     <div class="bg-white brutal-border-b p-3 overflow-x-auto hide-scroll whitespace-nowrap flex gap-2">
         <button class="bg-black text-white px-4 py-1 brutal-border font-bold text-xs uppercase inline-block" style="padding-top:0.375rem;padding-bottom:0.375rem">All</button>
         <button class="px-4 py-1 brutal-border font-bold text-xs uppercase inline-block transition-colors" style="background:var(--bg);padding-top:0.375rem;padding-bottom:0.375rem" onmouseover="this.style.background='var(--brand-400)'" onmouseout="this.style.background='var(--bg)'">Produce</button>
@@ -39,13 +33,8 @@
         <button class="px-4 py-1 brutal-border font-bold text-xs uppercase inline-block transition-colors" style="background:var(--bg);padding-top:0.375rem;padding-bottom:0.375rem" onmouseover="this.style.background='var(--brand-400)'" onmouseout="this.style.background='var(--bg)'">Meals</button>
         <button class="px-4 py-1 brutal-border font-bold text-xs uppercase inline-block transition-colors" style="background:var(--bg);padding-top:0.375rem;padding-bottom:0.375rem" onmouseover="this.style.background='var(--brand-400)'" onmouseout="this.style.background='var(--bg)'">Dairy</button>
     </div>
-
-    <!-- Main Content -->
     <main class="flex-1 overflow-y-auto p-4 space-y-4 bg-page" style="padding-bottom:6rem">
-
         <h2 class="font-display text-3xl uppercase mb-2">Nearby <span class="text-brand-600">Now</span></h2>
-
-        <!-- Card 1 (Urgent) -->
         <article class="nearby-card">
             <div class="nearby-distance bg-brand-400">0.5 mi</div>
             <div class="nearby-card-header">
@@ -68,8 +57,6 @@
             </div>
             <button class="btn-full-black">Claim Batch</button>
         </article>
-
-        <!-- Card 2 -->
         <article class="nearby-card">
             <div class="nearby-distance bg-white">1.2 mi</div>
             <div class="nearby-card-header">
@@ -92,8 +79,6 @@
             </div>
             <button class="btn-full-white">Claim Batch</button>
         </article>
-
-        <!-- Banner CTA -->
         <div class="brutal-border p-4 relative overflow-hidden" style="background:var(--brand-600);color:#fff;margin-top:1.5rem;margin-bottom:1.5rem">
             <i data-icon="truck" class="icon icon-huge absolute" style="right:-1rem;bottom:-1rem;opacity:0.2;color:#000;transform:rotate(12deg)"></i>
             <h3 class="font-display text-2xl uppercase mb-2 relative z-10">Have Surplus?</h3>
@@ -102,8 +87,6 @@
                 Create Listing
             </a>
         </div>
-
-        <!-- Card 3 -->
         <article class="nearby-card">
             <div class="nearby-distance bg-white">2.5 mi</div>
             <div class="nearby-card-header">
@@ -128,10 +111,7 @@
             </div>
             <button class="btn-full-white">Claim Batch</button>
         </article>
-
     </main>
-
-    <!-- Mobile Bottom Navigation -->
     <nav class="bg-white brutal-border-t fixed flex justify-around p-2" style="bottom:0;width:100%;max-width:28rem;z-index:50">
         <a href="feed.php" class="flex flex-col items-center p-2 text-brand-600">
             <i data-icon="list" class="icon icon-lg mb-1"></i>
@@ -162,8 +142,8 @@
             </a>
         <?php endif; ?>
     </nav>
-
-    <script src="icons.js"></script>
-    <script src="nav.js"></script>
+    <script src="assets/icons.js"></script>
+    <script src="assets/nav.js"></script>
 </body>
 </html>
+
