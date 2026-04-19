@@ -1,9 +1,3 @@
-/**
- * FoodCycle Icon System
- * Replaces Lucide Icons CDN with inline SVGs.
- * Usage: <i data-icon="icon-name" class="icon icon-lg"></i>
- * Runs automatically on DOMContentLoaded.
- */
 
 const ICONS = {
     recycle: '<path d="M7 19H4.815a1.83 1.83 0 0 1-1.57-.881 1.785 1.785 0 0 1-.004-1.784L7.196 9.5"/><path d="M11 19h8.203a1.83 1.83 0 0 0 1.556-.89 1.784 1.784 0 0 0 0-1.775l-1.226-2.12"/><path d="m14 16-3 3 3 3"/><path d="M8.293 13.596 4.875 8.385l-3.633 2.1"/><path d="M7.196 9.5 3.1 4.886a1.83 1.83 0 0 1 .012-1.783A1.785 1.785 0 0 1 4.676 2h7.357"/><path d="m15.293 5.39-.707.707"/><path d="m18.586 12.293-6.586-6.586"/><path d="m17 2 3.5 3.5L17 9"/><path d="m19.758 10.414 3.07 5.318a1.784 1.784 0 0 1-.009 1.781A1.83 1.83 0 0 1 21.266 18.4L18.4 18.4"/>',
@@ -56,7 +50,6 @@ const ICONS = {
     'mouse-pointer': '<path d="m3 3 7.07 16.97 2.51-7.39 7.39-2.51z"/>',
     filter: '<polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>',
 };
-
 function renderIcons() {
     document.querySelectorAll('[data-icon]').forEach(el => {
         const name = el.getAttribute('data-icon');
@@ -65,7 +58,6 @@ function renderIcons() {
             console.warn(`Icon "${name}" not found`);
             return;
         }
-
         const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
         svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
         svg.setAttribute('width', '24');
@@ -76,15 +68,11 @@ function renderIcons() {
         svg.setAttribute('stroke-width', '2');
         svg.setAttribute('stroke-linecap', 'round');
         svg.setAttribute('stroke-linejoin', 'round');
-
-        // Copy classes from the <i> to the <svg>
         if (el.className) {
             svg.setAttribute('class', el.className);
         }
-
         svg.innerHTML = svgContent;
         el.replaceWith(svg);
     });
 }
-
 document.addEventListener('DOMContentLoaded', renderIcons);

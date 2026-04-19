@@ -1,21 +1,14 @@
-/* ============================================================
-   FoodCycle — Community Food Rescue Platform
-   Shared Stylesheet (Pure Vanilla CSS, No Dependencies)
-   ============================================================ */
 
-/* ----- Reset & Base ----- */
 *, *::before, *::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-
 html {
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
-
 body {
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     line-height: 1.5;
@@ -23,65 +16,23 @@ body {
     background-color: #f4f4f0;
     min-height: 100vh;
 }
-
 a { color: inherit; text-decoration: none; }
 img { max-width: 100%; display: block; }
 button, input, select, textarea { font-family: inherit; font-size: inherit; }
 button { cursor: pointer; background: none; border: none; }
 ul, ol { list-style: none; }
-
 ::selection { background: #16a34a; color: #fff; }
-
-/* ----- CSS Custom Properties ----- */
 :root {
-    /* FoodCycle Green Theme */
-    --brand-50: #f0fdf4;
-    --brand-100: #dcfce7;
-    --brand-400: #4ade80;
-    --brand-500: #22c55e;
-    --brand-600: #16a34a;
-    --brand-900: #14532d;
-    --brand-950: #052e16;
-
-    /* Rescue_Arch Theme */
-    --arch-black: #0A0A0A;
-    --arch-white: #F4F4F0;
-    --arch-accent: #FF3B00;
-    --arch-gray: #8E8E8E;
-    --arch-light: #EAEAE5;
-
-    /* Shared */
-    --black: #000;
-    --white: #fff;
-    --bg: #f4f4f0;
-    --gray-100: #f3f4f6;
-    --gray-200: #e5e7eb;
-    --gray-300: #d1d5db;
-    --gray-400: #9ca3af;
-    --gray-500: #6b7280;
-    --gray-600: #4b5563;
-
-    /* Fonts */
-    --font-body: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    --font-display: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
-    --font-mono: "Cascadia Code", "Fira Code", Consolas, "Courier New", monospace;
-
-    /* Sizing */
-    --container: 1280px;
 }
-
-/* ----- Typography ----- */
 .font-display {
     font-family: var(--font-display);
     font-weight: 400;
     text-transform: uppercase;
     letter-spacing: 0.02em;
 }
-
 .font-mono {
     font-family: var(--font-mono);
 }
-
 .text-xs { font-size: 0.75rem; line-height: 1rem; }
 .text-sm { font-size: 0.875rem; line-height: 1.25rem; }
 .text-base { font-size: 1rem; line-height: 1.5rem; }
@@ -94,7 +45,6 @@ ul, ol { list-style: none; }
 .text-6xl { font-size: 3.75rem; line-height: 1; }
 .text-7xl { font-size: 4.5rem; line-height: 1; }
 .text-8xl { font-size: 6rem; line-height: 1; }
-
 .font-bold { font-weight: 700; }
 .font-medium { font-weight: 500; }
 .uppercase { text-transform: uppercase; }
@@ -111,8 +61,6 @@ ul, ol { list-style: none; }
 .truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .line-clamp-1 { display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
 .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-
-/* ----- Colors (text) ----- */
 .text-white { color: var(--white); }
 .text-black { color: var(--black); }
 .text-brand-400 { color: var(--brand-400); }
@@ -123,8 +71,6 @@ ul, ol { list-style: none; }
 .text-gray-600 { color: var(--gray-600); }
 .text-arch-accent { color: var(--arch-accent); }
 .text-arch-gray { color: var(--arch-gray); }
-
-/* ----- Colors (background) ----- */
 .bg-white { background-color: var(--white); }
 .bg-black { background-color: var(--black); }
 .bg-page { background-color: var(--bg); }
@@ -138,8 +84,6 @@ ul, ol { list-style: none; }
 .bg-arch-light { background-color: var(--arch-light); }
 .bg-arch-black { background-color: var(--arch-black); }
 .bg-arch-white { background-color: var(--arch-white); }
-
-/* ----- Layout: Flex ----- */
 .flex { display: flex; }
 .inline-flex { display: inline-flex; }
 .flex-col { flex-direction: column; }
@@ -155,22 +99,17 @@ ul, ol { list-style: none; }
 .justify-between { justify-content: space-between; }
 .justify-around { justify-content: space-around; }
 .self-center { align-self: center; }
-
 .gap-1 { gap: 0.25rem; }
 .gap-2 { gap: 0.5rem; }
 .gap-3 { gap: 0.75rem; }
 .gap-4 { gap: 1rem; }
 .gap-6 { gap: 1.5rem; }
 .gap-8 { gap: 2rem; }
-
-/* ----- Layout: Grid ----- */
 .grid { display: grid; }
 .grid-cols-1 { grid-template-columns: repeat(1, 1fr); }
 .grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
 .grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
 .col-span-2 { grid-column: span 2; }
-
-/* ----- Layout: Position ----- */
 .relative { position: relative; }
 .absolute { position: absolute; }
 .fixed { position: fixed; }
@@ -181,13 +120,10 @@ ul, ol { list-style: none; }
 .z-30 { z-index: 30; }
 .z-40 { z-index: 40; }
 .z-50 { z-index: 50; }
-
-/* ----- Sizing ----- */
 .w-full { width: 100%; }
 .h-full { height: 100%; }
 .min-h-screen { min-height: 100vh; }
 .min-w-0 { min-width: 0; }
-
 .container {
     max-width: var(--container);
     margin-left: auto;
@@ -195,8 +131,6 @@ ul, ol { list-style: none; }
     padding-left: 1rem;
     padding-right: 1rem;
 }
-
-/* ----- Spacing ----- */
 .p-0 { padding: 0; }
 .p-1 { padding: 0.25rem; }
 .p-2 { padding: 0.5rem; }
@@ -228,7 +162,6 @@ ul, ol { list-style: none; }
 .pl-4 { padding-left: 1rem; }
 .pl-5 { padding-left: 1.25rem; }
 .pl-6 { padding-left: 1.5rem; }
-
 .m-0 { margin: 0; }
 .mx-auto { margin-left: auto; margin-right: auto; }
 .mb-1 { margin-bottom: 0.25rem; }
@@ -248,21 +181,16 @@ ul, ol { list-style: none; }
 .ml-2 { margin-left: 0.5rem; }
 .ml-4 { margin-left: 1rem; }
 .ml-8 { margin-left: 2rem; }
-
 .space-y-2 > * + * { margin-top: 0.5rem; }
 .space-y-4 > * + * { margin-top: 1rem; }
 .space-y-6 > * + * { margin-top: 1.5rem; }
 .space-y-8 > * + * { margin-top: 2rem; }
 .space-x-1 > * + * { margin-left: 0.25rem; }
 .space-x-8 > * + * { margin-left: 2rem; }
-
-/* ----- Overflow ----- */
 .overflow-hidden { overflow: hidden; }
 .overflow-y-auto { overflow-y: auto; }
 .overflow-x-auto { overflow-x: auto; }
 .whitespace-nowrap { white-space: nowrap; }
-
-/* ----- Visibility & Opacity ----- */
 .hidden { display: none; }
 .block { display: block; }
 .inline-block { display: inline-block; }
@@ -275,41 +203,25 @@ ul, ol { list-style: none; }
     padding: 0; margin: -1px; overflow: hidden;
     clip: rect(0,0,0,0); white-space: nowrap; border: 0;
 }
-
-/* ----- Borders & Rounding ----- */
 .rounded-full { border-radius: 9999px; }
 .border-0 { border: none; }
 .border-dashed { border-style: dashed; }
-
-/* ----- Transforms ----- */
 .rotate-6 { transform: rotate(6deg); }
 .rotate-12 { transform: rotate(12deg); }
 .-rotate-6 { transform: rotate(-6deg); }
 .-rotate-12 { transform: rotate(-12deg); }
 .-skew-x-12 { transform: skewX(-12deg); }
-
-/* ----- Transitions ----- */
 .transition-colors { transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease; }
 .transition-transform { transition: transform 0.2s ease; }
 .transition-all { transition: all 0.2s ease; }
-
-/* ----- Cursors ----- */
 .cursor-pointer { cursor: pointer; }
 .cursor-not-allowed { cursor: not-allowed; }
-
-/* ----- Object fit ----- */
 .object-cover { object-fit: cover; }
-
-/* ============================================================
-   BRUTALIST DESIGN SYSTEM — FoodCycle Theme
-   ============================================================ */
-
 .brutal-border { border: 3px solid #000; }
 .brutal-border-b { border-bottom: 3px solid #000; }
 .brutal-border-t { border-top: 3px solid #000; }
 .brutal-border-r { border-right: 3px solid #000; }
 .brutal-border-l { border-left: 3px solid #000; }
-
 .brutal-shadow {
     box-shadow: 6px 6px 0px #000;
     transition: all 0.2s ease;
@@ -318,7 +230,6 @@ ul, ol { list-style: none; }
     box-shadow: 2px 2px 0px #000;
     transform: translate(4px, 4px);
 }
-
 .brutal-shadow-sm {
     box-shadow: 4px 4px 0px #000;
     transition: all 0.2s ease;
@@ -331,7 +242,6 @@ ul, ol { list-style: none; }
     box-shadow: 0 0 0 #000;
     transform: translate(4px, 4px);
 }
-
 .brutal-shadow-green {
     box-shadow: 6px 6px 0px var(--brand-600);
     transition: all 0.2s ease;
@@ -340,17 +250,11 @@ ul, ol { list-style: none; }
     box-shadow: 2px 2px 0px var(--brand-600);
     transform: translate(4px, 4px);
 }
-
-/* ============================================================
-   BRUTALIST DESIGN SYSTEM — Rescue_Arch Theme
-   ============================================================ */
-
 .arch-border { border: 2px solid var(--arch-black); }
 .arch-border-b { border-bottom: 2px solid var(--arch-black); }
 .arch-border-t { border-top: 2px solid var(--arch-black); }
 .arch-border-r { border-right: 2px solid var(--arch-black); }
 .arch-border-l { border-left: 2px solid var(--arch-black); }
-
 .arch-input {
     width: 100%;
     background: transparent;
@@ -368,7 +272,6 @@ ul, ol { list-style: none; }
     padding-left: 0.5rem;
 }
 .arch-input::placeholder { color: var(--arch-gray); }
-
 .arch-input-sm {
     width: 100%;
     background: transparent;
@@ -385,7 +288,6 @@ ul, ol { list-style: none; }
     background: rgba(255, 59, 0, 0.05);
     padding-left: 0.5rem;
 }
-
 .arch-textarea {
     width: 100%;
     background: transparent;
@@ -402,7 +304,6 @@ ul, ol { list-style: none; }
     border-color: var(--arch-accent);
     background: rgba(255, 59, 0, 0.05);
 }
-
 .arch-btn {
     display: inline-flex;
     align-items: center;
@@ -428,7 +329,6 @@ ul, ol { list-style: none; }
     transform: translateY(0);
     box-shadow: none;
 }
-
 .arch-btn-outline {
     display: inline-flex;
     align-items: center;
@@ -448,7 +348,6 @@ ul, ol { list-style: none; }
     background: var(--arch-black);
     color: var(--arch-white);
 }
-
 .arch-btn-sm {
     display: inline-flex;
     align-items: center;
@@ -470,43 +369,29 @@ ul, ol { list-style: none; }
     transform: translateY(-2px);
     box-shadow: 0 4px 0 var(--arch-black);
 }
-
-/* ============================================================
-   PATTERNS & BACKGROUNDS
-   ============================================================ */
-
 .bg-stripes {
     background-image: repeating-linear-gradient(
         45deg, #000 0, #000 2px, transparent 2px, transparent 8px
     );
 }
-
 .bg-grid {
     background-size: 40px 40px;
     background-image:
         linear-gradient(to right, rgba(0,0,0,0.1) 1px, transparent 1px),
         linear-gradient(to bottom, rgba(0,0,0,0.1) 1px, transparent 1px);
 }
-
 .bg-grid-light {
     background-size: 20px 20px;
     background-image:
         linear-gradient(to right, rgba(0,0,0,0.1) 1px, transparent 1px),
         linear-gradient(to bottom, rgba(0,0,0,0.1) 1px, transparent 1px);
 }
-
 .bg-blueprint {
     background-size: 40px 40px;
     background-image:
         linear-gradient(to right, rgba(10,10,10,0.05) 1px, transparent 1px),
         linear-gradient(to bottom, rgba(10,10,10,0.05) 1px, transparent 1px);
 }
-
-/* ============================================================
-   COMPONENTS
-   ============================================================ */
-
-/* --- Navigation --- */
 .site-nav {
     border-bottom: 3px solid #000;
     background: #fff;
@@ -514,7 +399,6 @@ ul, ol { list-style: none; }
     top: 0;
     z-index: 50;
 }
-
 .site-nav .nav-inner {
     max-width: var(--container);
     margin: 0 auto;
@@ -524,14 +408,12 @@ ul, ol { list-style: none; }
     align-items: center;
     height: 5rem;
 }
-
 .site-nav .logo {
     display: flex;
     align-items: center;
     gap: 0.5rem;
     flex-shrink: 0;
 }
-
 .site-nav .logo-icon {
     width: 2.5rem;
     height: 2.5rem;
@@ -543,7 +425,6 @@ ul, ol { list-style: none; }
     transform: rotate(-6deg);
     color: #fff;
 }
-
 .site-nav .logo-text {
     font-family: var(--font-display);
     font-size: 1.875rem;
@@ -551,7 +432,6 @@ ul, ol { list-style: none; }
     text-transform: uppercase;
     margin-top: 0.25rem;
 }
-
 .nav-links {
     display: none;
     align-items: center;
@@ -561,9 +441,7 @@ ul, ol { list-style: none; }
     letter-spacing: 0.05em;
     font-size: 0.875rem;
 }
-
 .nav-links a:hover { color: var(--brand-600); }
-
 .nav-links .btn-nav {
     background: #000;
     color: #fff;
@@ -572,7 +450,6 @@ ul, ol { list-style: none; }
     transition: all 0.2s ease;
 }
 .nav-links .btn-nav:hover { background: var(--brand-600); }
-
 .mobile-menu-btn {
     padding: 0.5rem;
     border: 3px solid #000;
@@ -581,8 +458,6 @@ ul, ol { list-style: none; }
     align-items: center;
     justify-content: center;
 }
-
-/* --- Buttons --- */
 .btn-primary {
     background: var(--brand-600);
     color: #fff;
@@ -601,7 +476,6 @@ ul, ol { list-style: none; }
     box-shadow: 2px 2px 0px #000;
     transform: translate(4px, 4px);
 }
-
 .btn-secondary {
     background: #fff;
     color: #000;
@@ -620,7 +494,6 @@ ul, ol { list-style: none; }
     box-shadow: 2px 2px 0px var(--brand-600);
     transform: translate(4px, 4px);
 }
-
 .btn-black {
     background: #000;
     color: #fff;
@@ -639,7 +512,6 @@ ul, ol { list-style: none; }
     box-shadow: 2px 2px 0px #000;
     transform: translate(2px, 2px);
 }
-
 .btn-white-outline {
     background: #fff;
     color: #000;
@@ -652,7 +524,6 @@ ul, ol { list-style: none; }
     cursor: pointer;
 }
 .btn-white-outline:hover { background: var(--brand-400); }
-
 .btn-full-black {
     width: 100%;
     background: #000;
@@ -667,7 +538,6 @@ ul, ol { list-style: none; }
     cursor: pointer;
 }
 .btn-full-black:hover { background: var(--brand-600); }
-
 .btn-full-white {
     width: 100%;
     background: #fff;
@@ -682,13 +552,10 @@ ul, ol { list-style: none; }
     cursor: pointer;
 }
 .btn-full-white:hover { background: var(--brand-400); }
-
-/* --- Cards --- */
 .card {
     background: #fff;
     border: 3px solid #000;
 }
-
 .card-hover {
     background: #fff;
     border: 3px solid #000;
@@ -697,8 +564,6 @@ ul, ol { list-style: none; }
 .card-hover:hover {
     box-shadow: 8px 8px 0 var(--arch-black);
 }
-
-/* --- Badges --- */
 .badge {
     display: inline-block;
     padding: 0.125rem 0.5rem;
@@ -706,7 +571,6 @@ ul, ol { list-style: none; }
     text-transform: uppercase;
     font-size: 0.625rem;
 }
-
 .badge-black {
     background: #000;
     color: #fff;
@@ -714,7 +578,6 @@ ul, ol { list-style: none; }
     font-size: 0.5625rem;
     padding: 0.25rem 0.5rem;
 }
-
 .badge-outline {
     border: 2px solid #000;
     font-family: var(--font-mono);
@@ -723,7 +586,6 @@ ul, ol { list-style: none; }
     font-weight: 700;
     text-transform: uppercase;
 }
-
 .badge-green {
     background: var(--brand-400);
     border: 2px solid #000;
@@ -732,7 +594,6 @@ ul, ol { list-style: none; }
     text-transform: uppercase;
     padding: 0.125rem 0.5rem;
 }
-
 .badge-brand {
     background: var(--brand-100);
     border: 2px solid #000;
@@ -741,8 +602,6 @@ ul, ol { list-style: none; }
     text-transform: uppercase;
     padding: 0.125rem 0.5rem;
 }
-
-/* --- Tag / Skewed label --- */
 .tag-skew {
     display: inline-block;
     background: var(--brand-400);
@@ -754,7 +613,6 @@ ul, ol { list-style: none; }
     font-size: 0.875rem;
     transform: skewX(-12deg);
 }
-
 .tag-black-skew {
     display: inline-block;
     background: #000;
@@ -766,8 +624,6 @@ ul, ol { list-style: none; }
     font-size: 0.875rem;
     transform: skewX(-12deg);
 }
-
-/* --- Form inputs (FoodCycle theme) --- */
 .input-brutal {
     width: 100%;
     border: 3px solid #000;
@@ -781,7 +637,6 @@ ul, ol { list-style: none; }
 .input-brutal:focus {
     border-color: var(--brand-600);
 }
-
 .select-brutal {
     width: 100%;
     border: 3px solid #000;
@@ -795,7 +650,6 @@ ul, ol { list-style: none; }
 .select-brutal:focus {
     border-color: var(--brand-600);
 }
-
 .textarea-brutal {
     width: 100%;
     border: 3px solid #000;
@@ -809,7 +663,6 @@ ul, ol { list-style: none; }
 .textarea-brutal:focus {
     border-color: var(--brand-600);
 }
-
 .checkbox-brutal {
     width: 1.25rem;
     height: 1.25rem;
@@ -817,22 +670,16 @@ ul, ol { list-style: none; }
     accent-color: var(--brand-600);
     cursor: pointer;
 }
-
-/* --- Filter checkbox (Rescue_Arch) --- */
 .filter-checkbox:checked + label {
     background-color: var(--arch-black);
     color: var(--arch-white);
     border-color: var(--arch-black);
 }
-
-/* Rating input (feedback) */
 .rating-input:checked + label {
     background-color: var(--arch-black);
     color: var(--arch-white);
     border-color: var(--arch-black);
 }
-
-/* --- Image Placeholders --- */
 .img-placeholder {
     background: linear-gradient(135deg, #e0e0d8 0%, #d0d0c8 50%, #c8c8c0 100%);
     display: flex;
@@ -842,7 +689,6 @@ ul, ol { list-style: none; }
     position: relative;
     overflow: hidden;
 }
-
 .img-placeholder-dark {
     background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 50%, #111 100%);
     display: flex;
@@ -851,7 +697,6 @@ ul, ol { list-style: none; }
     color: var(--gray-500);
     overflow: hidden;
 }
-
 .img-placeholder-stripes {
     background-image: repeating-linear-gradient(
         45deg, #ddd 0, #ddd 2px, #e8e8e0 2px, #e8e8e0 8px
@@ -861,8 +706,6 @@ ul, ol { list-style: none; }
     justify-content: center;
     overflow: hidden;
 }
-
-/* --- Crosshair decoration (login) --- */
 .crosshair {
     position: absolute;
     width: 20px;
@@ -881,8 +724,6 @@ ul, ol { list-style: none; }
     left: 50%; top: 0; bottom: 0;
     width: 1px; transform: translateX(-50%);
 }
-
-/* --- Progress Bar --- */
 .progress-bar {
     height: 0.5rem;
     width: 100%;
@@ -894,12 +735,6 @@ ul, ol { list-style: none; }
     height: 100%;
     background: var(--brand-600);
 }
-
-/* ============================================================
-   ANIMATIONS
-   ============================================================ */
-
-/* Marquee */
 .marquee-container {
     overflow: hidden;
     white-space: nowrap;
@@ -920,8 +755,6 @@ ul, ol { list-style: none; }
     0% { transform: translateX(0); }
     100% { transform: translateX(-50%); }
 }
-
-/* Pulse */
 .pulse {
     animation: pulse 2s cubic-bezier(0.4,0,0.6,1) infinite;
 }
@@ -929,7 +762,6 @@ ul, ol { list-style: none; }
     0%, 100% { opacity: 1; }
     50% { opacity: 0.5; }
 }
-
 .pulse-ring {
     animation: pulseRing 1.5s cubic-bezier(0,0,0.2,1) infinite;
 }
@@ -937,8 +769,6 @@ ul, ol { list-style: none; }
     0% { transform: scale(1); opacity: 0.75; }
     100% { transform: scale(2); opacity: 0; }
 }
-
-/* Bounce */
 .bounce {
     animation: bounce 1s infinite;
 }
@@ -946,28 +776,16 @@ ul, ol { list-style: none; }
     0%, 100% { transform: translateY(-25%); animation-timing-function: cubic-bezier(0.8,0,1,1); }
     50% { transform: translateY(0); animation-timing-function: cubic-bezier(0,0,0.2,1); }
 }
-
-/* ============================================================
-   SCROLLBAR (Rescue_Arch)
-   ============================================================ */
-
 .custom-scrollbar::-webkit-scrollbar { width: 8px; height: 8px; }
 .custom-scrollbar::-webkit-scrollbar-track { background: var(--bg); border-left: 2px solid var(--arch-black); }
 .custom-scrollbar::-webkit-scrollbar-thumb { background: var(--arch-black); }
 .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: var(--arch-accent); }
-
 .feed-scroll::-webkit-scrollbar { width: 8px; }
 .feed-scroll::-webkit-scrollbar-track { background: var(--bg); border-left: 3px solid #000; }
 .feed-scroll::-webkit-scrollbar-thumb { background: #000; }
 .feed-scroll::-webkit-scrollbar-thumb:hover { background: var(--brand-600); }
-
 .hide-scroll::-webkit-scrollbar { display: none; }
 .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
-
-/* ============================================================
-   ICON SIZING
-   ============================================================ */
-
 .icon { display: inline-block; vertical-align: middle; }
 .icon-sm { width: 1rem; height: 1rem; }
 .icon-md { width: 1.25rem; height: 1.25rem; }
@@ -976,11 +794,6 @@ ul, ol { list-style: none; }
 .icon-2xl { width: 3rem; height: 3rem; }
 .icon-hero { width: 4rem; height: 4rem; }
 .icon-huge { width: 16rem; height: 16rem; }
-
-/* ============================================================
-   RESPONSIVE
-   ============================================================ */
-
 @media (min-width: 640px) {
     .container { padding-left: 1.5rem; padding-right: 1.5rem; }
     .sm-flex { display: flex; }
@@ -998,7 +811,6 @@ ul, ol { list-style: none; }
     .sm-p-8 { padding: 2rem; }
     .sm-px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
 }
-
 @media (min-width: 768px) {
     .nav-links { display: flex; }
     .mobile-menu-btn { display: none; }
@@ -1010,7 +822,6 @@ ul, ol { list-style: none; }
     .md-flex-row { flex-direction: row; }
     .md-items-end { align-items: flex-end; }
 }
-
 @media (min-width: 1024px) {
     .container { padding-left: 2rem; padding-right: 2rem; }
     .lg-flex { display: flex; }
@@ -1030,17 +841,11 @@ ul, ol { list-style: none; }
     .lg-text-6xl { font-size: 3.75rem; }
     .lg-text-huge { font-size: 8.75rem; line-height: 0.85; }
 }
-
 @media (min-width: 1280px) {
     .xl-flex { display: flex; }
     .xl-hidden { display: none; }
     .xl-grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
 }
-
-/* ============================================================
-   FOOTER
-   ============================================================ */
-
 .site-footer {
     background: #000;
     color: #fff;
@@ -1064,15 +869,12 @@ ul, ol { list-style: none; }
     letter-spacing: 0.05em;
 }
 .site-footer .footer-links a:hover { color: var(--brand-400); }
-
 @media (min-width: 768px) {
     .site-footer .footer-inner {
         flex-direction: row;
         justify-content: space-between;
     }
 }
-
-/* --- Arch Footer --- */
 .arch-footer {
     padding: 1.5rem;
     display: flex;
@@ -1085,11 +887,6 @@ ul, ol { list-style: none; }
     letter-spacing: 0.1em;
 }
 .arch-footer a:hover { color: var(--arch-black); }
-
-/* ============================================================
-   PAGE-SPECIFIC: Hero (index.html)
-   ============================================================ */
-
 .hero-text-giant {
     font-family: var(--font-display);
     font-size: 4.5rem;
@@ -1102,14 +899,12 @@ ul, ol { list-style: none; }
 @media (min-width: 1024px) {
     .hero-text-giant { font-size: 8.75rem; }
 }
-
 .hero-accent-line {
     border-left: 6px solid var(--brand-600);
     padding-left: 1.5rem;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
 }
-
 .hero-image-frame {
     position: relative;
     background: #fff;
@@ -1117,7 +912,6 @@ ul, ol { list-style: none; }
     padding: 1rem;
     z-index: 10;
 }
-
 .hero-image-bg {
     position: absolute;
     inset: 0;
@@ -1125,7 +919,6 @@ ul, ol { list-style: none; }
     border: 3px solid #000;
     transform: translate(1.5rem, 1.5rem);
 }
-
 .hero-stats {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -1134,18 +927,12 @@ ul, ol { list-style: none; }
     border-top: 3px solid #000;
     margin-top: 3rem;
 }
-
-/* ============================================================
-   PAGE-SPECIFIC: Feed (feed.html)
-   ============================================================ */
-
 .feed-item {
     background: #fff;
     border: 3px solid #000;
     padding: 1rem;
     position: relative;
 }
-
 .feed-item-claimed {
     background: var(--gray-200);
     border: 3px solid #000;
@@ -1153,7 +940,6 @@ ul, ol { list-style: none; }
     position: relative;
     opacity: 0.75;
 }
-
 .feed-item-expiry {
     position: absolute;
     top: 0;
@@ -1168,7 +954,6 @@ ul, ol { list-style: none; }
     border-left: 3px solid #000;
     z-index: 10;
 }
-
 .feed-item-new {
     position: absolute;
     top: 0;
@@ -1183,24 +968,17 @@ ul, ol { list-style: none; }
     border-left: 3px solid #000;
     z-index: 10;
 }
-
 .feed-divider {
     border-top: 2px dashed var(--gray-300);
     margin-top: 0.5rem;
     padding-top: 0.75rem;
 }
-
-/* ============================================================
-   PAGE-SPECIFIC: Catalogue card image
-   ============================================================ */
-
 .catalogue-img {
     height: 12rem;
     border-bottom: 2px solid var(--arch-black);
     position: relative;
     overflow: hidden;
 }
-
 .catalogue-img .img-id {
     position: absolute;
     bottom: 0;
@@ -1213,8 +991,6 @@ ul, ol { list-style: none; }
     text-transform: uppercase;
     font-weight: 700;
 }
-
-/* Critical badge (catalogue) */
 .critical-badge {
     position: absolute;
     top: -0.75rem;
@@ -1231,8 +1007,6 @@ ul, ol { list-style: none; }
     z-index: 10;
     box-shadow: 4px 4px 0 var(--arch-black);
 }
-
-/* Claimed overlay */
 .claimed-overlay {
     position: absolute;
     inset: 0;
@@ -1242,7 +1016,6 @@ ul, ol { list-style: none; }
     z-index: 30;
     pointer-events: none;
 }
-
 .claimed-stamp {
     background: var(--arch-black);
     color: var(--arch-white);
@@ -1254,29 +1027,21 @@ ul, ol { list-style: none; }
     transform: rotate(-12deg);
     box-shadow: 4px 4px 0 var(--arch-accent);
 }
-
-/* ============================================================
-   PAGE-SPECIFIC: Nearby (mobile) card
-   ============================================================ */
-
 .nearby-card {
     background: #fff;
     border: 3px solid #000;
     position: relative;
 }
-
 .nearby-card-header {
     padding: 1rem;
     border-bottom: 3px solid #000;
     display: flex;
     gap: 0.75rem;
 }
-
 .nearby-card-body {
     padding: 1rem;
     background: var(--bg);
 }
-
 .nearby-distance {
     position: absolute;
     top: -0.75rem;
@@ -1289,11 +1054,6 @@ ul, ol { list-style: none; }
     transform: rotate(6deg);
     z-index: 10;
 }
-
-/* ============================================================
-   PAGE-SPECIFIC: Pickup
-   ============================================================ */
-
 .pickup-batch-badge {
     position: absolute;
     top: -1rem;
@@ -1307,7 +1067,6 @@ ul, ol { list-style: none; }
     transform: rotate(6deg);
     z-index: 10;
 }
-
 .pickup-stat {
     font-size: 0.75rem;
     font-weight: 700;
@@ -1315,11 +1074,6 @@ ul, ol { list-style: none; }
     color: var(--gray-500);
     margin-bottom: 0.25rem;
 }
-
-/* ============================================================
-   PAGE-SPECIFIC: Impact
-   ============================================================ */
-
 .stat-card {
     background: #fff;
     border: 3px solid #000;
@@ -1328,7 +1082,6 @@ ul, ol { list-style: none; }
     transition: transform 0.2s ease;
 }
 .stat-card:hover { transform: translateY(-0.5rem); }
-
 .stat-icon-circle {
     position: absolute;
     top: -1rem;
@@ -1343,7 +1096,6 @@ ul, ol { list-style: none; }
     justify-content: center;
     z-index: 10;
 }
-
 .bar-chart-row .bar-track {
     height: 1.5rem;
     width: 100%;
@@ -1354,8 +1106,6 @@ ul, ol { list-style: none; }
     height: 100%;
     border-right: 3px solid #000;
 }
-
-/* Mini bar chart */
 .mini-chart {
     display: flex;
     align-items: flex-end;
@@ -1367,11 +1117,6 @@ ul, ol { list-style: none; }
     flex: 1;
     border: 3px solid #000;
 }
-
-/* ============================================================
-   PAGE-SPECIFIC: Leaderboard
-   ============================================================ */
-
 .leaderboard-item {
     display: flex;
     align-items: center;
@@ -1381,13 +1126,11 @@ ul, ol { list-style: none; }
 }
 .leaderboard-item:hover { background: var(--brand-50); }
 .leaderboard-item:last-child { border-bottom: none; }
-
 .leaderboard-rank {
     font-family: var(--font-display);
     font-size: 1.875rem;
     width: 2.5rem;
 }
-
 .leaderboard-avatar {
     width: 3rem;
     height: 3rem;
@@ -1400,11 +1143,6 @@ ul, ol { list-style: none; }
     font-weight: 700;
     overflow: hidden;
 }
-
-/* ============================================================
-   PAGE-SPECIFIC: Pagination
-   ============================================================ */
-
 .pagination {
     display: flex;
     justify-content: center;
@@ -1414,7 +1152,6 @@ ul, ol { list-style: none; }
     font-size: 0.875rem;
     font-weight: 700;
 }
-
 .page-btn {
     width: 2.5rem;
     height: 2.5rem;
@@ -1430,7 +1167,6 @@ ul, ol { list-style: none; }
     background: var(--arch-black);
     color: var(--arch-white);
 }
-
 .page-btn-active {
     width: 2.5rem;
     height: 2.5rem;
@@ -1441,16 +1177,10 @@ ul, ol { list-style: none; }
     align-items: center;
     justify-content: center;
 }
-
-/* ============================================================
-   MAP PLACEHOLDER
-   ============================================================ */
-
 .map-placeholder {
     position: relative;
     overflow: hidden;
 }
-
 .map-pin {
     width: 2rem;
     height: 2rem;
@@ -1462,33 +1192,23 @@ ul, ol { list-style: none; }
     justify-content: center;
     color: #fff;
 }
-
 .map-dot {
     width: 1rem;
     height: 1rem;
     border: 3px solid #000;
     border-radius: 9999px;
 }
-
-/* ============================================================
-   MISC UTILITY
-   ============================================================ */
-
 .grayscale { filter: grayscale(100%); }
 .grayscale-hover:hover { filter: grayscale(0); }
-
 .border-l-brand {
     border-left: 4px solid #000;
     padding-left: 1rem;
 }
-
 .border-l-brand-thick {
     border-left: 6px solid var(--brand-600);
     padding-left: 1.5rem;
 }
-
 .drop-shadow-text {
     text-shadow: 4px 4px 0 rgba(0,0,0,1);
 }
-
 .no-resize { resize: none; }
