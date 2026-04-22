@@ -1,4 +1,54 @@
-<?php require_once '../backend/init.php'; ?>
+<?php 
+require_once '../backend/init.php'; 
+require_once '../backend/protect.php';
+require_once '../backend/db.php';
+
+$error = '';
+$success = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $title = trim($_POST['title'] ?? '');
+    $category = trim($_POST['category'] ?? '');
+    $quantity = floatval($_POST['quantity'] ?? 0);
+    $description = trim($_POST['description'] ?? '');
+    
+    $allergensArray = isset($_POST['allergens']) && is_array($_POST['allergens']) ? $_POST['allergens'] : [];
+    $allergens = implode(', ', $allergensArray);
+
+    $available_time = trim($_POST['available_until'] ?? '');
+    $pickup_location = trim($_POST['pickup_location'] ?? '');
+
+    if (empty($title) || empty($category) || empty($quantity) || empty($available_time) || empty($pickup_location)) {
+        $error = "Please fill in all required fields.";
+    } else {
+        $available_datetime = date('Y-m-d') . ' ' . $available_time . ':00';
+        
+        // If time passed, assume next day automatically
+        if (strtotime($available_datetime) < time()) {
+            $available_datetime = date('Y-m-d', strtotime('+1 day')) . ' ' . $available_time . ':00';
+        }
+
+        try {
+            $stmt = $pdo->prepare("INSERT INTO listings (user_id, title, description, category, quantity, pickup_location, available_until, allergens) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->execute([
+                $_SESSION['user_id'],
+                $title,
+                $description,
+                $category,
+                $quantity,
+                $pickup_location,
+                $available_datetime,
+                $allergens
+            ]);
+            
+            $success = "Your listing has been posted successfully!";
+        } catch (PDOException $e) {
+            $error = "Database error: " . $e->getMessage();
+            error_log("Listing Insert Error: " . $e->getMessage());
+        }
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,71 +85,86 @@
                 List your excess food to connect with local rescuers. Be as descriptive as possible.
             </p>
         </div>
-        <form class="space-y-8">
+
+        <?php if ($error): ?>
+            <div class="p-4 mb-8 brutal-border" style="background:var(--red-50);border-color:var(--red-500);color:var(--red-600)">
+                <span class="font-bold uppercase text-sm"><?php echo htmlspecialchars($error); ?></span>
+            </div>
+        <?php endif; ?>
+
+        <?php if ($success): ?>
+            <div class="p-4 mb-8 brutal-border" style="background:#e8f5e9;border-color:#4caf50;color:#2e7d32">
+                <span class="font-bold uppercase text-sm"><?php echo htmlspecialchars($success); ?></span>
+            </div>
+        <?php endif; ?>
+
+        <form method="POST" action="new-listing.php" class="space-y-8">
             <div class="bg-white brutal-border p-6 sm-p-8 relative">
                 <div class="absolute z-10" style="top:-1rem;right:-1rem;background:#000;color:#fff;border:3px solid #000;padding:0.5rem 1rem;font-family:var(--font-display);font-size:1.5rem;text-transform:uppercase;transform:rotate(6deg)">
                     01. Basics
                 </div>
                 <div class="space-y-6">
                     <div>
-                        <label class="font-bold uppercase text-sm text-gray-500 block mb-2">Listing Title</label>
-                        <input type="text" placeholder="e.g., Morning Pastries Batch" class="input-brutal">
+                        <label for="title" class="font-bold uppercase text-sm text-gray-500 block mb-2">Listing Title</label>
+                        <input type="text" name="title" id="title" required placeholder="e.g., Morning Pastries Batch" class="input-brutal">
                     </div>
                     <div class="grid grid-cols-1 sm-grid-cols-2 gap-6">
                         <div>
-                            <label class="font-bold uppercase text-sm text-gray-500 block mb-2">Food Category</label>
-                            <select class="select-brutal">
-                                <option>Select Category...</option>
-                                <option>Produce & Veg</option>
-                                <option>Baked Goods</option>
-                                <option>Prepared Meals</option>
-                                <option>Dairy & Eggs</option>
-                                <option>Pantry Staples</option>
+                            <label for="category" class="font-bold uppercase text-sm text-gray-500 block mb-2">Food Category</label>
+                            <select name="category" id="category" required class="select-brutal">
+                                <option value="">Select Category...</option>
+                                <option value="Produce">Produce & Veg</option>
+                                <option value="Baked Goods">Baked Goods</option>
+                                <option value="Prepared Meals">Prepared Meals</option>
+                                <option value="Dairy">Dairy & Eggs</option>
+                                <option value="Pantry Staples">Pantry Staples</option>
                             </select>
                         </div>
                         <div>
-                            <label class="font-bold uppercase text-sm text-gray-500 block mb-2">Estimated Quantity (lbs)</label>
-                            <input type="number" placeholder="e.g., 15" class="input-brutal">
+                            <label for="quantity" class="font-bold uppercase text-sm text-gray-500 block mb-2">Estimated Quantity (lbs)</label>
+                            <input type="number" name="quantity" id="quantity" required step="0.01" min="0" placeholder="e.g., 15" class="input-brutal">
                         </div>
                     </div>
                 </div>
             </div>
+            
             <div class="bg-white brutal-border p-6 sm-p-8 relative">
                 <div class="absolute z-10" style="top:-1rem;right:-1rem;background:#000;color:#fff;border:3px solid #000;padding:0.5rem 1rem;font-family:var(--font-display);font-size:1.5rem;text-transform:uppercase;transform:rotate(6deg)">
                     02. Details
                 </div>
                 <div class="space-y-6">
                     <div>
-                        <label class="font-bold uppercase text-sm text-gray-500 block mb-2">Description & Contents</label>
-                        <textarea rows="4" placeholder="Describe what's included, condition, and any packaging details..." class="textarea-brutal"></textarea>
+                        <label for="description" class="font-bold uppercase text-sm text-gray-500 block mb-2">Description & Contents</label>
+                        <textarea name="description" id="description" rows="4" placeholder="Describe what's included, condition, and any packaging details..." class="textarea-brutal"></textarea>
                     </div>
                     <div>
                         <label class="font-bold uppercase text-sm text-gray-500 block mb-4">Allergen Warnings (Select all that apply)</label>
                         <div class="flex flex-wrap gap-3" id="allergens">
                             <label class="cursor-pointer">
-                                <input type="checkbox" class="sr-only" onchange="this.nextElementSibling.style.background=this.checked?'var(--brand-400)':'var(--bg)'">
+                                <input type="checkbox" name="allergens[]" value="Gluten" class="sr-only" onchange="this.nextElementSibling.style.background=this.checked?'var(--brand-400)':'var(--bg)'">
                                 <div class="brutal-border px-4 py-2 font-bold uppercase text-sm transition-colors" style="background:var(--bg)">Gluten</div>
                             </label>
                             <label class="cursor-pointer">
-                                <input type="checkbox" class="sr-only" onchange="this.nextElementSibling.style.background=this.checked?'var(--brand-400)':'var(--bg)'">
+                                <input type="checkbox" name="allergens[]" value="Dairy" class="sr-only" onchange="this.nextElementSibling.style.background=this.checked?'var(--brand-400)':'var(--bg)'">
                                 <div class="brutal-border px-4 py-2 font-bold uppercase text-sm transition-colors" style="background:var(--bg)">Dairy</div>
                             </label>
                             <label class="cursor-pointer">
-                                <input type="checkbox" class="sr-only" onchange="this.nextElementSibling.style.background=this.checked?'var(--brand-400)':'var(--bg)'">
+                                <input type="checkbox" name="allergens[]" value="Nuts" class="sr-only" onchange="this.nextElementSibling.style.background=this.checked?'var(--brand-400)':'var(--bg)'">
                                 <div class="brutal-border px-4 py-2 font-bold uppercase text-sm transition-colors" style="background:var(--bg)">Nuts</div>
                             </label>
                             <label class="cursor-pointer">
-                                <input type="checkbox" class="sr-only" onchange="this.nextElementSibling.style.background=this.checked?'var(--brand-400)':'var(--bg)'">
+                                <input type="checkbox" name="allergens[]" value="Meat" class="sr-only" onchange="this.nextElementSibling.style.background=this.checked?'var(--brand-400)':'var(--bg)'">
                                 <div class="brutal-border px-4 py-2 font-bold uppercase text-sm transition-colors" style="background:var(--bg)">Meat</div>
                             </label>
                             <label class="cursor-pointer">
-                                <input type="checkbox" class="sr-only" onchange="this.nextElementSibling.style.background=this.checked?'#000':'var(--bg)';this.nextElementSibling.style.color=this.checked?'#fff':'#000'">
+                                <input type="checkbox" name="allergens[]" value="None" class="sr-only" onchange="this.nextElementSibling.style.background=this.checked?'#000':'var(--bg)';this.nextElementSibling.style.color=this.checked?'#fff':'#000'">
                                 <div class="brutal-border px-4 py-2 font-bold uppercase text-sm transition-colors" style="background:var(--bg)">None</div>
                             </label>
                         </div>
                     </div>
                 </div>
             </div>
+
             <div class="bg-white brutal-border p-6 sm-p-8 relative">
                 <div class="absolute z-10" style="top:-1rem;right:-1rem;background:#000;color:#fff;border:3px solid #000;padding:0.5rem 1rem;font-family:var(--font-display);font-size:1.5rem;text-transform:uppercase;transform:rotate(6deg)">
                     03. Logistics
@@ -107,16 +172,16 @@
                 <div class="space-y-6">
                     <div class="grid grid-cols-1 sm-grid-cols-2 gap-6">
                         <div>
-                            <label class="font-bold uppercase text-sm text-gray-500 block mb-2">Available Until</label>
-                            <input type="time" class="input-brutal">
+                            <label for="available_until" class="font-bold uppercase text-sm text-gray-500 block mb-2">Available Until</label>
+                            <input type="time" name="available_until" id="available_until" required class="input-brutal">
                         </div>
                         <div>
-                            <label class="font-bold uppercase text-sm text-gray-500 block mb-2">Pickup Location</label>
-                            <select class="select-brutal">
-                                <option>Main Storefront</option>
-                                <option>Back Alley Door</option>
-                                <option>Loading Dock B</option>
-                                <option>Add New Location...</option>
+                            <label for="pickup_location" class="font-bold uppercase text-sm text-gray-500 block mb-2">Pickup Location</label>
+                            <select name="pickup_location" id="pickup_location" required class="select-brutal">
+                                <option value="">Select Location...</option>
+                                <option value="Main Storefront">Main Storefront</option>
+                                <option value="Back Alley Door">Back Alley Door</option>
+                                <option value="Loading Dock B">Loading Dock B</option>
                             </select>
                         </div>
                     </div>
@@ -126,18 +191,17 @@
                     </div>
                 </div>
             </div>
+
             <div class="pt-8 flex flex-col gap-6 sm-flex-row sm-items-center" style="justify-content:space-between">
                 <p class="text-sm font-bold uppercase text-gray-500 text-center">
                     By posting, you agree to our <a href="#" class="underline" style="color:#000" onmouseover="this.style.color='var(--brand-600)'" onmouseout="this.style.color='#000'">Food Safety Guidelines</a>.
                 </p>
-                <button type="button" class="btn-primary brutal-shadow" style="width:auto;padding:1.25rem 3rem" onmouseover="this.style.background='#000'" onmouseout="this.style.background='var(--brand-600)'">
+                <button type="submit" class="btn-primary brutal-shadow" style="width:auto;padding:1.25rem 3rem" onmouseover="this.style.background='#000'" onmouseout="this.style.background='var(--brand-600)'">
                     Post Listing
                 </button>
             </div>
         </form>
     </main>
     <script src="assets/icons.js"></script>
-    <script src="assets/nav.js"></script>
 </body>
 </html>
-

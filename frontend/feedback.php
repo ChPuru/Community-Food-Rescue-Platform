@@ -1,4 +1,33 @@
-<?php require_once '../backend/init.php'; ?>
+<?php 
+require_once '../backend/init.php'; 
+require_once '../backend/db.php';
+
+$success = '';
+$error = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $category = $_POST['feedback-cat'] ?? '';
+    $subject = trim($_POST['subject'] ?? '');
+    $description = trim($_POST['description'] ?? '');
+    $contact_consent = isset($_POST['contact']) ? 1 : 0;
+    
+    // Auth logic optional (can be anonymous or linked to session user)
+    $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
+
+    if (empty($category) || empty($subject) || empty($description)) {
+        $error = "CATEGORY, SUBJECT, and DESCRIPTION are required parameters.";
+    } else {
+        try {
+            $stmt = $pdo->prepare("INSERT INTO feedback (user_id, category, subject, description, contact_consent) VALUES (?, ?, ?, ?, ?)");
+            $stmt->execute([$user_id, $category, $subject, $description, $contact_consent]);
+            $success = "SYS.FEEDBACK RECEIVED. LOGGED SUCCESSFULLY.";
+        } catch (PDOException $e) {
+            $error = "DATABASE WRITE ERROR. PLEASE TRY AGAIN LATER.";
+            error_log("Feedback Insert Error: " . $e->getMessage());
+        }
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,42 +68,54 @@
                 </div>
             </div>
             <div class="p-8 lg-p-12">
-                <form class="space-y-8">
+                <?php if ($error): ?>
+                    <div class="arch-border p-4 mb-6 font-mono font-bold text-sm" style="background:#ffebee;color:#c62828;">
+                        [!] <?php echo htmlspecialchars($error); ?>
+                    </div>
+                <?php endif; ?>
+                
+                <?php if ($success): ?>
+                    <div class="arch-border p-4 mb-6 font-mono font-bold text-sm" style="background:#e8f5e9;color:#2e7d32;">
+                        [OK] <?php echo htmlspecialchars($success); ?>
+                    </div>
+                <?php endif; ?>
+
+                <form method="POST" action="feedback.php" class="space-y-8">
                     <div>
                         <label class="font-mono text-xs font-bold uppercase tracking-widest block mb-4">
                             Feedback Category *
                         </label>
                         <div class="grid grid-cols-2 sm-grid-cols-4 gap-2">
-                            <div><input type="radio" name="feedback-cat" id="cat-bug" value="bug" class="sr-only rating-input"><label for="cat-bug" class="block text-center py-3 arch-border font-mono text-xs font-bold uppercase cursor-pointer transition-colors"><i data-icon="x" class="icon icon-sm inline-block mb-1"></i><br>Bug/Issue</label></div>
-                            <div><input type="radio" name="feedback-cat" id="cat-idea" value="idea" class="sr-only rating-input"><label for="cat-idea" class="block text-center py-3 arch-border font-mono text-xs font-bold uppercase cursor-pointer transition-colors"><i data-icon="plus" class="icon icon-sm inline-block mb-1"></i><br>Idea</label></div>
-                            <div><input type="radio" name="feedback-cat" id="cat-praise" value="praise" class="sr-only rating-input"><label for="cat-praise" class="block text-center py-3 arch-border font-mono text-xs font-bold uppercase cursor-pointer transition-colors"><i data-icon="trophy" class="icon icon-sm inline-block mb-1"></i><br>Praise</label></div>
-                            <div><input type="radio" name="feedback-cat" id="cat-other" value="other" class="sr-only rating-input"><label for="cat-other" class="block text-center py-3 arch-border font-mono text-xs font-bold uppercase cursor-pointer transition-colors"><i data-icon="layers" class="icon icon-sm inline-block mb-1"></i><br>Other</label></div>
+                            <div><input type="radio" name="feedback-cat" id="cat-bug" value="bug" class="sr-only rating-input" required><label for="cat-bug" class="block text-center py-3 arch-border font-mono text-xs font-bold uppercase cursor-pointer transition-colors"><i data-icon="x" class="icon icon-sm inline-block mb-1"></i><br>Bug/Issue</label></div>
+                            <div><input type="radio" name="feedback-cat" id="cat-idea" value="idea" class="sr-only rating-input" required><label for="cat-idea" class="block text-center py-3 arch-border font-mono text-xs font-bold uppercase cursor-pointer transition-colors"><i data-icon="plus" class="icon icon-sm inline-block mb-1"></i><br>Idea</label></div>
+                            <div><input type="radio" name="feedback-cat" id="cat-praise" value="praise" class="sr-only rating-input" required><label for="cat-praise" class="block text-center py-3 arch-border font-mono text-xs font-bold uppercase cursor-pointer transition-colors"><i data-icon="trophy" class="icon icon-sm inline-block mb-1"></i><br>Praise</label></div>
+                            <div><input type="radio" name="feedback-cat" id="cat-other" value="other" class="sr-only rating-input" required><label for="cat-other" class="block text-center py-3 arch-border font-mono text-xs font-bold uppercase cursor-pointer transition-colors"><i data-icon="layers" class="icon icon-sm inline-block mb-1"></i><br>Other</label></div>
                         </div>
                     </div>
                     <div class="relative">
                         <label class="font-mono text-xs font-bold uppercase tracking-widest block mb-1">Subject *</label>
-                        <input type="text" placeholder="Brief summary of your feedback" class="arch-input" required>
+                        <input type="text" name="subject" placeholder="Brief summary of your feedback" class="arch-input" required>
                     </div>
                     <div>
                         <div class="flex justify-between items-end mb-1">
                             <label class="font-mono text-xs font-bold uppercase tracking-widest block">Detailed Description *</label>
                             <span class="font-mono" style="font-size:0.625rem;color:var(--arch-gray)">0 / 500</span>
                         </div>
-                        <textarea maxlength="500" rows="6" placeholder="Provide as much detail as possible. If reporting a bug, include steps to reproduce..." class="arch-textarea" required></textarea>
+                        <textarea name="description" maxlength="500" rows="6" placeholder="Provide as much detail as possible. If reporting a bug, include steps to reproduce..." class="arch-textarea" required></textarea>
                     </div>
                     <div>
-                        <label class="font-mono text-xs font-bold uppercase tracking-widest block mb-4">Attachment (Optional)</label>
+                        <label class="font-mono text-xs font-bold uppercase tracking-widest block mb-4">Attachment (Optional Placeholder)</label>
                         <div class="arch-border p-6 text-center cursor-pointer transition-colors" style="border-style:dashed;background:var(--arch-light)" onmouseover="this.style.background='#fff'" onmouseout="this.style.background='var(--arch-light)'">
                             <i data-icon="upload-cloud" class="icon icon-2xl mb-2" style="display:inline-block;color:var(--arch-gray)"></i>
                             <p class="font-mono text-xs font-bold uppercase mb-1" style="color:var(--arch-gray)">Click or drag to upload</p>
                             <p class="font-mono" style="font-size:0.625rem;color:var(--arch-gray)">PNG, JPG, PDF &mdash; MAX 5MB</p>
-                            <input type="file" class="hidden" accept=".png,.jpg,.jpeg,.pdf">
+                            <input type="file" name="attachment_placeholder" class="hidden" accept=".png,.jpg,.jpeg,.pdf">
                         </div>
                     </div>
                     <div class="flex items-center gap-3 pt-2">
                         <label class="relative flex items-center cursor-pointer">
-                            <input type="checkbox" class="sr-only">
-                            <div class="arch-border transition-colors" style="width:1.25rem;height:1.25rem;display:flex;align-items:center;justify-content:center;cursor:pointer" onclick="this.previousElementSibling.click()"></div>
+                            <input type="checkbox" name="contact" value="1" class="sr-only">
+                            <div class="arch-border transition-colors outline-box" style="width:1.25rem;height:1.25rem;display:flex;align-items:center;justify-content:center;cursor:pointer" onclick="this.previousElementSibling.click(); this.style.background = this.previousElementSibling.checked ? 'var(--arch-black)' : 'transparent'"></div>
                         </label>
                         <span class="font-mono text-sm" style="color:var(--arch-gray)">I would like to be contacted about this feedback.</span>
                     </div>

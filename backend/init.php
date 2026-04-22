@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 if (!isset($_SESSION['user_id']) && isset($_COOKIE['remember_token'])) {
     require_once 'db.php';
     $token = $_COOKIE['remember_token'];
@@ -11,5 +13,3 @@ if (!isset($_SESSION['user_id']) && isset($_COOKIE['remember_token'])) {
         $_SESSION['user_name'] = $user['name'];
     }
 }
-?>
-

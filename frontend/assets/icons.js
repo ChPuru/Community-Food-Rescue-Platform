@@ -76,3 +76,4 @@ function renderIcons() {
     });
 }
 document.addEventListener('DOMContentLoaded', renderIcons);
+

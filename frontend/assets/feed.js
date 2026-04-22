@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let listings = [];
     
     function fetchListings() {
-        // Show updating status briefly
         updateStatus.textContent = 'Updating...';
         
         fetch('../backend/api_listings.php')
@@ -62,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <span class="badge-green">${escapeHtml(item.category)}</span>
                                 <span class="badge-outline">~${escapeHtml(item.quantity)} lbs</span>
                             </div>
-                            <button class="btn-black">Claim</button>
+                            <button class="btn-black claim-btn" data-id="${item.id}">Claim</button>
                         </div>
                     </div>
                 </div>
@@ -97,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 timerEl.textContent = `Expires in ${hours}h ${mins}m ${secs}s`;
                 
-                if (diff < 3600000) { // < 1 hour
+                if (diff < 3600000) {
                     timerEl.style.background = "#ffcccc";
                     timerEl.style.color = "#cc0000";
                 } else {
@@ -118,8 +117,47 @@ document.addEventListener('DOMContentLoaded', () => {
             .replace(/'/g, "&#039;");
     }
 
+    feedContainer.addEventListener('click', (e) => {
+        if (e.target.classList.contains('claim-btn')) {
+            const listingId = e.target.getAttribute('data-id');
+            claimListing(listingId, e.target);
+        }
+    });
+
+    function claimListing(id, buttonEl) {
+        buttonEl.disabled = true;
+        buttonEl.textContent = 'Claiming...';
+        
+        fetch('../backend/api_claim.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ listing_id: id })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.status === 'success') {
+                buttonEl.textContent = 'Claimed!';
+                buttonEl.style.background = '#8bc34a';
+                buttonEl.style.color = '#fff';
+                buttonEl.style.boxShadow = 'none';
+                setTimeout(fetchListings, 1500);
+            } else {
+                alert(data.message);
+                buttonEl.disabled = false;
+                buttonEl.textContent = 'Claim';
+            }
+        })
+        .catch(err => {
+            console.error('Claim error:', err);
+            alert('Failed to process claim.');
+            buttonEl.disabled = false;
+            buttonEl.textContent = 'Claim';
+        });
+    }
+
     setInterval(updateTimers, 1000);
-    // Auto refresh data every 30 seconds
     setInterval(fetchListings, 30000);
     
     fetchListings();
