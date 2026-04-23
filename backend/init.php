@@ -23,10 +23,13 @@ $role = isset($_SESSION['role']) ? $_SESSION['role'] : 'guest';
 $userId = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 'null';
 $userName = isset($_SESSION['user_name']) ? $_SESSION['user_name'] : 'Guest';
 
-echo '<script>';
-echo 'window.USER_ROLE = "' . htmlspecialchars($role) . '"; ';
-echo 'window.USER_ID = ' . $userId . '; ';
-echo 'window.USER_NAME = "' . htmlspecialchars($userName) . '"; ';
-echo 'window.CSRF_TOKEN = "' . $_SESSION['csrf_token'] . '";';
-echo '</script>';
+// Only output scripts for frontend pages, not for API redirects
+if (!defined('API_REQUEST')) {
+    echo '<script>';
+    echo 'window.USER_ROLE = "' . htmlspecialchars($role) . '"; ';
+    echo 'window.USER_ID = ' . $userId . '; ';
+    echo 'window.USER_NAME = "' . htmlspecialchars($userName) . '"; ';
+    echo 'window.CSRF_TOKEN = "' . $_SESSION['csrf_token'] . '";';
+    echo '</script>';
+}
 // No closing tag to avoid quirks mode issues

@@ -1,4 +1,5 @@
 <?php
+define('API_REQUEST', true);
 header('Content-Type: application/json');
 require_once 'init.php';
 require_once 'db.php';
@@ -11,8 +12,8 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'ngo') {
-    echo json_encode(['status' => 'error', 'message' => 'Unauthorized. Only active NGO operators can claim listings.']);
+if (!isset($_SESSION['role']) || !in_array($_SESSION['role'], ['ngo', 'recipient'])) {
+    echo json_encode(['status' => 'error', 'message' => 'Unauthorized. Only active NGO operators or individual recipients can claim listings.']);
     exit;
 }
 

@@ -1,4 +1,5 @@
 <?php
+define('API_REQUEST', true);
 header('Content-Type: application/json');
 require_once 'init.php';
 require_once 'db.php';
