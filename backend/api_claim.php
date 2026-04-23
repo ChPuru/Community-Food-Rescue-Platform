@@ -53,7 +53,7 @@ try {
         exit;
     }
 
-    $stmt = $pdo->prepare("SELECT id FROM claims WHERE listing_id = ? AND claimer_id = ?");
+    $stmt = $pdo->prepare("SELECT id FROM claims WHERE listing_id = ? AND user_id = ?");
     $stmt->execute([$listing_id, $user_id]);
     if ($stmt->fetch()) {
         echo json_encode(['status' => 'error', 'message' => 'You have already claimed this listing.']);
@@ -62,7 +62,7 @@ try {
 
     $pdo->beginTransaction();
 
-    $stmt = $pdo->prepare("INSERT INTO claims (listing_id, claimer_id) VALUES (?, ?)");
+    $stmt = $pdo->prepare("INSERT INTO claims (listing_id, user_id) VALUES (?, ?)");
     $stmt->execute([$listing_id, $user_id]);
 
     $stmt = $pdo->prepare("UPDATE listings SET status = 'claimed' WHERE id = ?");
@@ -70,7 +70,11 @@ try {
 
     $pdo->commit();
 
-    $mailService->sendClaimAlert($listing['user_id'], $_SESSION['user_name'], $listing['title']);
+    try {
+        $mailService->sendClaimAlert($listing['user_id'], $_SESSION['user_name'], $listing['title']);
+    } catch (Exception $e) {
+        error_log("Non-critical Notification Error: " . $e->getMessage());
+    }
 
     echo json_encode(['status' => 'success', 'message' => 'Listing claimed successfully!']);
 

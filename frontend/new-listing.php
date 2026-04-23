@@ -164,7 +164,10 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'donor') {
                 if(!query) return;
 
                 searchBtn.textContent = 'Searching...';
-                fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`)
+                // Bias search toward India (roughly 68, 6 to 97, 35)
+                const searchUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&viewbox=68.1,35.5,97.4,6.8&bounded=0`;
+                
+                fetch(searchUrl)
                     .then(r => r.json())
                     .then(data => {
                         if(data.length > 0) {
