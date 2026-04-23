@@ -23,6 +23,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 initialLoad = false;
                 renderListings();
             });
+
+        fetch('../backend/api_stats.php')
+            .then(res => res.json())
+            .then(d => {
+                if(d.status === 'success') {
+                    const activeCount = document.getElementById('stat-active-count');
+                    const usersCount = document.getElementById('stat-users-count');
+                    const rescuesCount = document.getElementById('stat-rescues-count');
+                    
+                    if(activeCount) activeCount.textContent = d.global.active_listings;
+                    if(usersCount) usersCount.textContent = d.global.total_users;
+                    if(rescuesCount) rescuesCount.textContent = d.global.total_claims;
+                }
+            });
     }
 
     function renderListings() {
