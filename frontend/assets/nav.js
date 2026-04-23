@@ -10,12 +10,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 <a href="feed.php" style="color: white; text-decoration: none; font-size: 11px; font-weight: bold; text-transform: uppercase;" onmouseover="this.style.color='#16A34A'" onmouseout="this.style.color='white'">4. Feed</a>
                 <a href="nearby.php" style="color: white; text-decoration: none; font-size: 11px; font-weight: bold; text-transform: uppercase;" onmouseover="this.style.color='#16A34A'" onmouseout="this.style.color='white'">5. Nearby</a>
                 <a href="pickup.php" style="color: white; text-decoration: none; font-size: 11px; font-weight: bold; text-transform: uppercase;" onmouseover="this.style.color='#16A34A'" onmouseout="this.style.color='white'">6. Pickup</a>
-                <a href="new-listing.php" style="color: white; text-decoration: none; font-size: 11px; font-weight: bold; text-transform: uppercase;" onmouseover="this.style.color='#16A34A'" onmouseout="this.style.color='white'">7. New Listing</a>
-                <a href="catalogue.php" style="color: white; text-decoration: none; font-size: 11px; font-weight: bold; text-transform: uppercase;" onmouseover="this.style.color='#16A34A'" onmouseout="this.style.color='white'">8. Catalogue</a>
+                ${window.USER_ROLE === 'donor' || window.USER_ROLE === 'guest' ? `<a href="new-listing.php" style="color: white; text-decoration: none; font-size: 11px; font-weight: bold; text-transform: uppercase;" onmouseover="this.style.color='#16A34A'" onmouseout="this.style.color='white'">7. New Listing</a>` : ''}
+                ${window.USER_ROLE === 'ngo' || window.USER_ROLE === 'guest' ? `<a href="catalogue.php" style="color: white; text-decoration: none; font-size: 11px; font-weight: bold; text-transform: uppercase;" onmouseover="this.style.color='#16A34A'" onmouseout="this.style.color='white'">8. Catalogue</a>` : ''}
                 <a href="feedback.php" style="color: white; text-decoration: none; font-size: 11px; font-weight: bold; text-transform: uppercase;" onmouseover="this.style.color='#16A34A'" onmouseout="this.style.color='white'">9. Feedback</a>
+                <a href="contact.php" style="color: white; text-decoration: none; font-size: 11px; font-weight: bold; text-transform: uppercase;" onmouseover="this.style.color='#16A34A'" onmouseout="this.style.color='white'">10. Contact</a>
+                <a href="profile.php" style="color: white; text-decoration: none; font-size: 11px; font-weight: bold; text-transform: uppercase;" onmouseover="this.style.color='#16A34A'" onmouseout="this.style.color='white'">11. Profile</a>
             </div>
         </div>
     `;
     document.body.appendChild(nav);
 });
-

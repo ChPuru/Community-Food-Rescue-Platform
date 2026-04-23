@@ -2,6 +2,8 @@
 header('Content-Type: application/json');
 require_once 'init.php';
 require_once 'db.php';
+require_once 'mail_service.php';
+$mailService = new NotificationService($pdo);
 
 // Check authentication
 if (!isset($_SESSION['user_id'])) {
@@ -9,10 +11,21 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'ngo') {
+    echo json_encode(['status' => 'error', 'message' => 'Unauthorized. Only active NGO operators can claim listings.']);
+    exit;
+}
+
 $user_id = $_SESSION['user_id'];
 
 // Get POST data
 $input = json_decode(file_get_contents('php://input'), true);
+
+if (!isset($input['csrf_token']) || $input['csrf_token'] !== $_SESSION['csrf_token']) {
+    echo json_encode(['status' => 'error', 'message' => 'Security token invalid.']);
+    exit;
+}
+
 if (!isset($input['listing_id'])) {
     echo json_encode(['status' => 'error', 'message' => 'Invalid request.']);
     exit;
@@ -62,6 +75,9 @@ try {
     $stmt->execute([$listing_id]);
 
     $pdo->commit();
+
+    // Trigger Notification
+    $mailService->sendClaimAlert($listing['user_id'], $_SESSION['user_name'], $listing['title']);
 
     echo json_encode(['status' => 'success', 'message' => 'Listing claimed successfully!']);
 
