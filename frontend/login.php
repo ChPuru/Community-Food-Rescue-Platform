@@ -1,8 +1,5 @@
 <?php 
-/*
-   Login Account
-   Secure authentication page for FoodCycle operators.
-*/
+
 require_once '../backend/init.php'; 
 
 if (isset($_SESSION['user_id'])) {

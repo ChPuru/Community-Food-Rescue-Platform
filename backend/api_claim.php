@@ -6,7 +6,6 @@ require_once 'db.php';
 require_once 'mail_service.php';
 $mailService = new NotificationService($pdo);
 
-// Check authentication
 if (!isset($_SESSION['user_id'])) {
     echo json_encode(['status' => 'error', 'message' => 'Unauthorized. Please log in to claim a listing.']);
     exit;
@@ -19,7 +18,6 @@ if (!isset($_SESSION['role']) || !in_array($_SESSION['role'], ['ngo', 'recipient
 
 $user_id = $_SESSION['user_id'];
 
-// Get POST data
 $input = json_decode(file_get_contents('php://input'), true);
 
 if (!isset($input['csrf_token']) || $input['csrf_token'] !== $_SESSION['csrf_token']) {
@@ -35,7 +33,7 @@ if (!isset($input['listing_id'])) {
 $listing_id = intval($input['listing_id']);
 
 try {
-    // 1. Verify listing is active and exists
+    
     $stmt = $pdo->prepare("SELECT id, user_id, status FROM listings WHERE id = ?");
     $stmt->execute([$listing_id]);
     $listing = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -50,13 +48,11 @@ try {
         exit;
     }
 
-    // Optional: Prevent user from claiming their own listing
     if ($listing['user_id'] == $user_id) {
         echo json_encode(['status' => 'error', 'message' => 'You cannot claim your own listing.']);
         exit;
     }
 
-    // 2. Prevent duplicate claims via a check (though UNIQUE constraint handles this too)
     $stmt = $pdo->prepare("SELECT id FROM claims WHERE listing_id = ? AND claimer_id = ?");
     $stmt->execute([$listing_id, $user_id]);
     if ($stmt->fetch()) {
@@ -64,20 +60,16 @@ try {
         exit;
     }
 
-    // 3. Perform atomic claim operation mapping
     $pdo->beginTransaction();
 
-    // Insert claim
     $stmt = $pdo->prepare("INSERT INTO claims (listing_id, claimer_id) VALUES (?, ?)");
     $stmt->execute([$listing_id, $user_id]);
 
-    // Update listing status
     $stmt = $pdo->prepare("UPDATE listings SET status = 'claimed' WHERE id = ?");
     $stmt->execute([$listing_id]);
 
     $pdo->commit();
 
-    // Trigger Notification
     $mailService->sendClaimAlert($listing['user_id'], $_SESSION['user_name'], $listing['title']);
 
     echo json_encode(['status' => 'success', 'message' => 'Listing claimed successfully!']);

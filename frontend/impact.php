@@ -1,8 +1,5 @@
 <?php 
-/*
-   Project Impact Analytics
-   Visualizing the platform's contribution to food waste reduction.
-*/
+
 require_once '../backend/init.php'; 
 ?>
 <!DOCTYPE html>

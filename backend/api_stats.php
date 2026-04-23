@@ -12,7 +12,7 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 
 try {
-    // 1. Global Stats
+    
     $stmt = $pdo->query("SELECT COUNT(*) FROM listings WHERE status = 'active'");
     $active_listings = $stmt->fetchColumn();
 
@@ -22,18 +22,15 @@ try {
     $stmt = $pdo->query("SELECT COUNT(*) FROM claims");
     $total_claims = $stmt->fetchColumn();
 
-    // Impact Specific Globals
-    // Sum of quantity of all listings that have been claimed
     $stmt = $pdo->query("SELECT SUM(l.quantity) FROM listings l JOIN claims c ON l.id = c.listing_id");
     $total_quantity_saved = $stmt->fetchColumn() ?: 0;
     
-    $meals_saved = floor($total_quantity_saved / 0.4); // Assuming 0.4kg per meal
-    $co2_reduced = round($total_quantity_saved * 2.5, 1); // 2.5kg CO2 per kg food
+    $meals_saved = floor($total_quantity_saved / 0.4); 
+    $co2_reduced = round($total_quantity_saved * 2.5, 1); 
     
     $stmt = $pdo->query("SELECT COUNT(DISTINCT claimer_id) FROM claims");
     $families_helped = $stmt->fetchColumn() ?: 0;
 
-    // 2. User-Specific Stats
     $role = $_SESSION['role'];
     $batches_helped = 0;
     
@@ -56,7 +53,6 @@ try {
         $active_claims = $stmt->fetchColumn();
     }
 
-    // 3. Recent Activity
     $recent_activity = [];
     if ($role === 'donor') {
         $stmt = $pdo->prepare("SELECT created_at as date, title as action, status FROM listings WHERE user_id = ? ORDER BY created_at DESC LIMIT 5");

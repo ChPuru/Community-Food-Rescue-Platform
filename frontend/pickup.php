@@ -1,8 +1,5 @@
 <?php 
-/*
-   Rescue Pickup Protocol
-   Guidelines and tracking for actual food collection.
-*/
+
 require_once '../backend/init.php'; 
 ?>
 <!DOCTYPE html>

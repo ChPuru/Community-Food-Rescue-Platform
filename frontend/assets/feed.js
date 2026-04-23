@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <h3 style="color: var(--primary-color); font-family: 'Lora', serif; font-size: 1.4rem; margin:0">${escapeHtml(item.title)}</h3>
                                 <span style="font-size: 11px; font-weight: bold; padding: 4px 12px; background: #f0f0f0; border-radius: 50px; color: #666">${escapeHtml(item.category)}</span>
                             </div>
-                            <p style="font-size: 0.95rem; color: #555; line-height: 1.6; margin-bottom: 15px">${escapeHtml(item.description)}</p>
+                            <p class="line-clamp-3" style="font-size: 0.95rem; color: #555; line-height: 1.6; margin-bottom: 15px">${escapeHtml(item.description)}</p>
                         </div>
                         
                         <div class="flex justify-between items-end">

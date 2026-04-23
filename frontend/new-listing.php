@@ -1,8 +1,5 @@
 <?php 
-/*
-   Submit New Food Donation
-   Integrated Map Search & Geolocation
-*/
+
 require_once '../backend/init.php'; 
 
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'donor') {

@@ -1,8 +1,5 @@
 <?php 
-/*
-   Contact the Development Team
-   Standard contact form for project-related inquiries.
-*/
+
 require_once '../backend/init.php'; 
 ?>
 <!DOCTYPE html>

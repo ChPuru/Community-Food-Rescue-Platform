@@ -6,9 +6,6 @@ class NotificationService {
         $this->pdo = $pdo;
     }
 
-    /**
-     * Simulates sending an email by logging it to the notifications table.
-     */
     public function send($user_id, $type, $subject, $body) {
         try {
             $stmt = $this->pdo->prepare("INSERT INTO notifications (user_id, type, subject, body) VALUES (?, ?, ?, ?)");
@@ -19,18 +16,12 @@ class NotificationService {
         }
     }
 
-    /**
-     * Specialized welcome email
-     */
     public function sendWelcome($user_id, $user_name) {
         $subject = "Welcome to Rescue_Arch, $user_name!";
         $body = "Hi $user_name,\n\nWelcome to the logistics network. Your operator account is now active. You can start sharing or rescuing food immediately.\n\nBest,\nThe Rescue_Arch Team";
         return $this->send($user_id, 'welcome', $subject, $body);
     }
 
-    /**
-     * Specialized claim notification email
-     */
     public function sendClaimAlert($donor_id, $ngo_name, $listing_title) {
         $subject = "Food Claimed: $listing_title";
         $body = "Great news!\n\nYour listing '$listing_title' has been claimed by $ngo_name. Please check the coordinates in your dashboard to coordinate the pickup.\n\nThank you for reducing waste!";

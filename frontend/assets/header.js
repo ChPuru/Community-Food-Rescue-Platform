@@ -1,10 +1,7 @@
-/* 
-   Global Navigation Header Implementation
-   Dynamic session handling and vanilla icon rendering
-*/
+
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Target the specific placeholder or the top of the body
+    
     const placeholder = document.getElementById('header-placeholder');
     const isDonor = window.USER_ROLE === 'donor';
     
@@ -59,12 +56,10 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.insertAdjacentHTML('afterbegin', headerHtml);
     }
 
-    // Initialize custom vanilla icons
     if (typeof renderIcons === 'function') {
         renderIcons();
     }
 
-    // Notification Logic
     const bell = document.getElementById('bell-container');
     const dropdown = document.getElementById('nav-notify-dropdown');
     
@@ -80,7 +75,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if(dropdown) dropdown.style.display = 'none';
     });
 
-    // Global Toast Function
     window.showToast = (msg, type='success') => {
         const container = document.getElementById('toast-container');
         if(!container) return;

@@ -6,8 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const resetBtn = document.getElementById('reset-filters');
     
     let listings = [];
-    
-    // Attach event listeners for real-time intelligence
+
     searchInput.addEventListener('input', applyFiltersAndSort);
     sortSelect.addEventListener('change', applyFiltersAndSort);
     
@@ -35,22 +34,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function applyFiltersAndSort() {
         const searchTerm = searchInput.value.toLowerCase();
-        
-        // Build array of active category strings
+
         const activeCategories = Array.from(document.querySelectorAll('.filter-checkbox:checked')).map(cb => cb.value);
 
-        // Filter Phase
         let filtered = listings.filter(item => {
             const matchesSearch = item.title.toLowerCase().includes(searchTerm) || item.description.toLowerCase().includes(searchTerm);
-            
-            // Note: DB uses "Dairy". HTML has "Dairy". 
-            // In case of slight mismatches, we ensure string includes or exact matches.
+
             const matchesCategory = activeCategories.includes(item.category);
             
             return matchesSearch && matchesCategory;
         });
 
-        // Sorting Phase
         const sortMode = sortSelect.value;
         filtered.sort((a, b) => {
             if (sortMode === 'expiry_asc') {
@@ -71,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
         catalogueCount.textContent = `Showing ${dataToRender.length} active listings`;
 
         if(dataToRender.length === 0) {
-            // Loading Skeletons
+            
             for(let i=0; i<6; i++) {
                 const skel = document.createElement('div');
                 skel.className = 'skeleton';
@@ -86,8 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
             card.className = 'card flex flex-col';
             
             const expiryTime = new Date(item.available_until).getTime();
-            
-            // Map category to real image
+
             let imgSource = 'assets/img/pantry.png';
             if (item.category === 'Produce') imgSource = 'assets/img/produce.png';
             else if (item.category === 'Baked Goods') imgSource = 'assets/img/bakery.png';
@@ -148,7 +141,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 timerEl.textContent = `${hours}h ${mins}m ${secs}s`;
 
-                // If less than 2 hours (7200 seconds), show critical badge
                 if (diff < 7200000) {
                     if(criticalBadge) criticalBadge.style.display = 'block';
                     timerEl.style.color = "var(--arch-accent)";
@@ -171,6 +163,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     setInterval(updateTimers, 1000);
-    setInterval(fetchListings, 30000); // Auto-refresh data and re-apply filters every 30s
+    setInterval(fetchListings, 30000); 
     fetchListings();
 });

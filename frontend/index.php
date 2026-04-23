@@ -1,8 +1,5 @@
 <?php 
-/*
-   FoodCycle Project - Index / Landing Page
-   Academic Submission Version
-*/
+
 require_once '../backend/init.php'; 
 ?>
 <!DOCTYPE html>

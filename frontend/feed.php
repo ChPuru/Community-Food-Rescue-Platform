@@ -1,7 +1,5 @@
 <?php 
-/*
-   Live Feed of Food Donations
-*/
+
 require_once '../backend/init.php'; 
 ?>
 <!DOCTYPE html>

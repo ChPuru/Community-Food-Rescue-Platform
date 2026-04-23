@@ -1,8 +1,5 @@
 <?php 
-/*
-   Rescue Interactive Radar
-   Mapping of active food donations using Leaflet.js
-*/
+
 require_once '../backend/init.php'; 
 ?>
 <!DOCTYPE html>
@@ -169,8 +166,8 @@ require_once '../backend/init.php';
                                         <h3 style="font-size: 1.2rem; color: var(--primary-color)">${item.title}</h3>
                                         <span class="dist-tag">${dist.toFixed(1)} km</span>
                                     </div>
-                                    <p style="font-size: 0.85rem; color: #666; margin-bottom: 20px; min-height: 40px">
-                                        Available at ${item.operator_name}. ${item.description.substring(0, 60)}...
+                                    <p class="line-clamp-3" style="font-size: 0.85rem; color: #666; margin-bottom: 20px; min-height: 40px">
+                                        Available at ${item.operator_name}. ${item.description}
                                     </p>
                                     <div class="flex gap-2">
                                         <a href="${gmapsUrl}" target="_blank" class="btn btn-outline" style="flex:1.2; text-align:center; padding: 10px; font-size:12px">Get Directions</a>

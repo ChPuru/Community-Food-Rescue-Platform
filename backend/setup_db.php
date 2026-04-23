@@ -1,24 +1,21 @@
 <?php
 require_once __DIR__ . '/db.php';
 try {
-    // Attempt to add rating column if it does not exist
+    
     try {
         $pdo->exec("ALTER TABLE feedback ADD COLUMN rating INT NOT NULL DEFAULT 5;");
     } catch (PDOException $e) {}
 
-    // Add role into users schema
     try {
         $pdo->exec("ALTER TABLE users ADD COLUMN role ENUM('donor', 'ngo') NOT NULL DEFAULT 'donor';");
     } catch (PDOException $e) {}
 
-    // Add profile details
     try {
         $pdo->exec("ALTER TABLE users ADD COLUMN phone VARCHAR(20) DEFAULT NULL;");
         $pdo->exec("ALTER TABLE users ADD COLUMN address TEXT DEFAULT NULL;");
         $pdo->exec("ALTER TABLE users ADD COLUMN profile_image VARCHAR(255) DEFAULT NULL;");
     } catch (PDOException $e) {}
 
-    // Add image_path to listings
     try {
         $pdo->exec("ALTER TABLE listings ADD COLUMN image_path VARCHAR(255) DEFAULT NULL;");
     } catch (PDOException $e) {}

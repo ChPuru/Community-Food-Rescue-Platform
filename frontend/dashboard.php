@@ -1,8 +1,5 @@
 <?php 
-/*
-   Operator Dashboard
-   Simplified full-width view focusing on stats and activity.
-*/
+
 require_once '../backend/init.php'; 
 
 if (!isset($_SESSION['user_id'])) {

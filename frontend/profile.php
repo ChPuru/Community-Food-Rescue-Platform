@@ -1,8 +1,5 @@
 <?php 
-/*
-   User Profile Settings
-   Update account identity, contact details, and security.
-*/
+
 require_once '../backend/init.php'; 
 
 if (!isset($_SESSION['user_id'])) {

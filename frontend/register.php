@@ -1,8 +1,5 @@
 <?php 
-/*
-   Account Registration
-   Onboarding for new food donors and NGO partners.
-*/
+
 require_once '../backend/init.php'; 
 ?>
 <!DOCTYPE html>

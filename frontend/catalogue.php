@@ -1,8 +1,5 @@
 <?php 
-/*
-   Food Donation Catalogue
-   Searchable and filterable grid of all active items.
-*/
+
 require_once '../backend/init.php'; 
 ?>
 <!DOCTYPE html>

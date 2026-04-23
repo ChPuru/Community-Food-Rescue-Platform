@@ -1,105 +1,81 @@
-# FoodCycle - Community Food Rescue Platform
+# FoodCycle - Full-Stack Community Food Rescue Platform
 
-A web-based platform that connects local businesses with surplus food to community members, shelters, and volunteers who can pick it up before it goes to waste. Instead of throwing away perfectly good food, list it here and let someone nearby come grab it.
+FoodCycle is a real-time platform designed to reduce urban food waste by connecting businesses with surplus food to local NGOs and recipients. Developed for the SY BTech Web Programming Lab (2025–26), it utilizes geospatial data and live synchronization to ensure efficient food rescue in Mumbai.
 
-## What this project is
+---
 
-FoodCycle is a frontend prototype for a community food rescue coordination system. It's built as a set of static HTML pages that demonstrate the full user flow — from landing on the site, to browsing available food, to claiming a batch for pickup.
+## Key Features
 
-This is currently frontend only. There's no backend or database hooked up yet. The pages use hardcoded sample data to show what the experience would look like.
+- Live Donation Feed: Real-time listing of food batches with automatic expiry countdowns.
+- Interactive Nearby Feed: A Leaflet.js-powered map of Mumbai allowing users to find the closest food batches.
+- Smart Navigation: One-click deep-linking to Google Maps for precise turn-by-turn navigation to pickup points.
+- Geocoded Listing Search: Donors can search for addresses or manually pin their pickup location using an interactive map.
+- Impact Analytics: Dynamic tracking of "Meals Rescued," "CO2 Reduced," and community participation metrics.
+- Secure Portal: Role-based access control (RBAC) for Donors, NGOs, and Recipients with personalized impact scores.
+- Live Notifications: Real-time alerts for claims and status updates.
 
-## Tech stack
+---
 
-This project is intentionally built with zero external dependencies. Everything works offline, no internet required.
+## Technology Stack
 
-- HTML
-- CSS (vanilla, one shared `styles.css`)
-- JavaScript (vanilla)
-- `icons.js` — a small inline SVG icon system, no CDN needed
-- System fonts only (no Google Fonts)
+This project follows a professional, high-performance vanilla stack to ensure maximum speed and offline-ready components:
 
-No Tailwind, no npm, no build step, no bundler, no framework, no CDN. Just open the HTML files in a browser and they work.
+- Frontend: HTML5, CSS3, JavaScript (ES6+).
+- Backend: PHP 8.x (API-first architecture).
+- Database: MySQL (Relational storage for users, listings, and claims).
+- Mapping: Leaflet.js with OpenStreetMap (Nominatim) for geocoding.
+- Branding: Custom SVG icon system (icons.js) and typography (Lora & Inter).
 
-## Pages
+---
 
-Here's what's in the project:
+## Project Structure
 
-- **index.html** — Landing page. Explains what the platform does, shows some quick stats, and highlights urgent rescue batches nearby.
-- **login.html** — Login/registration page. Supports email login with placeholders for GitHub and Google auth.
-- **catalogue.html** — Main food catalogue. A filterable, searchable grid of all available food listings. Filter by category, urgency, and distance.
-- **feed.html** — Live dashboard view. Shows a scrollable feed of available food with a sidebar for filters and a map panel.
-- **nearby.html** — Mobile-first view. Designed for phones, shows nearby food as a card list with a bottom navigation bar.
-- **new-listing.html** — Form for donors to post surplus food. Covers title, category, quantity, description, allergens, expiry, and pickup location.
-- **pickup.html** — Pickup detail page for a specific batch. Shows what's included, instructions, allergen info, a map placeholder, and the claim button.
-- **impact.html** — Impact dashboard. Tracks food rescued, meals provided, CO2 prevented, top rescuers leaderboard, and category breakdown.
-- **feedback.html** — Feedback form. Report bugs, suggest ideas, send praise. Supports file attachments.
-
-## Design
-
-The design uses a brutalist / editorial aesthetic. Bold typography, thick black borders, hard box shadows, and high contrast. The project has two visual themes:
-
-1. **FoodCycle theme** (index, feed, nearby, new-listing, pickup, impact) — System sans-serif + Impact display font, green brand colors, thick 3px borders, offset box shadows.
-2. **Rescue_Arch theme** (login, catalogue, feedback) — System monospace + sans-serif, orange accent (#FF3B00), technical/systems UI feel.
-
-Both share the same brutalist DNA but have slightly different personalities.
-
-## Running locally
-
-Just open any of the HTML files directly in your browser. Double-click the file or drag it into a browser window. That's it.
-
-Since there are zero external dependencies, the pages work completely offline — no internet connection needed.
-
-If you want to run a local server (for cleaner URL paths), you can do:
-
-```
-python -m http.server 8000
-```
-
-Then go to `http://localhost:8000`.
-
-## Project structure
-
-```
+```text
 foodrescueplatform/
-    index.html          - Landing page
-    login.html          - Authentication
-    catalogue.html      - Food listing catalogue
-    feed.html           - Live feed dashboard
-    nearby.html         - Mobile nearby view
-    new-listing.html    - Create new food listing
-    pickup.html         - Pickup details
-    impact.html         - Impact metrics dashboard
-    feedback.html       - User feedback form
-    styles.css          - Shared stylesheet (all CSS lives here)
-    icons.js            - Inline SVG icon system
-    nav.js              - Dev navigation overlay
-    figma design/       - Original design mockups
-    .gitignore
-    README.md
+├── backend/                # Server-side Logic (PHP APIs)
+│   ├── api_listings.php    # CRUD for food batches
+│   ├── api_claim.php       # Transactional claim logic
+│   ├── api_stats.php       # Environmental & user analytics
+│   ├── api_notifications.php
+│   ├── db.php              # PDO Connection
+│   └── init.php            # Global session & security
+├── frontend/               # User Interface
+│   ├── index.php           # Landing Page
+│   ├── feed.php            # Live Donation Grid
+│   ├── nearby.php          # Interactive Map Feed
+│   ├── impact.php          # Analytics Dashboard
+│   ├── dashboard.php       # User Portal
+│   ├── profile.php         # Account & Security
+│   ├── new-listing.php     # Donor Submission Map
+│   └── assets/             # Styles, custom icons, and JS
+└── figma design/           # Original UI mockups
 ```
 
-## How the icons work
+---
 
-Instead of loading icons from a CDN, the project includes `icons.js` which contains SVG path data for about 40 icons. In the HTML, icons are written as:
+## Installation & Setup
 
-```html
-<i data-icon="recycle" class="icon icon-lg"></i>
-```
+### Prerequisites
+- XAMPP (or any LAMP/WAMP stack with PHP 8.0+ and MySQL).
+- Browser with Geolocation permissions enabled.
 
-When the page loads, `icons.js` replaces each `<i>` tag with the actual `<svg>`. You can add new icons by adding entries to the `ICONS` object in that file.
+### Steps
+1.  Clone the repository or move the foodrescueplatform folder to your htdocs directory.
+2.  Start Apache and MySQL via the XAMPP Control Panel.
+3.  Database Import:
+    - Open phpMyAdmin (http://localhost/phpmyadmin).
+    - Create a new database named foodcycle.
+    - Import the provided backend/schema.sql or run the setup script.
+4.  Access the Platform:
+    - Navigate to http://localhost/foodrescueplatform/frontend/index.php.
+    - Register as a Donor to list food or an NGO to claim it.
 
-## What's next
+---
 
-This is a frontend prototype. To make it actually functional, it would need:
+## Academic Context
+Developed as a Mini Project Submission for the SY BTech Web Programming Lab. This project demonstrates the integration of relational databases, server-side scripting, and external GIS APIs into a unified social-impact application.
 
-- A backend with a database
-- User authentication
-- Real-time feed updates
-- Map integration (Mapbox, Leaflet, etc.)
-- Image uploads for food listings
-- Push notifications for urgent rescues
-- API for claims, listings, and user management
+---
 
 ## License
-
-Not specified yet. Reach out if you want to use or build on this.
+Educational Lab Project - All rights reserved 2026.

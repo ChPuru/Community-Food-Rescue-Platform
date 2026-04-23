@@ -1,9 +1,5 @@
 <?php 
-/*
-   Platform Feedback Survey
-   Community input to help improve the FoodCycle initiative.
-   Part of the Web Programming Lab documentation.
-*/
+
 require_once '../backend/init.php'; 
 ?>
 <!DOCTYPE html>

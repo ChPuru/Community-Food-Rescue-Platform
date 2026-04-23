@@ -12,7 +12,7 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 
 try {
-    // Fetch last 10 notifications
+    
     $stmt = $pdo->prepare("SELECT * FROM notifications WHERE user_id = ? ORDER BY sent_at DESC LIMIT 10");
     $stmt->execute([$user_id]);
     $notifications = $stmt->fetchAll(PDO::FETCH_ASSOC);

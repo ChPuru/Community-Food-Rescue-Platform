@@ -21,7 +21,7 @@ if ($method === 'GET') {
     }
 } 
 elseif ($method === 'POST') {
-    // Only donors can create listings
+    
     if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'donor') {
         echo json_encode(['status' => 'error', 'message' => 'Unauthorized. Only donors can list food.']);
         exit;
@@ -36,13 +36,11 @@ elseif ($method === 'POST') {
     $lat = $_POST['latitude'] ?? null;
     $lng = $_POST['longitude'] ?? null;
 
-    // Basic Validation
     if (empty($title) || empty($available_until)) {
         echo json_encode(['status' => 'error', 'message' => 'Title and Expiry are required.']);
         exit;
     }
 
-    // Handle Image Upload
     $image_path = null;
     if (isset($_FILES['food_image']) && $_FILES['food_image']['error'] === UPLOAD_ERR_OK) {
         $upload_dir = '../frontend/assets/uploads/listings/';
@@ -60,7 +58,6 @@ elseif ($method === 'POST') {
         $stmt = $pdo->prepare("INSERT INTO listings (user_id, title, category, quantity, available_until, description, image_path, latitude, longitude, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'active')");
         $stmt->execute([$user_id, $title, $category, $quantity, $available_until, $description, $image_path, $lat, $lng]);
 
-        // Redirect back to dashboard or feed with success
         header("Location: ../frontend/dashboard.php?msg=Listing+Published");
         exit;
     } catch (PDOException $e) {
