@@ -8,6 +8,13 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $role = isset($_SESSION['role']) ? $_SESSION['role'] : 'guest';
+
+$stmt = $pdo->prepare("SELECT id FROM users WHERE id = ?");
+$stmt->execute([$_SESSION['user_id']]);
+if (!$stmt->fetch()) {
+    header("Location: logout.php");
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

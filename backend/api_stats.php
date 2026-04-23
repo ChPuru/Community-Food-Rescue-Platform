@@ -28,7 +28,7 @@ try {
     $meals_saved = floor($total_quantity_saved / 0.4); 
     $co2_reduced = round($total_quantity_saved * 2.5, 1); 
     
-    $stmt = $pdo->query("SELECT COUNT(DISTINCT claimer_id) FROM claims");
+    $stmt = $pdo->query("SELECT COUNT(DISTINCT user_id) FROM claims");
     $families_helped = $stmt->fetchColumn() ?: 0;
 
     $role = $_SESSION['role'];
@@ -39,7 +39,7 @@ try {
         $stmt->execute([$user_id]);
         $batches_helped = $stmt->fetchColumn();
     } else {
-        $stmt = $pdo->prepare("SELECT COUNT(*) FROM claims WHERE claimer_id = ?");
+        $stmt = $pdo->prepare("SELECT COUNT(*) FROM claims WHERE user_id = ?");
         $stmt->execute([$user_id]);
         $batches_helped = $stmt->fetchColumn();
     }
@@ -48,7 +48,7 @@ try {
 
     $active_claims = 0;
     if ($role !== 'donor') {
-        $stmt = $pdo->prepare("SELECT COUNT(*) FROM claims WHERE claimer_id = ?");
+        $stmt = $pdo->prepare("SELECT COUNT(*) FROM claims WHERE user_id = ?");
         $stmt->execute([$user_id]);
         $active_claims = $stmt->fetchColumn();
     }
@@ -59,7 +59,7 @@ try {
         $stmt->execute([$user_id]);
         $recent_activity = $stmt->fetchAll();
     } else {
-        $stmt = $pdo->prepare("SELECT c.claimed_at as date, l.title as action, l.status FROM claims c JOIN listings l ON c.listing_id = l.id WHERE c.claimer_id = ? ORDER BY c.claimed_at DESC LIMIT 5");
+        $stmt = $pdo->prepare("SELECT c.claimed_at as date, l.title as action, l.status FROM claims c JOIN listings l ON c.listing_id = l.id WHERE c.user_id = ? ORDER BY c.claimed_at DESC LIMIT 5");
         $stmt->execute([$user_id]);
         $recent_activity = $stmt->fetchAll();
     }

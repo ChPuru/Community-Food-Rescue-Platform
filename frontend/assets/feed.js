@@ -65,29 +65,37 @@ document.addEventListener('DOMContentLoaded', () => {
             else if (item.category === 'Dairy') imgSource = 'assets/img/dairy.png';
 
             card.innerHTML = `
-                <div class="flex gap-6" style="align-items: stretch">
-                    <div style="width: 180px; height: 140px; flex-shrink: 0; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border-radius: 12px; overflow: hidden">
+                <div class="card flex" style="gap: 25px; padding: 20px; align-items: stretch; margin-bottom: 20px;">
+                    <!-- Image Column -->
+                    <div style="width: 200px; height: 160px; overflow: hidden; border-radius: 12px; flex-shrink: 0;">
                         <img src="${item.image_path || imgSource}" style="width:100%; height:100%; object-fit:cover;">
                     </div>
-                    <div class="flex-1 flex flex-col justify-between">
+                    
+                    <!-- Content Column -->
+                    <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between; padding: 5px 0;">
                         <div>
-                            <div class="flex justify-between items-start mb-2">
+                            <div class="flex items-center justify-between mb-2">
                                 <h3 style="color: var(--primary-color); font-family: 'Lora', serif; font-size: 1.4rem; margin:0">${escapeHtml(item.title)}</h3>
-                                <span style="font-size: 11px; font-weight: bold; padding: 4px 12px; background: #f0f0f0; border-radius: 50px; color: #666">${escapeHtml(item.category)}</span>
+                                <span style="font-size: 10px; font-weight: bold; padding: 4px 12px; background: #f0f0f0; border-radius: 50px; color: #666; text-transform: uppercase; letter-spacing: 0.5px;">${escapeHtml(item.category)}</span>
                             </div>
-                            <p class="line-clamp-3" style="font-size: 0.95rem; color: #555; line-height: 1.6; margin-bottom: 15px">${escapeHtml(item.description)}</p>
+                            <p class="line-clamp-3" style="font-size: 0.95rem; color: #555; line-height: 1.6; margin-bottom: 10px; min-height: 45px;">${escapeHtml(item.description)}</p>
                         </div>
                         
-                        <div class="flex justify-between items-end">
-                            <div class="flex flex-col gap-2">
-                                <div style="font-size: 13px; font-weight: 600; color: #444; display: flex; align-items: center; gap: 6px">
-                                    <i data-icon="map-pin" style="width:14px; height:14px; color: var(--secondary-color)"></i>
-                                    ${escapeHtml(item.operator_name)}
-                                </div>
-                                <div class="feed-item-expiry" data-expiry="${expiryTime}" style="padding: 4px 12px; border-radius: 50px; font-size: 11px; font-weight: bold; display: inline-block">...</div>
-                            </div>
-                            <button class="btn btn-primary claim-btn" data-id="${item.id}" style="padding: 12px 30px; font-weight: bold; font-size: 13px; border-radius: 8px">Claim Batch</button>
+                        <div class="flex items-center gap-2" style="font-size: 0.85rem; color: #777;">
+                            <i data-icon="map-pin" class="icon" style="width:14px; height:14px; color: var(--secondary-color)"></i>
+                            <span style="font-weight: 500">${escapeHtml(item.operator_name || 'Anonymous Donor')}</span>
                         </div>
+                    </div>
+                    
+                    <!-- Action Column -->
+                    <div style="width: 180px; display: flex; flex-direction: column; justify-content: space-between; gap: 15px; padding-left: 20px; border-left: 1px solid #eee;">
+                        <div class="feed-item-expiry" data-expiry="${expiryTime}" style="background: #e3f2fd; border-radius: 8px; padding: 12px; text-align: center; color: #1565c0; font-weight: 700; font-size: 0.8rem;">
+                            <div style="font-size: 10px; text-transform: uppercase; margin-bottom: 4px; opacity: 0.8;">Expires In</div>
+                            <span class="expiry-timer">Calculating...</span>
+                        </div>
+                        <button class="btn btn-primary claim-btn" data-id="${item.id}" style="width: 100%; padding: 12px; border-radius: 8px; font-weight: 700;">
+                            Claim Batch
+                        </button>
                     </div>
                 </div>
             `;

@@ -11,6 +11,11 @@ require_once '../backend/db.php';
 $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
 $stmt->execute([$_SESSION['user_id']]);
 $user = $stmt->fetch();
+
+if (!$user) {
+    header("Location: logout.php");
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
