@@ -1,149 +1,132 @@
-<?php require_once '../backend/init.php'; ?>
+<?php 
+/*
+   Rescue Interactive Radar
+   Mapping of active food donations using Leaflet.js
+   Unit 5: Geographical API Integration logic
+*/
+require_once '../backend/init.php'; 
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FoodCycle - Nearby</title>
+    <title>FoodCycle - Community Food Rescue Platform</title>
+    
+    <!-- External CSS -->
     <link rel="stylesheet" href="assets/styles.css">
+    
+    <!-- Leaflet Map CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
-<body class="bg-page flex flex-col brutal-border" style="max-width:28rem;margin:0 auto;min-height:100vh;border-left:3px solid #000;border-right:3px solid #000">
-    <header class="bg-white brutal-border-b p-4 sticky flex justify-between items-center" style="top:0;z-index:50">
-        <div class="flex items-center gap-2">
-            <div class="logo-icon" style="width:2rem;height:2rem"><i data-icon="recycle" class="icon icon-md" style="color:#fff"></i></div>
-            <span class="font-display text-2xl tracking-wide mt-1">FoodCycle</span>
-        </div>
-        <button class="brutal-border brutal-shadow-sm flex items-center justify-center" style="width:2.5rem;height:2.5rem;background:#000;color:#fff">
-            <i data-icon="menu" class="icon icon-md"></i>
-        </button>
-    </header>
-    <div class="bg-brand-400 brutal-border-b p-3 flex justify-between items-center">
-        <div class="font-bold uppercase text-sm tracking-wider flex items-center gap-2">
-            <span class="pulse" style="width:0.5rem;height:0.5rem;background:#000;border-radius:9999px;display:inline-block"></span>
-            12 Active Rescues
-        </div>
-        <button class="bg-white px-3 py-1 brutal-border font-bold text-xs uppercase flex items-center gap-1 brutal-shadow-sm">
-            <i data-icon="map" class="icon icon-sm"></i> Map
-        </button>
-    </div>
-    <div class="bg-white brutal-border-b p-3 overflow-x-auto hide-scroll whitespace-nowrap flex gap-2">
-        <button class="bg-black text-white px-4 py-1 brutal-border font-bold text-xs uppercase inline-block" style="padding-top:0.375rem;padding-bottom:0.375rem">All</button>
-        <button class="px-4 py-1 brutal-border font-bold text-xs uppercase inline-block transition-colors" style="background:var(--bg);padding-top:0.375rem;padding-bottom:0.375rem" onmouseover="this.style.background='var(--brand-400)'" onmouseout="this.style.background='var(--bg)'">Produce</button>
-        <button class="px-4 py-1 brutal-border font-bold text-xs uppercase inline-block transition-colors" style="background:var(--bg);padding-top:0.375rem;padding-bottom:0.375rem" onmouseover="this.style.background='var(--brand-400)'" onmouseout="this.style.background='var(--bg)'">Bakery</button>
-        <button class="px-4 py-1 brutal-border font-bold text-xs uppercase inline-block transition-colors" style="background:var(--bg);padding-top:0.375rem;padding-bottom:0.375rem" onmouseover="this.style.background='var(--brand-400)'" onmouseout="this.style.background='var(--bg)'">Meals</button>
-        <button class="px-4 py-1 brutal-border font-bold text-xs uppercase inline-block transition-colors" style="background:var(--bg);padding-top:0.375rem;padding-bottom:0.375rem" onmouseover="this.style.background='var(--brand-400)'" onmouseout="this.style.background='var(--bg)'">Dairy</button>
-    </div>
-    <main class="flex-1 overflow-y-auto p-4 space-y-4 bg-page" style="padding-bottom:6rem">
-        <h2 class="font-display text-3xl uppercase mb-2">Nearby <span class="text-brand-600">Now</span></h2>
-        <article class="nearby-card">
-            <div class="nearby-distance bg-brand-400">0.5 mi</div>
-            <div class="nearby-card-header">
-                <div class="brutal-border flex-shrink-0 flex items-center justify-center" style="width:3rem;height:3rem;background:#000;color:#fff">
-                    <i data-icon="croissant" class="icon icon-lg"></i>
-                </div>
+<body>
+    <div id="header-placeholder"></div>
+
+    <main class="content-area">
+        <div class="container">
+            <div class="flex justify-between items-center mb-6">
                 <div>
-                    <h3 class="font-display text-xl uppercase leading-none mb-1">Morning Pastries</h3>
-                    <p class="text-xs font-bold text-gray-500 uppercase">Local Bakery Co.</p>
+                    <h1 style="color: var(--primary-color)">Rescue Radar</h1>
+                    <p style="color: #666">Discover and navigate to available food batches in real-time.</p>
+                </div>
+                <div style="background: white; border: 1.5px solid var(--primary-color); color: var(--primary-color); padding: 8px 18px; border-radius: 50px; font-weight: 600; font-size: 0.85rem">
+                    12 Batches Available
                 </div>
             </div>
-            <div class="nearby-card-body">
-                <p class="text-sm font-medium mb-3">2 boxes of assorted bagels and muffins. Best before end of day.</p>
-                <div class="flex items-center justify-between">
-                    <span class="badge-outline">~15 lbs</span>
-                    <span class="text-brand-600 font-bold text-xs uppercase flex items-center gap-1">
-                        <i data-icon="clock" class="icon icon-sm"></i> 45m left
-                    </span>
-                </div>
-            </div>
-            <button class="btn-full-black">Claim Batch</button>
-        </article>
-        <article class="nearby-card">
-            <div class="nearby-distance bg-white">1.2 mi</div>
-            <div class="nearby-card-header">
-                <div class="brutal-border flex-shrink-0 flex items-center justify-center" style="width:3rem;height:3rem;background:var(--brand-100)">
-                    <i data-icon="carrot" class="icon icon-lg text-brand-900"></i>
-                </div>
-                <div>
-                    <h3 class="font-display text-xl uppercase leading-none mb-1">Imperfect Produce</h3>
-                    <p class="text-xs font-bold text-gray-500 uppercase">City Supermarket</p>
-                </div>
-            </div>
-            <div class="nearby-card-body">
-                <p class="text-sm font-medium mb-3">Slightly bruised apples and overripe bananas. Great for baking.</p>
-                <div class="flex items-center justify-between">
-                    <span class="badge-outline">~20 lbs</span>
-                    <span class="text-gray-500 font-bold text-xs uppercase flex items-center gap-1">
-                        <i data-icon="clock" class="icon icon-sm"></i> 2h left
-                    </span>
-                </div>
-            </div>
-            <button class="btn-full-white">Claim Batch</button>
-        </article>
-        <div class="brutal-border p-4 relative overflow-hidden" style="background:var(--brand-600);color:#fff;margin-top:1.5rem;margin-bottom:1.5rem">
-            <i data-icon="truck" class="icon icon-huge absolute" style="right:-1rem;bottom:-1rem;opacity:0.2;color:#000;transform:rotate(12deg)"></i>
-            <h3 class="font-display text-2xl uppercase mb-2 relative z-10">Have Surplus?</h3>
-            <p class="text-sm font-medium mb-4 relative z-10">List your excess food in seconds and connect with local rescuers.</p>
-            <a href="new-listing.php" class="brutal-border relative z-10 inline-block" style="background:#000;color:#fff;padding:0.5rem 1rem;font-weight:700;font-size:0.75rem;text-transform:uppercase">
-                Create Listing
-            </a>
-        </div>
-        <article class="nearby-card">
-            <div class="nearby-distance bg-white">2.5 mi</div>
-            <div class="nearby-card-header">
-                <div class="brutal-border flex-shrink-0 overflow-hidden" style="width:3rem;height:3rem">
-                    <div class="img-placeholder w-full h-full" style="background:linear-gradient(135deg,#b3e5fc,#81d4fa)">
-                        <i data-icon="box" class="icon icon-lg" style="opacity:0.4"></i>
+
+            <!-- Live Map Section -->
+            <div id="live-map" style="margin-bottom: 40px; height: 500px"></div>
+
+            <!-- Nearby Listings Grid -->
+            <h2 class="mb-4">Recent Listings Nearby</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px">
+                
+                <!-- Listing Card 1 -->
+                <div class="card">
+                    <img src="assets/img/bakery.png" class="category-img" alt="Bakery Items">
+                    <div class="flex justify-between items-center mb-2">
+                        <h3 style="font-size: 1.2rem">Morning Pastries</h3>
+                        <span style="background: #e8f5e9; color: #2e7d32; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold">0.5 mi</span>
+                    </div>
+                    <p style="font-size: 0.9rem; color: var(--text-light); margin-bottom: 15px">
+                        A fresh batch of croissants and bagels from Downtown Bakery. Still warm and ready for pickup.
+                    </p>
+                    <div class="flex justify-between items-center">
+                        <span style="font-size: 0.8rem; font-weight: bold; color: var(--secondary-color)">Expires in 45m</span>
+                        <button class="btn btn-primary" onclick="window.showToast('Please login to claim')">Claim Now</button>
                     </div>
                 </div>
-                <div>
-                    <h3 class="font-display text-xl uppercase leading-none mb-1">Excess Dairy</h3>
-                    <p class="text-xs font-bold text-gray-500 uppercase">Corner Bodega</p>
+
+                <!-- Listing Card 2 -->
+                <div class="card">
+                    <img src="assets/img/produce.png" class="category-img" alt="Fresh Produce">
+                    <div class="flex justify-between items-center mb-2">
+                        <h3 style="font-size: 1.2rem">Fresh Veggies</h3>
+                        <span style="background: #e8f5e9; color: #2e7d32; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold">1.2 mi</span>
+                    </div>
+                    <p style="font-size: 0.9rem; color: var(--text-light); margin-bottom: 15px">
+                        Mixed bag of organic vegetables including carrots, spinach, and tomatoes. High nutritional value.
+                    </p>
+                    <div class="flex justify-between items-center">
+                        <span style="font-size: 0.8rem; font-weight: bold; color: var(--secondary-color)">Expires in 2h</span>
+                        <button class="btn btn-primary" onclick="window.showToast('Please login to claim')">Claim Now</button>
+                    </div>
                 </div>
-            </div>
-            <div class="nearby-card-body">
-                <p class="text-sm font-medium mb-3">Milk and yogurt nearing sell-by date. Needs refrigeration ASAP.</p>
-                <div class="flex items-center justify-between">
-                    <span class="badge-outline">~10 lbs</span>
-                    <span class="text-gray-500 font-bold text-xs uppercase flex items-center gap-1">
-                        <i data-icon="clock" class="icon icon-sm"></i> 4h left
-                    </span>
+
+                <!-- Listing Card 3 -->
+                <div class="card">
+                    <img src="assets/img/meals.png" class="category-img" alt="Prepared Meals">
+                    <div class="flex justify-between items-center mb-2">
+                        <h3 style="font-size: 1.2rem">Nutritious Meals</h3>
+                        <span style="background: #e8f5e9; color: #2e7d32; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold">2.5 mi</span>
+                    </div>
+                    <p style="font-size: 0.9rem; color: var(--text-light); margin-bottom: 15px">
+                        5 portions of grilled chicken and healthy grains. Packaged in sanitized, eco-friendly boxes.
+                    </p>
+                    <div class="flex justify-between items-center">
+                        <span style="font-size: 0.8rem; font-weight: bold; color: var(--secondary-color)">Expires in 4h</span>
+                        <button class="btn btn-primary" onclick="window.showToast('Please login to claim')">Claim Now</button>
+                    </div>
                 </div>
+
             </div>
-            <button class="btn-full-white">Claim Batch</button>
-        </article>
-    </main>
-    <nav class="bg-white brutal-border-t fixed flex justify-around p-2" style="bottom:0;width:100%;max-width:28rem;z-index:50">
-        <a href="feed.php" class="flex flex-col items-center p-2 text-brand-600">
-            <i data-icon="list" class="icon icon-lg mb-1"></i>
-            <span class="font-bold uppercase" style="font-size:0.625rem">Feed</span>
-        </a>
-        <a href="#" class="flex flex-col items-center p-2 text-gray-400 transition-colors" onmouseover="this.style.color='#000'" onmouseout="this.style.color='var(--gray-400)'">
-            <i data-icon="map" class="icon icon-lg mb-1"></i>
-            <span class="font-bold uppercase" style="font-size:0.625rem">Map</span>
-        </a>
-        <div class="relative" style="top:-1.5rem">
-            <a href="new-listing.php" class="brutal-border brutal-shadow-sm rounded-full flex items-center justify-center" style="width:3.5rem;height:3.5rem;background:var(--brand-400)">
-                <i data-icon="plus" class="icon icon-lg"></i>
-            </a>
         </div>
-        <a href="impact.php" class="flex flex-col items-center p-2 text-gray-400 transition-colors" onmouseover="this.style.color='#000'" onmouseout="this.style.color='var(--gray-400)'">
-            <i data-icon="bar-chart-2" class="icon icon-lg mb-1"></i>
-            <span class="font-bold uppercase" style="font-size:0.625rem">Impact</span>
-        </a>
-        <?php if (isset($_SESSION['user_id'])): ?>
-            <a href="dashboard.php" class="flex flex-col items-center p-2 text-brand-600 transition-colors">
-                <i data-icon="user" class="icon icon-lg mb-1"></i>
-                <span class="font-bold uppercase" style="font-size:0.625rem">Profile</span>
-            </a>
-        <?php else: ?>
-            <a href="login.php" class="flex flex-col items-center p-2 text-gray-400 transition-colors" onmouseover="this.style.color='#000'" onmouseout="this.style.color='var(--gray-400)'">
-                <i data-icon="user" class="icon icon-lg mb-1"></i>
-                <span class="font-bold uppercase" style="font-size:0.625rem">Login</span>
-            </a>
-        <?php endif; ?>
-    </nav>
+    </main>
+
+    <!-- Footer -->
+    <footer style="background: #fff; border-top: 1px solid #ddd; padding: 40px 0; text-align: center; margin-top: 60px">
+        <div class="container">
+            <p style="font-weight: bold; color: var(--primary-color)">FoodCycle Platform &copy; 2026</p>
+            <p style="font-size: 12px; color: #888">A Community Food Rescue Initiative</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="assets/icons.js"></script>
-    <script src="assets/nav.js"></script>
+    <script src="assets/header.js"></script>
+    
+    <script>
+        // Initialize Live Map
+        // We set the view to a central location (e.g., London or a local area)
+        const map = L.map('live-map').setView([51.505, -0.09], 13);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Simulated Marker for Bakery
+        L.marker([51.505, -0.09]).addTo(map)
+            .bindPopup('<strong>Downtown Bakery</strong><br>3 batches available.')
+            .openPopup();
+
+        // Simulated Marker for Supermarket
+        L.marker([51.515, -0.1]).addTo(map)
+            .bindPopup('<strong>City Supermarket</strong><br>Fresh produce collection.');
+
+        // Marker for a Community Center
+        L.marker([51.495, -0.08]).addTo(map)
+            .bindPopup('<strong>Hope Shelter</strong><br>Pickup point.');
+    </script>
 </body>
 </html>
-

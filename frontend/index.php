@@ -1,167 +1,134 @@
-<?php
-require_once '../backend/init.php';
+<?php 
+/*
+   FoodCycle Project - Index / Landing Page
+   Academic Submission Version
+   Developed for Web Programming Lab
+*/
+require_once '../backend/init.php'; 
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FoodCycle — Community Food Rescue</title>
+    <title>FoodCycle - Community Food Rescue Platform</title>
     <link rel="stylesheet" href="assets/styles.css">
 </head>
-<body class="bg-page min-h-screen flex flex-col">
-    <nav class="site-nav">
-        <div class="nav-inner">
-            <div class="logo">
-                <div class="logo-icon">
-                    <i data-icon="recycle" class="icon icon-lg" style="color:#fff"></i>
-                </div>
-                <span class="logo-text">FoodCycle</span>
-            </div>
-            <div class="nav-links">
-                <a href="#">Mission</a>
-                <a href="#">Find Food</a>
-                <a href="#">Donate</a>
-                <a href="impact.php">Impact</a>
-                <?php if (isset($_SESSION['user_id'])): ?>
-                    <a href="dashboard.php" style="font-weight:bold; color:var(--brand-600);">Op: <?php echo htmlspecialchars($_SESSION['user_name']); ?></a>
-                    <a href="logout.php" class="btn-nav" style="background:#000; color:#fff; border-color:#000;">Logout</a>
-                <?php else: ?>
-                    <a href="login.php" class="btn-nav">Join Movement / Login</a>
-                <?php endif; ?>
-            </div>
-            <button class="mobile-menu-btn">
-                <i data-icon="menu" class="icon icon-lg"></i>
-            </button>
-        </div>
-    </nav>
-    <div class="marquee-container">
-        <div class="marquee-content">
-            RESCUE FOOD. REDUCE WASTE. FEED LIVES. &bull; ZERO HUNGER &bull; RESCUE FOOD. REDUCE WASTE. FEED LIVES. &bull; ZERO HUNGER &bull; RESCUE FOOD. REDUCE WASTE. FEED LIVES. &bull; ZERO HUNGER &bull;
-        </div>
-    </div>
-    <main class="flex-grow">
-        <div class="container" style="padding-top:3rem;padding-bottom:3rem">
-            <div class="grid grid-cols-1 lg-grid-cols-12 gap-8" style="align-items:center">
-                <div style="grid-column:span 7" class="lg-col-span-7">
-                    <div class="tag-skew mb-4">Community Action</div>
-                    <h1 class="hero-text-giant mb-4">
-                        Stop <br>
-                        <span class="text-brand-600">Wasting</span><br>
-                        Good Food.
+<body>
+    <div id="header-placeholder"></div>
+
+    <main>
+        <!-- Hero Banner - Traditional responsive container -->
+        <section class="hero-section">
+            <div class="container">
+                <div style="max-width: 850px; margin: 0 auto">
+                    <h1 style="font-size: 3.8rem; margin-bottom: 25px; line-height: 1.1">
+                        Saving Food, <span style="color: #a5d6a7">Strengthening Community</span>
                     </h1>
-                    <p class="text-xl font-medium hero-accent-line mb-8" style="max-width:42rem">
-                        Connect surplus food from local businesses directly to community members and shelters in real-time.
+                    <p style="font-size: 1.25rem; margin-bottom: 40px; opacity: 0.9">
+                        Our platform connects local food donors with organizations that help people in need. 
+                        Let's work together to reduce food waste and help our neighbors.
                     </p>
-                    <div class="flex flex-col gap-6 sm-flex-row">
-                        <a href="nearby.php" class="btn-primary">I Need Food</a>
-                        <a href="new-listing.php" class="btn-secondary">I Have Surplus</a>
-                    </div>
-                    <div class="hero-stats">
-                        <div>
-                            <div class="font-display text-4xl sm-text-5xl">2.4<span class="text-brand-600">M</span></div>
-                            <div class="font-bold uppercase text-xs tracking-wider mt-1">Meals Rescued</div>
-                        </div>
-                        <div>
-                            <div class="font-display text-4xl sm-text-5xl">850<span class="text-brand-600">+</span></div>
-                            <div class="font-bold uppercase text-xs tracking-wider mt-1">Active Donors</div>
-                        </div>
-                        <div>
-                            <div class="font-display text-4xl sm-text-5xl">12<span class="text-brand-600">K</span></div>
-                            <div class="font-bold uppercase text-xs tracking-wider mt-1">Volunteers</div>
-                        </div>
-                    </div>
-                </div>
-                <div style="grid-column:span 5" class="lg-col-span-5 relative">
-                    <div class="hero-image-bg"></div>
-                    <div class="hero-image-frame">
-                        <div class="img-placeholder-stripes brutal-border" style="aspect-ratio:4/5;position:relative">
-                            <div style="position:absolute;inset:0;background:linear-gradient(135deg,#a8d5a2 0%,#6ab864 50%,#3d8b37 100%);opacity:0.4"></div>
-                            <i data-icon="recycle" class="icon icon-huge" style="color:rgba(0,0,0,0.15);position:relative;z-index:1"></i>
-                            <div style="position:absolute;top:1rem;right:1rem;background:#000;color:#fff;padding:1rem;border:3px solid #000;transform:rotate(12deg);z-index:10">
-                                <div class="font-display text-3xl text-center leading-none">LIVE</div>
-                                <div class="font-bold text-xs uppercase tracking-widest text-brand-400 mt-1">Rescue Map</div>
-                            </div>
-                        </div>
-                        <div class="flex items-start justify-between mt-4">
-                            <div>
-                                <h3 class="font-bold uppercase text-lg">Current Batch: #8842</h3>
-                                <p class="text-sm font-medium text-gray-600">Fresh produce from Downtown Market</p>
-                            </div>
-                            <span class="badge-brand" style="padding:0.25rem 0.5rem;white-space:nowrap">45 mins left</span>
-                        </div>
+                    <div class="flex justify-center gap-4">
+                        <a href="feed.php" class="btn btn-primary" style="padding: 15px 35px">Find Food Near Me</a>
+                        <a href="new-listing.php" class="btn btn-secondary" style="padding: 15px 35px">Donate Surplus Food</a>
                     </div>
                 </div>
             </div>
+        </section>
+
+            <!-- Introduction Section -->
+            <section style="margin-top: 60px; text-align: center">
+                <h2 style="color: var(--primary-color); margin-bottom: 15px">Why FoodCycle?</h2>
+                <p style="max-width: 700px; margin: 0 auto; color: #555">
+                    Every day, tons of perfectly good food go to waste. At the same time, many people struggle to find their next meal. 
+                    FoodCycle is a student-led initiative to bridge this gap using real-time technology.
+                </p>
+                
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: 50px">
+                    <div class="card">
+                        <i data-icon="zap" style="width: 40px; height: 40px; color: var(--accent-color); margin-bottom: 15px"></i>
+                        <h3>Real-time Alerts</h3>
+                        <p style="font-size: 0.9rem; color: #666; margin-top: 10px">Get notified immediately when a local business lists surplus food.</p>
+                    </div>
+                    <div class="card">
+                        <i data-icon="map-pin" style="width: 40px; height: 40px; color: var(--secondary-color); margin-bottom: 15px"></i>
+                        <h3>Interactive Maps</h3>
+                        <p style="font-size: 0.9rem; color: #666; margin-top: 10px">Find rescue points and donors easily with our live mapping system.</p>
+                    </div>
+                    <div class="card">
+                        <i data-icon="award" style="width: 40px; height: 40px; color: var(--primary-color); margin-bottom: 15px"></i>
+                        <h3>Impact Tracking</h3>
+                        <p style="font-size: 0.9rem; color: #666; margin-top: 10px">See how many meals we've saved and the CO2 emissions avoided.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recent Rescues Section -->
+            <section style="margin-top: 80px">
+                <div class="flex justify-between items-end mb-4">
+                    <h2 style="color: var(--primary-color)">Current Food Batches</h2>
+                    <a href="feed.php" style="font-weight: 600; color: var(--secondary-color)">View Full Feed &rarr;</a>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px">
+                    <div class="card">
+                        <img src="assets/img/bakery.png" class="category-img" alt="Bakery">
+                        <h4>Bakery Surplus</h4>
+                        <p style="font-size: 0.85rem; color: #666; margin-top: 5px">Fresh breads and muffins from Central Bakery.</p>
+                        <a href="feed.php" class="btn btn-outline" style="width: 100%; margin-top: 15px; text-align: center">Check Details</a>
+                    </div>
+                    <div class="card">
+                        <img src="assets/img/produce.png" class="category-img" alt="Produce">
+                        <h4>Fresh Produce</h4>
+                        <p style="font-size: 0.85rem; color: #666; margin-top: 5px">Assorted fruits and vegetables from organic farm.</p>
+                        <a href="feed.php" class="btn btn-outline" style="width: 100%; margin-top: 15px; text-align: center">Check Details</a>
+                    </div>
+                    <div class="card">
+                        <img src="assets/img/meals.png" class="category-img" alt="Meals">
+                        <h4>Prepared Meals</h4>
+                        <p style="font-size: 0.85rem; color: #666; margin-top: 5px">High-quality catering meals from Hotel Grand.</p>
+                        <a href="feed.php" class="btn btn-outline" style="width: 100%; margin-top: 15px; text-align: center">Check Details</a>
+                    </div>
+                </div>
+            </section>
         </div>
     </main>
-    <section class="brutal-border-t bg-white">
-        <div class="container py-16">
-            <div class="flex justify-between items-end mb-8">
-                <h2 class="font-display text-5xl sm-text-6xl">Urgent <span class="text-brand-600">Rescues</span></h2>
-                <a href="feed.php" class="sm-flex items-center gap-2 font-bold uppercase tracking-wider hidden" style="display:none">
-                    View All <i data-icon="arrow-right" class="icon icon-md"></i>
-                </a>
+
+    <!-- Footer -->
+    <footer style="background: #fff; border-top: 1px solid #ddd; padding: 60px 0; margin-top: 100px">
+        <div class="container" style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 50px">
+            <div>
+                <div class="logo">
+                    <i data-icon="recycle" class="icon" style="width:24px;height:24px"></i>
+                    FoodCycle
+                </div>
+                <p style="margin-top: 15px; color: #666; font-size: 0.9rem">
+                    A web-based platform dedicated to reducing food waste and supporting local hunger relief efforts through smart logistics.
+                </p>
             </div>
-            <div class="grid grid-cols-1 md-grid-cols-3 gap-8">
-                <div class="card p-6 relative" style="background:var(--bg)">
-                    <div class="nearby-distance bg-brand-400">1.2 mi</div>
-                    <div class="flex items-center gap-3 mb-4">
-                        <div style="width:3rem;height:3rem;background:#000;border-radius:9999px;display:flex;align-items:center;justify-content:center;color:#fff">
-                            <i data-icon="croissant" class="icon icon-lg"></i>
-                        </div>
-                        <div>
-                            <div class="font-bold uppercase">Morning Pastries</div>
-                            <div class="text-sm font-medium text-gray-600">Local Bakery Co.</div>
-                        </div>
-                    </div>
-                    <p class="font-medium mb-6">2 boxes of assorted bagels and muffins. Best before end of day.</p>
-                    <button class="w-full brutal-border py-3 font-bold uppercase tracking-wider bg-white transition-colors" onmouseover="this.style.background='#000';this.style.color='#fff'" onmouseout="this.style.background='#fff';this.style.color='#000'">
-                        Claim Batch
-                    </button>
-                </div>
-                <div class="card p-6 relative" style="background:var(--bg)">
-                    <div class="nearby-distance bg-brand-400">0.8 mi</div>
-                    <div class="flex items-center gap-3 mb-4">
-                        <div style="width:3rem;height:3rem;background:#000;border-radius:9999px;display:flex;align-items:center;justify-content:center;color:#fff">
-                            <i data-icon="carrot" class="icon icon-lg"></i>
-                        </div>
-                        <div>
-                            <div class="font-bold uppercase">Imperfect Produce</div>
-                            <div class="text-sm font-medium text-gray-600">City Supermarket</div>
-                        </div>
-                    </div>
-                    <p class="font-medium mb-6">15 lbs of slightly bruised apples and overripe bananas. Great for baking.</p>
-                    <button class="w-full brutal-border py-3 font-bold uppercase tracking-wider bg-white transition-colors" onmouseover="this.style.background='#000';this.style.color='#fff'" onmouseout="this.style.background='#fff';this.style.color='#000'">
-                        Claim Batch
-                    </button>
-                </div>
-                <div class="card p-6 flex flex-col justify-center items-center text-center" style="background:#000;color:#fff">
-                    <i data-icon="map" class="icon icon-hero text-brand-400 mb-4"></i>
-                    <h3 class="font-display text-3xl mb-2">Open Map</h3>
-                    <p class="font-medium mb-6" style="color:var(--gray-400)">See 24 more active rescues in your area right now.</p>
-                    <button class="brutal-border py-3 px-8 font-bold uppercase tracking-wider transition-colors" style="background:var(--brand-600);color:#fff;border-color:#fff" onmouseover="this.style.background='#fff';this.style.color='#000'" onmouseout="this.style.background='var(--brand-600)';this.style.color='#fff'">
-                        Launch Radar
-                    </button>
-                </div>
+            <div>
+                <h4 style="margin-bottom: 20px">Quick Links</h4>
+                <ul style="list-style: none; font-size: 0.9rem; color: #444; line-height: 2">
+                    <li><a href="feed.php">Donation Feed</a></li>
+                    <li><a href="nearby.php">Nearby Map</a></li>
+                    <li><a href="impact.php">Our Impact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 style="margin-bottom: 20px">Contact Details</h4>
+                <ul style="list-style: none; font-size: 0.9rem; color: #444; line-height: 2">
+                    <li>Email: students@lab.college.edu</li>
+                    <li>Location: Web Programming Lab</li>
+                </ul>
             </div>
         </div>
-    </section>
-    <footer class="site-footer">
-        <div class="footer-inner">
-            <div class="flex items-center gap-2">
-                <i data-icon="recycle" class="icon icon-xl text-brand-400"></i>
-                <span class="font-display text-2xl tracking-wide mt-1">FoodCycle</span>
-            </div>
-            <div class="footer-links">
-                <a href="#">About</a>
-                <a href="#">Guidelines</a>
-                <a href="feedback.php">Contact</a>
-            </div>
+        <div class="container" style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee">
+            <p style="font-size: 13px; color: #999">FoodCycle &copy; 2026 - Mini Project Submission</p>
         </div>
     </footer>
+
     <script src="assets/icons.js"></script>
-    <script src="assets/nav.js"></script>
+    <script src="assets/header.js"></script>
 </body>
 </html>
-

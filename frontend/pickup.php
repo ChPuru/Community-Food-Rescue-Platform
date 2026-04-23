@@ -1,143 +1,83 @@
-<?php require_once '../backend/init.php'; ?>
+<?php 
+/*
+   Rescue Pickup Protocol
+   Guidelines and tracking for actual food collection.
+*/
+require_once '../backend/init.php'; 
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FoodCycle — Pickup Details</title>
+    <title>FoodCycle - Pickup Protocol</title>
+    <link rel="stylesheet" href="assets/assets/styles.css"> <!-- checking path -->
     <link rel="stylesheet" href="assets/styles.css">
 </head>
-<body class="bg-page min-h-screen flex flex-col">
-    <nav class="site-nav">
-        <div class="nav-inner">
-            <div class="flex items-center gap-4">
-                <a href="feed.php" class="p-2 brutal-border transition-colors" onmouseover="this.style.background='var(--brand-400)'" onmouseout="this.style.background='transparent'">
-                    <i data-icon="arrow-left" class="icon icon-lg"></i>
-                </a>
-                <div class="sm-flex hidden items-center gap-2">
-                    <span class="font-display text-2xl tracking-wide mt-1">Back to Feed</span>
-                </div>
-            </div>
-            <div class="flex items-center gap-3">
-                <div class="brutal-border font-display text-xl uppercase tracking-wider flex items-center gap-2" style="background:#000;color:var(--brand-400);padding:0.5rem 1rem">
-                    <span class="pulse" style="width:0.75rem;height:0.75rem;background:var(--brand-400);border-radius:9999px;display:inline-block"></span>
-                    Active
-                </div>
-            </div>
-        </div>
-    </nav>
-    <main class="flex-grow container py-8">
-        <div class="grid grid-cols-1 lg-grid-cols-12 gap-8">
-            <div class="lg-col-span-7 space-y-8">
-                <div class="bg-white brutal-border p-6 sm-p-8 relative">
-                    <div class="pickup-batch-badge">Batch #8842</div>
-                    <div class="flex items-start gap-4 mb-6">
-                        <div class="brutal-border flex-shrink-0 flex items-center justify-center" style="width:4rem;height:4rem;background:#000;color:#fff">
-                            <i data-icon="croissant" class="icon icon-xl"></i>
-                        </div>
-                        <div>
-                            <div class="badge-brand mb-2">Baked Goods</div>
-                            <h1 class="font-display text-4xl sm-text-5xl leading-none mb-2">Morning Pastries</h1>
-                            <p class="text-xl font-medium text-gray-600">Local Bakery Co.</p>
+<body>
+    <div id="header-placeholder"></div>
+
+    <main class="content-area">
+        <div class="container" style="max-width: 900px">
+            <h1 style="color: var(--primary-color); margin-bottom: 20px; text-align: center">Pickup & Safety Protocol</h1>
+            
+            <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 40px; margin-top: 40px">
+                
+                <!-- Guidelines -->
+                <section>
+                    <div class="card mb-4" style="padding: 30px">
+                        <h3 style="margin-bottom: 15px; display: flex; align-items: center; gap: 10px">
+                            <i data-icon="shield-check" class="icon" style="color: var(--primary-color)"></i>
+                            Food Safety Guidelines
+                        </h3>
+                        <ul style="padding-left: 20px; color: #444; line-height: 1.8">
+                            <li>Ensure all temperature-sensitive items (Dairy/Meals) are transported in insulated bags.</li>
+                            <li>Verify the "Best Before" date upon arrival at the donor location.</li>
+                            <li>Personnel must wear clean gloves and masks during the handoff.</li>
+                            <li>If packaging is compromised, do not proceed with the rescue.</li>
+                        </ul>
+                    </div>
+
+                    <div class="card" style="padding: 30px">
+                        <h3 style="margin-bottom: 15px; display: flex; align-items: center; gap: 10px">
+                            <i data-icon="info" class="icon" style="color: var(--secondary-color)"></i>
+                            Logistics Workflow
+                        </h3>
+                        <ol style="padding-left: 20px; color: #444; line-height: 1.8">
+                            <li>Notify the donor using the platform contact details.</li>
+                            <li>Arrive at the designated pickup point with the Batch ID.</li>
+                            <li>Confirm quantity and quality with the donor representative.</li>
+                            <li>Mark the rescue as "Delivered" on your dashboard.</li>
+                        </ol>
+                    </div>
+                </section>
+
+                <!-- Status / Tracking Card -->
+                <aside>
+                    <div class="card text-center" style="background: #f8f9fa; border: 2px dashed var(--primary-color)">
+                        <i data-icon="clock" style="width: 40px; height: 40px; margin-bottom: 15px; color: var(--accent-color)"></i>
+                        <h4>Active Rescues</h4>
+                        <p style="font-size: 0.8rem; color: #666; margin-top: 5px">You currently have 2 pending pickups.</p>
+                        <div style="margin-top: 20px; text-align: left; background: white; padding: 10px; border-radius: 6px; font-size: 0.75rem">
+                            <strong>Batch #4502</strong><br>
+                            <span style="color: var(--primary-color)">Ready for collection</span>
                         </div>
                     </div>
-                    <div class="brutal-border-t pt-6 grid grid-cols-2 sm-grid-cols-4 gap-4">
-                        <div>
-                            <p class="pickup-stat">Quantity</p>
-                            <p class="font-display text-2xl">~15 lbs</p>
-                        </div>
-                        <div>
-                            <p class="pickup-stat">Expires In</p>
-                            <p class="font-display text-2xl text-brand-600">44:28</p>
-                        </div>
-                        <div>
-                            <p class="pickup-stat">Distance</p>
-                            <p class="font-display text-2xl">1.2 mi</p>
-                        </div>
-                        <div>
-                            <p class="pickup-stat">Vehicle</p>
-                            <p class="font-display text-2xl"><i data-icon="bike" class="icon icon-lg inline-block"></i></p>
-                        </div>
+
+                    <div class="card mt-4" style="text-align: center">
+                        <button class="btn btn-primary" style="width: 100%">Download PDF Instructions</button>
                     </div>
-                </div>
-                <div class="bg-white brutal-border p-6 sm-p-8">
-                    <h2 class="font-display text-3xl uppercase mb-6" style="border-bottom:3px solid #000;padding-bottom:0.5rem">Details & Instructions</h2>
-                    <div class="space-y-6">
-                        <div>
-                            <h3 class="font-bold uppercase text-sm text-gray-500 mb-2">What's Included</h3>
-                            <p class="font-medium text-lg">2 boxes of assorted bagels, muffins, and day-old bread. Best before end of day.</p>
-                        </div>
-                        <div>
-                            <h3 class="font-bold uppercase text-sm text-gray-500 mb-2">Pickup Instructions</h3>
-                            <div class="brutal-border p-4 font-medium" style="background:var(--bg)">
-                                <ul style="list-style:disc;padding-left:1.25rem" class="space-y-2">
-                                    <li>Come to the back alley door (blue door).</li>
-                                    <li>Ring the bell and say you are with FoodCycle.</li>
-                                    <li><strong class="text-brand-600">Please bring your own containers or bags if possible.</strong> We have limited boxes today.</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div>
-                            <h3 class="font-bold uppercase text-sm text-gray-500 mb-2">Allergen Warning</h3>
-                            <div class="flex gap-2">
-                                <span class="brutal-border" style="background:#000;color:#fff;padding:0.25rem 0.75rem;font-size:0.75rem;font-weight:700;text-transform:uppercase">Gluten</span>
-                                <span class="brutal-border" style="background:#000;color:#fff;padding:0.25rem 0.75rem;font-size:0.75rem;font-weight:700;text-transform:uppercase">Dairy</span>
-                                <span class="brutal-border" style="background:#000;color:#fff;padding:0.25rem 0.75rem;font-size:0.75rem;font-weight:700;text-transform:uppercase">Nuts (Traces)</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="lg-col-span-5 space-y-8">
-                <div class="bg-white brutal-border overflow-hidden flex flex-col" style="height:400px">
-                    <div class="brutal-border-b p-3 flex justify-between items-center" style="background:#000;color:#fff">
-                        <h2 class="font-bold uppercase tracking-wider text-sm">Location</h2>
-                        <button style="color:#fff" onmouseover="this.style.color='var(--brand-400)'" onmouseout="this.style.color='#fff'"><i data-icon="external-link" class="icon icon-sm"></i></button>
-                    </div>
-                    <div class="flex-grow relative" style="background:var(--gray-200)">
-                        <div class="absolute inset-0 bg-grid" style="opacity:0.3"></div>
-                        <div class="absolute inset-0 p-4">
-                            <div class="brutal-border w-full h-full relative overflow-hidden" style="background:#e5e5f7">
-                                <svg class="absolute inset-0 w-full h-full" style="opacity:0.2" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M0,50 Q100,100 200,50 T400,50" fill="none" stroke="black" stroke-width="4"/>
-                                    <path d="M50,0 L50,400 M150,0 L150,400 M250,0 L250,400" fill="none" stroke="black" stroke-width="2"/>
-                                </svg>
-                                <div class="map-pin absolute" style="top:50%;left:50%;transform:translate(-50%,-50%);z-index:10">
-                                    <i data-icon="map-pin" class="icon icon-sm" style="color:#fff"></i>
-                                </div>
-                                <svg class="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M100,300 L200,200 L200,150" fill="none" stroke="var(--brand-600)" stroke-width="6" stroke-dasharray="8 8" class="pulse"/>
-                                </svg>
-                                <div class="map-dot absolute" style="bottom:25%;left:25%;background:#000"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-4 brutal-border-t bg-white">
-                        <p class="font-bold text-lg">123 Main Street</p>
-                        <p class="text-sm text-gray-600 font-medium">Downtown District, Cityville</p>
-                        <button class="w-full brutal-border py-2 font-bold text-xs uppercase flex items-center justify-center gap-2 mt-3 transition-colors" style="background:var(--bg)" onmouseover="this.style.background='var(--brand-400)'" onmouseout="this.style.background='var(--bg)'">
-                            <i data-icon="navigation" class="icon icon-sm"></i> Get Directions
-                        </button>
-                    </div>
-                </div>
-                <div class="brutal-border p-6 sm-p-8 relative overflow-hidden" style="background:var(--brand-400)">
-                    <i data-icon="hand-heart" class="icon absolute" style="right:-2.5rem;bottom:-2.5rem;width:12rem;height:12rem;opacity:0.2;color:#000;transform:rotate(12deg)"></i>
-                    <div class="relative z-10">
-                        <h2 class="font-display text-4xl mb-2">Ready to Rescue?</h2>
-                        <p class="font-medium mb-6" style="color:#000">By claiming this batch, you commit to picking it up within the next 45 minutes.</p>
-                        <button class="w-full brutal-shadow font-display text-3xl uppercase tracking-wider mb-4 transition-colors" style="background:#000;color:#fff;padding:1.25rem;border:none;cursor:pointer" onmouseover="this.style.background='#fff';this.style.color='#000'" onmouseout="this.style.background='#000';this.style.color='#fff'">
-                            Claim Batch
-                        </button>
-                        <p class="text-center text-xs font-bold uppercase tracking-wider">
-                            Need help? <a href="feedback.php" class="underline" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#000'">Contact Support</a>
-                        </p>
-                    </div>
-                </div>
+                </aside>
+
             </div>
         </div>
     </main>
+
+    <footer style="text-align: center; padding: 40px; color: #888; font-size: 0.8rem">
+        FoodCycle Logistics &copy; 2026
+    </footer>
+
     <script src="assets/icons.js"></script>
-    <script src="assets/nav.js"></script>
+    <script src="assets/header.js"></script>
 </body>
 </html>
-

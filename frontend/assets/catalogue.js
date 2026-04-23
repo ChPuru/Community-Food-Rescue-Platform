@@ -1,71 +1,127 @@
 document.addEventListener('DOMContentLoaded', () => {
     const catalogueGrid = document.getElementById('catalogue-grid');
     const catalogueCount = document.getElementById('catalogue-count');
+    const searchInput = document.getElementById('search-input');
+    const sortSelect = document.getElementById('sort-select');
+    const resetBtn = document.getElementById('reset-filters');
+    
     let listings = [];
     
+    // Attach event listeners for real-time intelligence
+    searchInput.addEventListener('input', applyFiltersAndSort);
+    sortSelect.addEventListener('change', applyFiltersAndSort);
+    
+    const checkboxes = document.querySelectorAll('.filter-checkbox');
+    checkboxes.forEach(cb => cb.addEventListener('change', applyFiltersAndSort));
+
+    resetBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        checkboxes.forEach(cb => cb.checked = true);
+        sortSelect.value = 'expiry_asc';
+        applyFiltersAndSort();
+    });
+
     function fetchListings() {
         fetch('../backend/api_listings.php')
             .then(res => res.json())
             .then(data => {
                 if(data.status === 'success') {
                     listings = data.data;
-                    renderListings();
+                    applyFiltersAndSort();
                 }
             })
             .catch(err => console.error('Error fetching listings:', err));
     }
 
-    function renderListings() {
-        catalogueGrid.innerHTML = '';
-        catalogueCount.textContent = `Showing ${listings.length} active listings`;
+    function applyFiltersAndSort() {
+        const searchTerm = searchInput.value.toLowerCase();
+        
+        // Build array of active category strings
+        const activeCategories = Array.from(document.querySelectorAll('.filter-checkbox:checked')).map(cb => cb.value);
 
-        listings.forEach(item => {
-            const article = document.createElement('article');
-            article.className = 'card-hover flex flex-col relative';
+        // Filter Phase
+        let filtered = listings.filter(item => {
+            const matchesSearch = item.title.toLowerCase().includes(searchTerm) || item.description.toLowerCase().includes(searchTerm);
+            
+            // Note: DB uses "Dairy". HTML has "Dairy". 
+            // In case of slight mismatches, we ensure string includes or exact matches.
+            const matchesCategory = activeCategories.includes(item.category);
+            
+            return matchesSearch && matchesCategory;
+        });
+
+        // Sorting Phase
+        const sortMode = sortSelect.value;
+        filtered.sort((a, b) => {
+            if (sortMode === 'expiry_asc') {
+                return new Date(a.available_until).getTime() - new Date(b.available_until).getTime();
+            } else if (sortMode === 'qty_desc') {
+                return parseFloat(b.quantity) - parseFloat(a.quantity);
+            } else if (sortMode === 'qty_asc') {
+                return parseFloat(a.quantity) - parseFloat(b.quantity);
+            }
+            return 0;
+        });
+
+        renderListings(filtered);
+    }
+
+    function renderListings(dataToRender) {
+        catalogueGrid.innerHTML = '';
+        catalogueCount.textContent = `Showing ${dataToRender.length} active listings`;
+
+        if(dataToRender.length === 0) {
+            // Loading Skeletons
+            for(let i=0; i<6; i++) {
+                const skel = document.createElement('div');
+                skel.className = 'skeleton';
+                skel.style.height = '320px';
+                catalogueGrid.appendChild(skel);
+            }
+            return;
+        }
+
+        dataToRender.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'card flex flex-col';
             
             const expiryTime = new Date(item.available_until).getTime();
             
-            let icon = 'package';
-            if (item.category === 'Produce') icon = 'carrot';
-            else if (item.category === 'Baked Goods') icon = 'croissant';
+            // Map category to real image
+            let imgSource = 'assets/img/pantry.png';
+            if (item.category === 'Produce') imgSource = 'assets/img/produce.png';
+            else if (item.category === 'Baked Goods') imgSource = 'assets/img/bakery.png';
+            else if (item.category === 'Meals') imgSource = 'assets/img/meals.png';
+            else if (item.category === 'Dairy') imgSource = 'assets/img/dairy.png';
 
-            const paddedId = String(item.id).padStart(4, '0');
-
-            article.innerHTML = `
-                <div class="critical-badge" style="display: none;">Critical</div>
-                <div class="catalogue-img img-placeholder" style="background:var(--arch-light)">
-                    <i data-icon="${icon}" class="icon icon-2xl" style="opacity:0.3"></i>
-                    <div class="img-id">ID: BATCH-${paddedId}</div>
+            card.innerHTML = `
+                <div style="height: 180px; overflow: hidden; border-radius: 8px 8px 0 0;">
+                    <img src="${item.image_path || imgSource}" style="width:100%; height:100%; object-fit:cover;">
                 </div>
-                <div class="p-5 flex-1 flex flex-col">
-                    <h3 class="font-bold text-xl uppercase leading-tight mb-2">${escapeHtml(item.title)}</h3>
-                    <p class="font-mono text-xs mb-4" style="color:var(--arch-gray)">${escapeHtml(item.operator_name)} &bull; ${escapeHtml(item.pickup_location)}</p>
-                    <div class="grid grid-cols-2 gap-2 mb-6 font-mono uppercase" style="font-size:0.625rem">
-                        <div class="arch-border p-2" style="background:var(--arch-light)">
-                            <span class="block mb-1" style="color:var(--arch-gray)">Quantity</span>
-                            <span class="font-bold text-sm">~${escapeHtml(item.quantity)} lbs</span>
-                        </div>
-                        <div class="arch-border p-2" style="background:var(--arch-light)">
-                            <span class="block mb-1" style="color:var(--arch-gray)">Expires In</span>
-                            <span class="font-bold text-sm countdown-timer" data-expiry="${expiryTime}">...</span>
-                        </div>
+                <div style="padding: 20px; flex: 1; display: flex; flex-direction: column;">
+                    <div class="flex justify-between items-center mb-2">
+                        <span style="font-size: 10px; font-weight: bold; padding: 2px 8px; background: #e8f5e9; color: #2e7d32; border-radius: 4px;">${escapeHtml(item.category)}</span>
+                        <span style="font-size: 10px; color: #888;">ID: #${String(item.id).padStart(4, '0')}</span>
                     </div>
-                    <div class="flex items-center justify-between mt-auto pt-4" style="border-top:2px solid rgba(10,10,10,0.1)">
-                        <div class="flex gap-1">
-                            <span class="badge-black">${escapeHtml(item.category)}</span>
+                    <h3 style="font-size: 1.1rem; margin-bottom: 10px; color: var(--primary-color)">${escapeHtml(item.title)}</h3>
+                    <p style="font-size: 0.8rem; color: #666; margin-bottom: 15px; flex: 1;">${escapeHtml(item.description)}</p>
+                    
+                    <div style="background: #f8f9fa; padding: 10px; border-radius: 6px; font-size: 11px;">
+                        <div class="flex justify-between mb-1">
+                            <span>Quantity:</span>
+                            <strong>~${escapeHtml(item.quantity)} lbs</strong>
                         </div>
-                        <button style="width:2.5rem;height:2.5rem;background:var(--arch-black);color:var(--arch-white);display:flex;align-items:center;justify-content:center;border:none;cursor:pointer;transition:background 0.2s" onmouseover="this.style.background='var(--arch-accent)'" onmouseout="this.style.background='var(--arch-black)'">
-                            <i data-icon="arrow-right" class="icon icon-md"></i>
-                        </button>
+                        <div class="flex justify-between">
+                            <span>Expires:</span>
+                            <strong class="countdown-timer" data-expiry="${expiryTime}">...</strong>
+                        </div>
                     </div>
                 </div>
             `;
-            catalogueGrid.appendChild(article);
+            catalogueGrid.appendChild(card);
         });
 
-        // Initialize icons for the newly injected HTML
         if(typeof lucide !== 'undefined') lucide.createIcons();
-
         updateTimers();
     }
 
@@ -75,6 +131,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         articles.forEach(article => {
             const timerEl = article.querySelector('.countdown-timer');
+            if(!timerEl) return;
+            
             const expiryTime = parseInt(timerEl.getAttribute('data-expiry'), 10);
             const diff = expiryTime - now;
             const criticalBadge = article.querySelector('.critical-badge');
@@ -82,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (diff <= 0) {
                 timerEl.textContent = "EXPIRED";
                 timerEl.style.color = "var(--arch-accent)";
-                criticalBadge.style.display = 'block';
+                if(criticalBadge) criticalBadge.style.display = 'block';
             } else {
                 const hours = Math.floor(diff / (1000 * 60 * 60));
                 const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
@@ -92,10 +150,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // If less than 2 hours (7200 seconds), show critical badge
                 if (diff < 7200000) {
-                    criticalBadge.style.display = 'block';
+                    if(criticalBadge) criticalBadge.style.display = 'block';
                     timerEl.style.color = "var(--arch-accent)";
                 } else {
-                    criticalBadge.style.display = 'none';
+                    if(criticalBadge) criticalBadge.style.display = 'none';
                     timerEl.style.color = "inherit";
                 }
             }
@@ -104,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function escapeHtml(unsafe) {
         if(!unsafe) return '';
-        return unsafe
+        return String(unsafe)
             .replace(/&/g, "&amp;")
             .replace(/</g, "&lt;")
             .replace(/>/g, "&gt;")
@@ -113,5 +171,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     setInterval(updateTimers, 1000);
+    setInterval(fetchListings, 30000); // Auto-refresh data and re-apply filters every 30s
     fetchListings();
 });

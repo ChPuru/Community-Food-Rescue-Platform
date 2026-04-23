@@ -25,52 +25,54 @@ document.addEventListener('DOMContentLoaded', () => {
         feedContainer.innerHTML = '';
 
         if(listings.length === 0) {
-            feedContainer.innerHTML = `
-                <div class="text-center py-12">
-                    <p class="font-bold uppercase text-gray-500">No active listings available.</p>
-                </div>
-            `;
+            // Skeletons while loading
+            for(let i=0; i<3; i++) {
+                const skel = document.createElement('div');
+                skel.className = 'skeleton mb-4';
+                skel.style.height = '180px';
+                feedContainer.appendChild(skel);
+            }
             return;
         }
 
         listings.forEach(item => {
-            const article = document.createElement('article');
-            article.className = 'feed-item';
+            const card = document.createElement('div');
+            card.className = 'card mb-4';
             
             const expiryTime = new Date(item.available_until).getTime();
             
-            let icon = 'package';
-            if (item.category === 'Produce') icon = 'carrot';
-            else if (item.category === 'Baked Goods') icon = 'croissant';
-            else if (item.category === 'Dairy') icon = 'box';
+            // Map category to real image
+            let imgSource = 'assets/img/pantry.png';
+            if (item.category === 'Produce') imgSource = 'assets/img/produce.png';
+            else if (item.category === 'Baked Goods') imgSource = 'assets/img/bakery.png';
+            else if (item.category === 'Meals') imgSource = 'assets/img/meals.png';
+            else if (item.category === 'Dairy') imgSource = 'assets/img/dairy.png';
 
-            article.innerHTML = `
-                <div class="feed-item-expiry" data-expiry="${expiryTime}">...</div>
+            card.innerHTML = `
                 <div class="flex gap-4">
-                    <div class="brutal-border flex-shrink-0 flex items-center justify-center" style="width:4rem;height:4rem;background:var(--brand-100)">
-                        <i data-icon="${icon}" class="icon icon-xl text-brand-900"></i>
+                    <div style="width: 150px; height: 120px; flex-shrink: 0;">
+                        <img src="${item.image_path || imgSource}" style="width:100%; height:100%; object-fit:cover; border-radius: 8px;">
                     </div>
-                    <div class="flex-1 min-w-0">
-                        <h3 class="font-display text-xl uppercase truncate" style="padding-right:6rem">${escapeHtml(item.title)}</h3>
-                        <div class="text-sm font-bold text-gray-600 mb-2 flex items-center gap-2">
-                            <i data-icon="map-pin" class="icon icon-sm"></i> ${escapeHtml(item.operator_name)} (${escapeHtml(item.pickup_location)})
+                    <div class="flex-1">
+                        <div class="flex justify-between items-start">
+                            <h3 style="color: var(--primary-color)">${escapeHtml(item.title)}</h3>
+                            <span style="font-size: 11px; font-weight: bold; padding: 2px 8px; background: #f0f0f0; border-radius: 4px;">${escapeHtml(item.category)}</span>
                         </div>
-                        <p class="text-sm font-medium mb-3 line-clamp-2">${escapeHtml(item.description)}</p>
-                        <div class="feed-divider flex items-center justify-between">
-                            <div class="flex gap-2">
-                                <span class="badge-green">${escapeHtml(item.category)}</span>
-                                <span class="badge-outline">~${escapeHtml(item.quantity)} lbs</span>
+                        <p style="font-size: 0.85rem; color: #555; margin: 8px 0">${escapeHtml(item.description)}</p>
+                        <div class="flex justify-between items-center mt-2">
+                            <div style="font-size: 12px; font-weight: 600">
+                                📍 ${escapeHtml(item.operator_name)}
                             </div>
-                            <button class="btn-black claim-btn" data-id="${item.id}">Claim</button>
+                            <button class="btn btn-primary claim-btn" data-id="${item.id}" style="padding: 5px 15px; font-size: 12px">Claim Batch</button>
                         </div>
+                        <div class="feed-item-expiry" data-expiry="${expiryTime}" style="margin-top: 10px; font-size: 11px; font-weight: bold; color: var(--secondary-color)">...</div>
                     </div>
                 </div>
             `;
-            feedContainer.appendChild(article);
+            feedContainer.appendChild(card);
         });
 
         if(typeof lucide !== 'undefined') lucide.createIcons();
-
         updateTimers();
     }
 
@@ -133,25 +135,29 @@ document.addEventListener('DOMContentLoaded', () => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ listing_id: id })
+            body: JSON.stringify({ 
+                listing_id: id,
+                csrf_token: window.CSRF_TOKEN
+            })
         })
         .then(res => res.json())
         .then(data => {
             if (data.status === 'success') {
+                window.showToast('Listing claimed successfully!');
                 buttonEl.textContent = 'Claimed!';
                 buttonEl.style.background = '#8bc34a';
                 buttonEl.style.color = '#fff';
                 buttonEl.style.boxShadow = 'none';
                 setTimeout(fetchListings, 1500);
             } else {
-                alert(data.message);
+                window.showToast(data.message, 'error');
                 buttonEl.disabled = false;
                 buttonEl.textContent = 'Claim';
             }
         })
         .catch(err => {
             console.error('Claim error:', err);
-            alert('Failed to process claim.');
+            window.showToast('Failed to process claim.', 'error');
             buttonEl.disabled = false;
             buttonEl.textContent = 'Claim';
         });
