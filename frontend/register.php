@@ -14,7 +14,7 @@ require_once '../backend/init.php';
     <link rel="stylesheet" href="assets/styles.css">
     <style>
         .auth-container {
-            max-width: 550px;
+            max-width: 600px;
             margin: 60px auto;
             padding: 40px;
         }
@@ -45,6 +45,11 @@ require_once '../backend/init.php';
                         <input type="radio" name="role" value="ngo" style="margin-bottom: 10px">
                         <div style="font-weight: bold">RESCUE NGO</div>
                         <div style="font-size: 10px; color: #888">Shelters, Charities</div>
+                    </label>
+                    <label class="flex-1 card text-center" style="cursor: pointer; padding: 15px; transition: 0.2s" id="role-recipient-card">
+                        <input type="radio" name="role" value="recipient" style="margin-bottom: 10px">
+                        <div style="font-weight: bold">RECIPIENT</div>
+                        <div style="font-size: 10px; color: #888">Individual/Families</div>
                     </label>
                 </div>
 

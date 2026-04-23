@@ -28,18 +28,20 @@ require_once '../backend/init.php';
                     </p>
                     
                     <div class="card mb-4">
-                        <h4 style="color: var(--secondary-color); margin-bottom: 10px">Lab Location</h4>
+                        <h4 style="color: var(--secondary-color); margin-bottom: 10px">Location</h4>
                         <p style="font-size: 0.9rem">
-                            Department of Computer Science <br>
-                            Web Programming Laboratory <br>
-                            Academic Block IV, Room 102
+                            Sandipani Hostel <br>
+                            Room 204 <br>
+                            Campus South
                         </p>
                     </div>
 
-                    <div class="card">
-                        <h4 style="color: var(--secondary-color); margin-bottom: 10px">Email Support</h4>
-                        <p style="font-size: 0.9rem">support.foodcycle@college.edu</p>
-                        <p style="font-size: 0.9rem">devteam@college-lab.com</p>
+                    <div class="card" style="border-left: 5px solid var(--accent-color)">
+                        <h4 style="color: var(--accent-color); margin-bottom: 10px">Quick Support</h4>
+                        <p style="font-size: 0.85rem; color: #666">
+                            For immediate assistance, please use the form on the right. 
+                            Our team monitors submissions daily between 9 AM and 6 PM.
+                        </p>
                     </div>
                 </div>
 

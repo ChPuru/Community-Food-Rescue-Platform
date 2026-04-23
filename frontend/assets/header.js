@@ -1,11 +1,12 @@
 /* 
    Global Navigation Header Implementation
-   // Manual Logic for session handling and dynamic UI
+   Dynamic session handling and vanilla icon rendering
 */
 
 document.addEventListener('DOMContentLoaded', () => {
     // Target the specific placeholder or the top of the body
     const placeholder = document.getElementById('header-placeholder');
+    const isDonor = window.USER_ROLE === 'donor';
     
     const headerHtml = `
     <nav class="main-nav">
@@ -16,10 +17,11 @@ document.addEventListener('DOMContentLoaded', () => {
             </a>
             
             <ul class="nav-menu">
+                <li><a href="index.php">Home</a></li>
                 <li><a href="feed.php">Donations</a></li>
-                <li><a href="nearby.php">Nearby Map</a></li>
+                <li><a href="nearby.php">Nearby Feed</a></li>
                 <li><a href="impact.php">Our Impact</a></li>
-                <li><a href="feedback.php">Feedback</a></li>
+                ${isDonor ? '<li><a href="new-listing.php" style="color:var(--primary-color); font-weight:bold">Donate Now</a></li>' : ''}
             </ul>
 
             <div class="flex items-center gap-4">
@@ -57,31 +59,42 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.insertAdjacentHTML('afterbegin', headerHtml);
     }
 
-    // Initialize icons
-    if (typeof lucide !== 'undefined') lucide.createIcons();
+    // Initialize custom vanilla icons
+    if (typeof renderIcons === 'function') {
+        renderIcons();
+    }
 
     // Notification Logic
     const bell = document.getElementById('bell-container');
     const dropdown = document.getElementById('nav-notify-dropdown');
     
     if(bell) {
-        bell.addEventListener('click', () => {
+        bell.addEventListener('click', (e) => {
+            e.stopPropagation();
             dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
             fetchNotifications();
         });
     }
 
+    document.addEventListener('click', () => {
+        if(dropdown) dropdown.style.display = 'none';
+    });
+
     // Global Toast Function
     window.showToast = (msg, type='success') => {
+        const container = document.getElementById('toast-container');
+        if(!container) return;
+        
         const toast = document.createElement('div');
         toast.className = 'toast';
         toast.style.backgroundColor = type === 'success' ? '#2e7d32' : '#c62828';
         toast.textContent = msg;
-        document.getElementById('toast-container').appendChild(toast);
+        container.appendChild(toast);
         setTimeout(() => toast.remove(), 3500);
     };
 
     async function fetchNotifications() {
+        if(!window.USER_ID) return;
         try {
             const r = await fetch('../backend/api_notifications.php');
             const d = await r.json();
@@ -90,20 +103,20 @@ document.addEventListener('DOMContentLoaded', () => {
             
             if(d.status === 'success' && d.data) {
                 if(d.data.length > 0) {
-                    count.style.display = 'block';
+                    count.style.display = 'flex';
                     count.textContent = d.data.length;
                     list.innerHTML = d.data.map(n => `
-                        <div style="padding:8px; border-bottom:1px solid #f5f5f5; font-size:12px">
+                        <div style="padding:10px; border-bottom:1px solid #f5f5f5; font-size:12px; color:#444">
                             <strong>${n.subject}</strong><br>
                             <span style="color:#888; font-size:10px">${new Date(n.sent_at).toLocaleDateString()}</span>
                         </div>
                     `).join('');
                 } else {
-                    list.innerHTML = '<p style="text-align:center; padding:10px; font-size:12px">No notifications</p>';
+                    list.innerHTML = '<p style="text-align:center; padding:15px; color:#888; font-size:12px">No notifications</p>';
                 }
             }
         } catch(e) {}
     }
 
-    fetchNotifications();
+    if(window.USER_ID) fetchNotifications();
 });

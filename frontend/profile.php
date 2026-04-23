@@ -44,7 +44,7 @@ $user = $stmt->fetch();
     <main class="content-area">
         <div class="container">
             <div class="profile-wrapper">
-                <h1 style="margin-bottom: 40px; text-align: center">Account Settings</h1>
+                <h1 style="margin-bottom: 40px; text-align: center; color: var(--primary-color)">Account Settings</h1>
 
                 <!-- Profile Identity Section -->
                 <div class="card mb-4" style="padding: 30px">
@@ -115,7 +115,7 @@ $user = $stmt->fetch();
                 </div>
 
                 <!-- Security Section -->
-                <div class="card" style="padding: 30px">
+                <div class="card mb-6" style="padding: 30px">
                     <h3 class="section-header" style="color: #c62828">
                         <i data-icon="shield" class="icon"></i> Security & Passcode
                     </h3>
@@ -136,6 +136,14 @@ $user = $stmt->fetch();
                             <button type="submit" class="btn btn-secondary" style="padding: 10px 40px">Rotate Passcode</button>
                         </div>
                     </form>
+                </div>
+
+                <!-- Logout Section -->
+                <div style="margin-top: 60px; border-top: 2px solid #eee; padding-top: 30px; text-align: center">
+                    <p style="color: #888; font-size: 0.9rem; margin-bottom: 20px">Finished managing your account?</p>
+                    <a href="logout.php" class="btn btn-outline" style="border-color: #c62828; color: #c62828; padding: 12px 60px">
+                        <i data-icon="log-out" class="icon" style="width:16px;height:16px"></i> Logout from FoodCycle
+                    </a>
                 </div>
 
             </div>

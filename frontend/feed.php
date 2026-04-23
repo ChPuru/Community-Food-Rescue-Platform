@@ -1,8 +1,6 @@
 <?php 
 /*
    Live Feed of Food Donations
-   Available Donations Feed
-   Real-time view of active rescue batches.
 */
 require_once '../backend/init.php'; 
 ?>
@@ -20,9 +18,15 @@ require_once '../backend/init.php';
     <main class="content-area">
         <div class="container">
             <!-- Header Section -->
-            <div style="border-bottom: 2px solid #eee; padding-bottom: 20px; margin-bottom: 40px">
-                <h1 style="font-size: 2.8rem; color: var(--primary-color)">Available Donations</h1>
-                <p style="color: #666">View active food rescue batches available for immediate pickup in your community.</p>
+            <div style="border-bottom: 2px solid #eee; padding-bottom: 20px; margin-bottom: 40px; display: flex; justify-content: space-between; align-items: flex-end">
+                <div>
+                    <h1 style="font-size: 2.8rem; color: var(--primary-color)">Available Donations</h1>
+                    <p style="color: #666">View active food rescue batches available for immediate pickup in your community.</p>
+                </div>
+                <div style="font-size: 0.75rem; font-weight: bold; text-transform: uppercase; color: #888; background: #f5f5f5; padding: 4px 12px; border-radius: 50px; display: flex; align-items: center; gap: 6px">
+                    <span style="width: 8px; height: 8px; background: #4caf50; border-radius: 50%"></span>
+                    Status: <span id="feed-update-status">Live</span>
+                </div>
             </div>
 
             <!-- Feed Content -->
@@ -31,8 +35,7 @@ require_once '../backend/init.php';
                 <!-- Main Feed List -->
                 <section>
                     <div id="feed-container" style="display: grid; grid-template-columns: 1fr; gap: 20px">
-                        <!-- JS will populate this with standard cards -->
-                        <div class="skeleton" style="height: 200px"></div>
+                        <!-- JS will populate this -->
                         <div class="skeleton" style="height: 200px"></div>
                         <div class="skeleton" style="height: 200px"></div>
                     </div>
@@ -43,9 +46,9 @@ require_once '../backend/init.php';
                     <div class="card mb-4">
                         <h4 style="margin-bottom: 15px; border-bottom: 1.5px solid #eee; padding-bottom: 8px">Project Statistics</h4>
                         <ul style="list-style: none; font-size: 0.9rem; color: #555; line-height: 2">
-                            <li>Active Batches: 12</li>
-                            <li>Registered Donors: 8</li>
-                            <li>Rescue Centers: 5</li>
+                            <li>Active Batches: <span id="sidebar-stat-active" style="font-weight:bold">--</span></li>
+                            <li>Registered Users: <span id="sidebar-stat-users" style="font-weight:bold">--</span></li>
+                            <li>Total Rescues: <span id="sidebar-stat-claims" style="font-weight:bold">--</span></li>
                         </ul>
                     </div>
 
@@ -70,10 +73,16 @@ require_once '../backend/init.php';
     <script src="assets/header.js"></script>
     <script src="assets/feed.js"></script>
     <script>
-        // Adjusting feed for traditional look
         document.addEventListener('DOMContentLoaded', () => {
-            // Need to make sure the JS feed items use standard card styles
-            // The existing feed.js will handle rendering, but I'll add a hover effect here
+            fetch('../backend/api_stats.php')
+                .then(r => r.json())
+                .then(d => {
+                    if(d.status === 'success') {
+                        document.getElementById('sidebar-stat-active').textContent = d.global.active_listings;
+                        document.getElementById('sidebar-stat-users').textContent = d.global.total_users;
+                        document.getElementById('sidebar-stat-claims').textContent = d.global.total_claims;
+                    }
+                });
         });
     </script>
 </body>
