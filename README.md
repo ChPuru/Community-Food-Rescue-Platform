@@ -1,4 +1,6 @@
-# FoodCycle - Full-Stack Community Food Rescue Platform
+# [FoodCycle - Full-Stack Community Food Rescue Platform](https://foodcycle.wuaze.com/)
+
+**Live Demo:** https://foodcycle.wuaze.com/
 
 FoodCycle is a real-time platform designed to reduce urban food waste by connecting businesses with surplus food to local NGOs and recipients. Developed for the SY BTech Web Programming Lab (2025–26), it utilizes geospatial data and live synchronization to ensure efficient food rescue in Mumbai.
 
